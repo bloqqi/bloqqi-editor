@@ -1,0 +1,7 @@
+KIELER, klay (layout algorithms)
+	License: Eclipse Public License v1.0
+	Depends on: Guava, EMF (Ecore)
+Guava
+	License: Apache License v2.0
+EMF
+	License: Eclipse Public License v1.0	

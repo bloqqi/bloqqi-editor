@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="org.bloqqi.editor.feature"
+      label="Bloqqi Editor Feature"
+      version="0.1.13">
+
+   <description>
+      A Eclipse feature for the Bloqqi editor
+   </description>
+
+   <plugin
+         id="org.bloqqi.editor"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+</feature>

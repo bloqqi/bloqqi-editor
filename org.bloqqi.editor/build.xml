@@ -1,0 +1,7 @@
+<project name="BloqqiEditor" default="build" basedir=".">
+	<target name="build">
+		<ant dir="picodiagram-compiler" target="clean" />
+		<ant dir="picodiagram-compiler" target="jar" />
+		<copy file="picodiagram-compiler/bloqqi-compiler.jar" todir="lib" />
+	</target>
+</project>

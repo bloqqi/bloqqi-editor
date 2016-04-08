@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            name="Bloqqi Editor"
+            extensions="dia"
+            contributorClass="org.bloqqi.editor.BloqqiActionBarContributor"
+            class="org.bloqqi.editor.BloqqiEditor"
+            id="bloqqi.editors.BloqqiEditor">
+      </editor>
+   </extension>
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            class="org.eclipse.ui.navigator.CommonNavigator"
+            id="bloqqi-editor.view"
+            name="BloqqiView"
+            restorable="true">
+      </view>
+   </extension>
+   <extension
+         point="org.eclipse.ui.navigator.viewer">
+      <viewerContentBinding
+            viewerId="bloqqi-editor.view">
+         <includes>
+            <contentExtension
+                  pattern="org.eclipse.ui.navigator.resourceContent">
+            </contentExtension>
+            <contentExtension
+                  pattern="org.eclipse.ui.navigator.resources.filters.*">
+            </contentExtension>
+         </includes>
+      </viewerContentBinding>
+   </extension>
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            class="org.bloqqi.editor.preferences.PreferencePage"
+            id="org.bloqqi.editor.preferences.PreferencePage"
+            name="Bloqqi">
+      </page>
+   </extension>
+   <extension
+         point="org.eclipse.core.runtime.preferences">
+      <initializer
+            class="org.bloqqi.editor.preferences.PreferenceInitializer">
+      </initializer>
+   </extension>
+
+</plugin>
