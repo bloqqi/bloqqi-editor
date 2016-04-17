@@ -1,3 +1,0 @@
-[submodule "org.bloqqi.editor/picodiagram-compiler"]
-	path = org.bloqqi.editor/picodiagram-compiler
-	url = git@bitbucket.org:bloqqi/bloqqi-compiler.git
