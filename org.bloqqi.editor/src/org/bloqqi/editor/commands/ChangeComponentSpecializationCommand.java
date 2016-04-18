@@ -12,37 +12,43 @@ import org.bloqqi.compiler.ast.VarUse;
 import org.bloqqi.editor.wizards.specialize.PageParameters.NewInParameter;
 
 public class ChangeComponentSpecializationCommand extends Command {
-	private Component component;
-	private final DiagramType enclosingDiagramType;
+	private final Component existingComponent;
+	private final int componentIndex;
+	private final DiagramType enclosingDt;
 	private final Set<NewInParameter> newInParameters;
 
+	private Component newComponent;
+	
 	private boolean hasExecuted;
 	
-	public ChangeComponentSpecializationCommand(Component component,
-			DiagramType enclosingDiagramType, SpecializeDiagramType specializeDt, 
+	public ChangeComponentSpecializationCommand(Component existingComponent,
+			SpecializeDiagramType specializeDt,
 			Set<NewInParameter> newInParameters) {
-		this.component = component;
-		this.enclosingDiagramType = enclosingDiagramType;
+		this.existingComponent = existingComponent;
+		this.enclosingDt = existingComponent.diagramType();
+		this.componentIndex = enclosingDt.getLocalComponents().getIndexOfChild(existingComponent);
 		this.newInParameters = newInParameters;
+		this.newComponent = existingComponent.treeCopy();
+		this.newComponent.setType(specializeDt.newAnonymousComponent("").getType());
 		hasExecuted = false;
 	}
 	
 	public void execute() {
-		// OK
-		enclosingDiagramType.program().flushAllAttributes();
+		enclosingDt.getLocalComponentList().setChild(newComponent, componentIndex);
+		enclosingDt.program().flushAllAttributes();
 
 		if (!hasExecuted) {
 			// Some parameters of nested components should be exposed as parameters.
 			// This is set by the user in the specialization wizard.
 			for (NewInParameter in: newInParameters) {
-				String parameter = component.name() + "." + in.getName();
-				Pair<Component, VarUse> p = enclosingDiagramType.addConnectionsParameters(parameter);
-				component = p.first;
+				String parameter = existingComponent.name() + "." + in.getName();
+				Pair<Component, VarUse> p = enclosingDt.addConnectionsParameters(parameter);
+				newComponent = p.first;
 			}
 		}
 		
-		enclosingDiagramType.program().flushAllAttributes();
-		enclosingDiagramType.notifyObservers();
+		enclosingDt.program().flushAllAttributes();
+		enclosingDt.notifyObservers();
 		
 		hasExecuted = true;
 	}
@@ -53,8 +59,8 @@ public class ChangeComponentSpecializationCommand extends Command {
 	}
 	
 	public void undo() {
-		enclosingDiagramType.getLocalComponentList().removeChild(component);
-		enclosingDiagramType.program().flushAllAttributes();
-		enclosingDiagramType.notifyObservers();
+		enclosingDt.getLocalComponentList().setChild(existingComponent, componentIndex);
+		enclosingDt.program().flushAllAttributes();
+		enclosingDt.notifyObservers();
 	}
 }

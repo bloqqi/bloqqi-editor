@@ -1,6 +1,5 @@
 package org.bloqqi.editor.actions;
 
-import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.widgets.Shell;
 
@@ -8,15 +7,11 @@ import java.util.Iterator;
 
 import org.bloqqi.compiler.ast.Component;
 import org.bloqqi.compiler.ast.DiagramType;
-import org.bloqqi.compiler.ast.InheritedComponent;
 import org.bloqqi.editor.BloqqiEditor;
 import org.bloqqi.editor.commands.ChangeComponentSpecializationCommand;
-import org.bloqqi.editor.commands.CreateDiagramTypeSpecializationCommand;
-import org.bloqqi.editor.commands.RenameComponentCommand;
 import org.bloqqi.editor.editparts.ComponentPart;
 import org.bloqqi.editor.wizards.specialize.MyWizardDialog;
 import org.bloqqi.editor.wizards.specialize.WizardChangeComponent;
-import org.bloqqi.editor.wizards.specialize.WizardComponent;
 import org.bloqqi.editor.wizards.specialize.WizardDiagramType;
 
 public class ChangeSpecializationComponent extends MySelectionAction {
@@ -42,7 +37,7 @@ public class ChangeSpecializationComponent extends MySelectionAction {
 
 	@Override 
 	public void run() {
-		Component component = getSelected(ComponentPart.class).getModel();
+		Component component = getSelected(ComponentPart.class).getModel().declaredComponent();
 		DiagramType superDt = getDirectSuperType(component);
 		
 		Shell shell = getEditor().getSite().getShell();
@@ -51,24 +46,16 @@ public class ChangeSpecializationComponent extends MySelectionAction {
 				component.diagramType(),
 				superDt.specialize(component.anonymousDiagramType()));
 		MyWizardDialog dialog = new MyWizardDialog(shell, wizard);
+
 		if (dialog.open() == Window.OK) {
 			ChangeComponentSpecializationCommand cmd =
-//				new ChangeComponentSpecializationCommand(
-//						component,
-//						wizard.getConfiguration(),
-//						wizard.getNewInParameters()
-//				);
-		}
-		/*if (dialog.open() == Window.OK) {
-			CreateDiagramTypeSpecializationCommand cmd;
-			cmd = new CreateDiagramTypeSpecializationCommand(
-					diagramType.compUnit(),
-					wizard.getConfiguration(),
-					wizard.getNewName(),
-					wizard.getNewInParameters());
+				new ChangeComponentSpecializationCommand(
+						component,
+						wizard.getConfiguration(),
+						wizard.getNewInParameters()
+				);
 			execute(cmd);
-		}*/
-		//ComponentPart editPart = getSelected(ComponentPart.class);
+		}
 	}
 	
 	private DiagramType getDirectSuperType(Component c) {

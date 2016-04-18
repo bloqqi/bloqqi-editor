@@ -1,8 +1,6 @@
 package org.bloqqi.editor.wizards.specialize;
 
 import org.bloqqi.compiler.ast.DiagramType;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 
 public class PageFeaturesChangeComponent extends PageFeatures {
