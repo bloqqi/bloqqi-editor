@@ -17,7 +17,11 @@ public class WizardDiagramType extends Wizard {
 	protected Set<NewInParameter> newInParameters;
 	
 	public WizardDiagramType(DiagramType diagramType) {
-		specializeDt = diagramType.specialize();
+		this(diagramType, diagramType.specialize());
+	}
+
+	public WizardDiagramType(DiagramType diagramType, SpecializeDiagramType specializeDt) {
+		this.specializeDt = specializeDt;
 		pageDiagramType = createPageDiagramType();
 		pageDiagramType.setSpecializeDiagramType(specializeDt);
 		pageDiagramType.setDiagramType(diagramType);

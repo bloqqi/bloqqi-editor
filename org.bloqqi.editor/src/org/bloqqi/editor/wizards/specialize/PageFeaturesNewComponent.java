@@ -3,7 +3,7 @@ package org.bloqqi.editor.wizards.specialize;
 import org.bloqqi.compiler.ast.DiagramType;
 import org.bloqqi.compiler.ast.Program;
 
-public class PageFeaturesComponent extends PageFeatures {
+public class PageFeaturesNewComponent extends PageFeatures {
 	protected DiagramType enclosingDiagramType;
 	
 	public void setEnclosingDiagramType(DiagramType enclosingDiagramType) {

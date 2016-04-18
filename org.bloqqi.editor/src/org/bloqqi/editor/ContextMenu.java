@@ -3,6 +3,7 @@ package org.bloqqi.editor;
 import org.bloqqi.editor.actions.AutoLayoutAction;
 import org.bloqqi.editor.actions.ChangeAllConnectionRoutersAction;
 import org.bloqqi.editor.actions.ChangeConnectionRouterAction;
+import org.bloqqi.editor.actions.ChangeSpecializationComponent;
 import org.bloqqi.editor.actions.DiagramTypePropertiesAction;
 import org.bloqqi.editor.actions.ExtractSubTypeAsRecommendationAction;
 import org.bloqqi.editor.actions.InlineAction;
@@ -55,6 +56,7 @@ public class ContextMenu extends ContextMenuProvider {
 		addActionToRest(menu, InlineAction.ID);
 		addActionToRest(menu, RenameComponentAction.ID);
 		addActionToRest(menu, RenameParameterAction.ID);
+		addActionToRest(menu, ChangeSpecializationComponent.ID);
 		addActionToRest(menu, ActionFactory.DELETE.getId());
 		
 		menu.appendToGroup(GEFActionConstants.GROUP_EDIT, new Separator());

@@ -6,6 +6,7 @@ import org.bloqqi.editor.actions.AutoLayoutAction;
 import org.bloqqi.editor.actions.ChangeAllConnectionRoutersAction;
 import org.bloqqi.editor.actions.ChangeConnectionRouterAction;
 import org.bloqqi.editor.actions.ChangeNameDisplayedAction;
+import org.bloqqi.editor.actions.ChangeSpecializationComponent;
 import org.bloqqi.editor.actions.DiagramTypePropertiesAction;
 import org.bloqqi.editor.actions.ExtractSubTypeAsRecommendationAction;
 import org.bloqqi.editor.actions.InlineAction;
@@ -71,6 +72,7 @@ public class Actions {
 		addSelectionAction(new TargetInterceptAction(editor));
 		addSelectionAction(new SourceInterceptAction(editor));
 		addSelectionAction(new OpenComponentTypeAction(editor));
+		addSelectionAction(new ChangeSpecializationComponent(editor));
 	}
 	
 	private void createOutlineActions() {

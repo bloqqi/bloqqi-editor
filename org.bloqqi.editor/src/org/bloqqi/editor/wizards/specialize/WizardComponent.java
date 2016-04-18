@@ -10,10 +10,10 @@ public class WizardComponent extends WizardDiagramType {
 	}
 	
 	protected PageFeatures createPageDiagramType() {
-		return new PageFeaturesComponent();
+		return new PageFeaturesNewComponent();
 	}
 	
-	protected PageFeaturesComponent getPageDiagramType() {
-		return (PageFeaturesComponent) pageDiagramType;
+	protected PageFeaturesNewComponent getPageDiagramType() {
+		return (PageFeaturesNewComponent) pageDiagramType;
 	}
 }
