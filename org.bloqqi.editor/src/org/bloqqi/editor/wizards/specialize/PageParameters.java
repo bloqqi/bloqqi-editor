@@ -6,6 +6,7 @@ import java.util.SortedSet;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
 
+import org.bloqqi.compiler.ast.Parameter;
 import org.bloqqi.compiler.ast.SpecializeDiagramType;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.CellEditor;
@@ -43,6 +44,7 @@ public class PageParameters extends AbstractWizardPage {
 		super(PAGE_NAME);
 		this.specializeDt = specializeDt;
 		this.newInParameters = new TreeMap<>();
+		updateNewInParameters();
 		setTitle("Select parameters");
 		setDescription("Select inner parameters that are exposed as parameters.");
 	}
@@ -154,6 +156,14 @@ public class PageParameters extends AbstractWizardPage {
 			selectAllParameters(true);
 		}
 		viewer.refresh();
+	}
+	
+	public void selectParameter(String parPath, Parameter par) {
+		NewInParameter in = newInParameters.get(parPath);
+		if (in != null) {
+			in.setChecked(true);
+			in.setNewName(par.name());
+		}
 	}
 	
 	public static class NewInParameter implements Comparable<NewInParameter> {

@@ -44,7 +44,7 @@ public class ChangeSpecializationComponent extends MySelectionAction {
 		WizardDiagramType wizard = new WizardChangeComponent(
 				superDt, 
 				component.diagramType(),
-				superDt.specialize(component.anonymousDiagramType()));
+				component);
 		MyWizardDialog dialog = new MyWizardDialog(shell, wizard);
 
 		if (dialog.open() == Window.OK) {

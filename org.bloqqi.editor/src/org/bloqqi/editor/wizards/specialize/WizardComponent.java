@@ -5,15 +5,17 @@ import org.bloqqi.compiler.ast.DiagramType;
 public class WizardComponent extends WizardDiagramType {
 	public WizardComponent(DiagramType diagramType, DiagramType enclosingDiagramType) {
 		super(diagramType);
-		getPageDiagramType().setEnclosingDiagramType(enclosingDiagramType);
+		getPageFeatures().setEnclosingDiagramType(enclosingDiagramType);
 		setWindowTitle("Create new specialized component");
 	}
 	
-	protected PageFeatures createPageDiagramType() {
+	@Override
+	protected PageFeatures createPageFeatures() {
 		return new PageFeaturesNewComponent();
 	}
 	
-	protected PageFeaturesNewComponent getPageDiagramType() {
-		return (PageFeaturesNewComponent) pageDiagramType;
+	@Override
+	protected PageFeaturesNewComponent getPageFeatures() {
+		return (PageFeaturesNewComponent) super.getPageFeatures();
 	}
 }

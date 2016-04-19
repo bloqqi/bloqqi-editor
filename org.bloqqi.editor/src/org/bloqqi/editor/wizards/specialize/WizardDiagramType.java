@@ -10,9 +10,9 @@ import org.bloqqi.compiler.ast.SpecializeDiagramType;
 import org.bloqqi.editor.wizards.specialize.PageParameters.NewInParameter;
 
 public class WizardDiagramType extends Wizard {
-	protected final PageFeatures pageDiagramType;
-	protected final SpecializeDiagramType specializeDt;
-	protected final PageParameters pageNewInParameters;
+	private final PageFeatures pageDiagramType;
+	private final SpecializeDiagramType specializeDt;
+	private final PageParameters pageNewInParameters;
 	protected String newName;
 	protected Set<NewInParameter> newInParameters;
 	
@@ -22,29 +22,37 @@ public class WizardDiagramType extends Wizard {
 
 	public WizardDiagramType(DiagramType diagramType, SpecializeDiagramType specializeDt) {
 		this.specializeDt = specializeDt;
-		pageDiagramType = createPageDiagramType();
-		pageDiagramType.setSpecializeDiagramType(specializeDt);
-		pageDiagramType.setDiagramType(diagramType);
-		pageNewInParameters = new PageParameters(specializeDt);
+		this.pageDiagramType = createPageFeatures();
+		getPageFeatures().setSpecializeDiagramType(specializeDt);
+		getPageFeatures().setDiagramType(diagramType);
+		this.pageNewInParameters = new PageParameters(specializeDt);
 		setHelpAvailable(false);
 		setWindowTitle("Specialize diagram type");
 	}
 	
-	protected PageFeatures createPageDiagramType() {
+	protected PageFeatures createPageFeatures() {
 		return new PageFeatures();
 	}
 
 	@Override
 	public void addPages() {
-		addPage(pageDiagramType);
-		addPage(pageNewInParameters);
+		addPage(getPageFeatures());
+		addPage(getPageParameters());
 	}
 	
 	@Override
 	public boolean performFinish() {
-		newName = pageDiagramType.getNewName();
-		newInParameters = pageNewInParameters.getNewInParameters();
+		newName = getPageFeatures().getNewName();
+		newInParameters = getPageParameters().getNewInParameters();
 		return true;
+	}
+	
+	protected PageFeatures getPageFeatures() {
+		return pageDiagramType;
+	}
+
+	protected PageParameters getPageParameters() {
+		return pageNewInParameters;
 	}
 	
 	public SpecializeDiagramType getConfiguration() {
