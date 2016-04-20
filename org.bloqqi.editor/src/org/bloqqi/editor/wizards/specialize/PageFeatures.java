@@ -15,6 +15,8 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.TreeColumn;
+import org.bloqqi.compiler.ast.ConfComponentGroup;
+import org.bloqqi.compiler.ast.ConfReplaceable;
 import org.bloqqi.compiler.ast.DiagramType;
 import org.bloqqi.compiler.ast.Program;
 import org.bloqqi.compiler.ast.SpecializeDiagramType;
@@ -33,6 +35,7 @@ public class PageFeatures extends AbstractWizardPage  {
 	protected Composite container;
 	protected Text newNameText;
 	protected Label nameLabel;
+	private TreeViewer treeViewer;
 
 	public PageFeatures() {
 		super(PAGE_NAME);
@@ -84,12 +87,12 @@ public class PageFeatures extends AbstractWizardPage  {
 		});
 	}
 
-	private void createRecommendedComponentsUI() {
+	protected void createRecommendedComponentsUI() {
 		Label label = new Label(container, SWT.NONE);
 		label.setText("Features:");
 		label.setLayoutData(new GridData(GridData.VERTICAL_ALIGN_BEGINNING));
 		
-		TreeViewer treeViewer = new TreeViewer(container, SWT.H_SCROLL | SWT.V_SCROLL | SWT.FULL_SELECTION);
+		treeViewer = new TreeViewer(container, SWT.H_SCROLL | SWT.V_SCROLL | SWT.FULL_SELECTION);
 		treeViewer.setContentProvider(new SpecializationContentProvider());
 		treeViewer.setLabelProvider(new SpecializationTableLabelProvider());
 
@@ -115,8 +118,8 @@ public class PageFeatures extends AbstractWizardPage  {
 		// Input
 		treeViewer.setInput(specializeDt);
 		
-		// Expand all
-		// treeViewer.expandAll();
+		// Expand selected features (when changing a specialization)
+		expandSelectedFeatures();
 
 		// Layout
 		GridData layoutData = new GridData(GridData.FILL_BOTH);
@@ -134,6 +137,32 @@ public class PageFeatures extends AbstractWizardPage  {
 		});
 	}
 	
+	private void expandSelectedFeatures() {
+		expandSelectedFeatures(specializeDt);
+	}
+	private void expandSelectedFeatures(SpecializeDiagramType specDt) {
+		for (ConfComponentGroup g: specDt.getGroups()) {
+			if (g.isSelected()) {
+				treeViewer.expandToLevel(g, 1);
+				if (g.getSelectedComponent().containsChanges()) {
+					expandSelectedFeatures(g.getSelectedComponent().specializeType());
+				}
+			}
+		}
+		for (ConfReplaceable r: specDt.getReplaceables()) {
+			if (r.isRedeclared()) {
+				treeViewer.expandToLevel(r, 1);
+				if (r.getSelectedAlternative().containsChanges()) {
+					expandSelectedFeatures(r.getSelectedAlternative().specializeType());
+				}
+			}
+		}
+	}
+
+	protected void checkNameInput() {
+		setPageComplete(isNameValid(newNameText.getText()));
+	}
+
 	protected boolean isNameValid(String name) {
 		return Program.isIdValid(name)
 				&& !diagramType.program().isTypeDeclared(name);
@@ -141,9 +170,5 @@ public class PageFeatures extends AbstractWizardPage  {
 	
 	protected String getNewName() {
 		return newNameText.getText();
-	}
-	
-	private void checkNameInput() {
-		setPageComplete(isNameValid(newNameText.getText()));
 	}
 }
