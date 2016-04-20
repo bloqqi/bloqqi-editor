@@ -110,7 +110,7 @@ public class PageParameters extends AbstractWizardPage {
 		tableColumn1.setLabelProvider(new ColumnLabelProvider() {
 			@Override
 			public String getText(Object element) {
-				return ((NewInParameter) element).getName();
+				return ((NewInParameter) element).getPath();
 			}
 		});
 		
@@ -167,24 +167,24 @@ public class PageParameters extends AbstractWizardPage {
 	}
 	
 	public static class NewInParameter implements Comparable<NewInParameter> {
-		private final String name;
+		private final String path;
 		private boolean checked;
 		private String newName;
 		
-		public NewInParameter(String name) {
-			this.name = name;
+		public NewInParameter(String path) {
+			this.path = path;
 			this.checked = false;
-			if (name.indexOf('.') > 0) {
+			if (path.indexOf('.') > 0) {
 				this.newName =
-					name.substring(0, name.indexOf('.'))
-					+ name.substring(name.lastIndexOf('.')+1);
+					path.substring(0, path.indexOf('.'))
+					+ path.substring(path.lastIndexOf('.')+1);
 			} else {
-				this.newName = name;
+				this.newName = path;
 			}
 		}
 		
-		public String getName() {
-			return name;
+		public String getPath() {
+			return path;
 		}
 		
 		public boolean isChecked() {
@@ -205,7 +205,7 @@ public class PageParameters extends AbstractWizardPage {
 		
 		@Override
 		public int compareTo(NewInParameter other) {
-			return name.compareTo(other.name);
+			return path.compareTo(other.path);
 		}
 		
 		@Override
@@ -219,14 +219,14 @@ public class PageParameters extends AbstractWizardPage {
 		@Override
 		public int hashCode() {
 			int result = 17;
-			result = 31 * result + name.hashCode();
+			result = 31 * result + path.hashCode();
 			result = 31 * result + Boolean.hashCode(checked);
 			result = 31 * result + newName.hashCode();
 			return result;
 		}
 		
 		public String toString() {
-			return "[name: " + name + ", add: " + checked + ", newName: " + newName + "]";
+			return "[name: " + path + ", add: " + checked + ", newName: " + newName + "]";
 		}
 	}
 	

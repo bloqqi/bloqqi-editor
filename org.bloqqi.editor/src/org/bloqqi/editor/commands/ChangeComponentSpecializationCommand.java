@@ -41,8 +41,8 @@ public class ChangeComponentSpecializationCommand extends Command {
 			// Some parameters of nested components should be exposed as parameters.
 			// This is set by the user in the specialization wizard.
 			for (NewInParameter in: newInParameters) {
-				String parameter = existingComponent.name() + "." + in.getName();
-				Pair<Component, VarUse> p = enclosingDt.addConnectionsParameters(parameter);
+				String parameter = existingComponent.name() + "." + in.getPath();
+				Pair<Component, VarUse> p = enclosingDt.addConnectionsParameters(parameter, in.getNewName());
 				newComponent = p.first;
 			}
 		}

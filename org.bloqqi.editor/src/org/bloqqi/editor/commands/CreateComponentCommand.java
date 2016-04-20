@@ -46,8 +46,8 @@ public class CreateComponentCommand extends Command {
 			// Some parameters of nested components should be exposed as parameters.
 			// This is set by the user in the specialization wizard.
 			for (NewInParameter in: newInParameters) {
-				String parameter = component.name() + "." + in.getName();
-				Pair<Component, VarUse> p = diagramType.addConnectionsParameters(parameter);
+				String parameter = component.name() + "." + in.getPath();
+				Pair<Component, VarUse> p = diagramType.addConnectionsParameters(parameter, in.getNewName());
 				component = p.first;
 			}
 		}

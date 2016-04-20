@@ -29,7 +29,7 @@ public class CreateDiagramTypeSpecializationCommand extends Command {
 		cu.program().flushAllAttributes();
 		if (!hasExecuted) {
 			for (NewInParameter in: newInParameters) {
-				newDiagramType.addConnectionsParametersToDiagramType(in.getName());
+				newDiagramType.addConnectionsParametersToDiagramType(in.getPath(), in.getNewName());
 			}
 		}
 		cu.program().flushAllAttributes();
