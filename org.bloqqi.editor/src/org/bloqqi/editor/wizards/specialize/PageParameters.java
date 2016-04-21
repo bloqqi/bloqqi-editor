@@ -143,6 +143,10 @@ public class PageParameters extends AbstractWizardPage {
 	}
 	
 	public Set<NewInParameter> getNewInParameters() {
+		// Important to update before returning new in parameters.
+		// Otherwise a bug may occur when this page is never shown
+		// and the user changes a specialization.
+		updateNewInParameters();
 		return newInParameters.values().stream()
 				.filter((p) -> p.isChecked())
 				.collect(Collectors.toSet());
