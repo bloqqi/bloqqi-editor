@@ -84,7 +84,7 @@ public class ComponentCreationTool extends CreationTool {
 		MyWizardDialog dialog = new MyWizardDialog(shell, wizard);
 
 		if (dialog.open() == Window.OK) {
-			Component newComponent = wizard.getConfiguration().newAnonymousComponent(wizard.getNewName());
+			Component newComponent = wizard.getFeatureConfiguration().newAnonymousComponent(wizard.getNewName());
 			createCmd.setComponent(newComponent);
 			createCmd.setNewInParameters(wizard.getNewInParameters());
 			return true;

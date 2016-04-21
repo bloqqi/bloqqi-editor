@@ -8,10 +8,10 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
-import org.bloqqi.compiler.ast.ConfComponent;
-import org.bloqqi.compiler.ast.ConfComponentGroup;
 import org.bloqqi.compiler.ast.ConfReplaceable;
 import org.bloqqi.compiler.ast.ConfReplaceableAlternative;
+import org.bloqqi.compiler.ast.OptionalFeature;
+import org.bloqqi.compiler.ast.OptionalFeatureAlternative;
 
 public class SelectItemMenuListener extends MenuAdapter {
 	private final Menu menu;
@@ -28,40 +28,40 @@ public class SelectItemMenuListener extends MenuAdapter {
 			items[i].dispose();
 		}
 		Object element = treeViewer.getTree().getSelection()[0].getData();
-		if (element instanceof ConfComponentGroup) {
-			createMenuComponentGroup(menu, (ConfComponentGroup) element);
-		} else if (element instanceof ConfComponent) {
-			createMenuComponent(menu, (ConfComponent) element);
+		if (element instanceof OptionalFeature) {
+			createMenuOptionalFeature(menu, (OptionalFeature) element);
+		} else if (element instanceof OptionalFeatureAlternative) {
+			createMenuOptionalAlternative(menu, (OptionalFeatureAlternative) element);
 		} else if (element instanceof ConfReplaceableAlternative) {
 			createMenuReplaceable(menu, (ConfReplaceableAlternative) element);
 		}
 	}
 
-	private void createMenuComponentGroup(final Menu menu, final ConfComponentGroup group) {
+	private void createMenuOptionalFeature(final Menu menu, final OptionalFeature opt) {
 		MenuItem newItem = new MenuItem(menu, SWT.NONE);
 		newItem.addSelectionListener(new SelectionAdapter() {
 			@Override public void widgetSelected(SelectionEvent e) {
-				group.setSelected(!group.isSelected());
-				treeViewer.update(group, null);
-				treeViewer.update(group.getRecommendations().toArray(), null);
+				opt.setSelected(!opt.isSelected());
+				treeViewer.update(opt, null);
+				treeViewer.update(opt.getAlternatives().toArray(), null);
 			}
 		});
-		String selectText = group.isSelected() ? "Deselect" : "Select"; 
-		newItem.setText(selectText + " " + group.getName());
+		String selectText = opt.isSelected() ? "Deselect" : "Select"; 
+		newItem.setText(selectText + " " + opt.getName());
 	}
 
-	private void createMenuComponent(final Menu menu, final ConfComponent component) {
+	private void createMenuOptionalAlternative(final Menu menu, final OptionalFeatureAlternative alt) {
 		MenuItem newItem = new MenuItem(menu, SWT.NONE);
 		newItem.addSelectionListener(new SelectionAdapter() {
 			@Override public void widgetSelected(SelectionEvent e) {
-				ConfComponentGroup group = component.getGroup();
-				group.setSelectedComponent(component);
-				group.setSelected(true);
-				treeViewer.update(group, null);
-				treeViewer.update(group.getRecommendations().toArray(), null);
+				OptionalFeature opt = alt.getOptionalFeature();
+				opt.setSelectedAlternative(alt);
+				opt.setSelected(true);
+				treeViewer.update(opt, null);
+				treeViewer.update(opt.getAlternatives().toArray(), null);
 			}
 		});
-		newItem.setText("Select " + component.getType().name());
+		newItem.setText("Select " + alt.getType().name());
 	}
 	
 	private void createMenuReplaceable(final Menu menu, final ConfReplaceableAlternative alt) {

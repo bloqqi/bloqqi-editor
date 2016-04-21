@@ -14,7 +14,7 @@ public class WizardChangeComponent extends WizardDiagramType {
 		getPageFeatures().setComponentName(component.name());
 		setWindowTitle("Changing existing specialized component");
 		
-		for (String parPath: getConfiguration().getNewInParameters()) {
+		for (String parPath: getFeatureConfiguration().getNewInParameters()) {
 			Parameter par = component.anonymousDiagramType().isInnerParameterExposed(parPath);
 			if (par != null) {
 				getPageParameters().selectParameter(parPath, par);

@@ -15,11 +15,11 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.TreeColumn;
-import org.bloqqi.compiler.ast.ConfComponentGroup;
 import org.bloqqi.compiler.ast.ConfReplaceable;
 import org.bloqqi.compiler.ast.DiagramType;
+import org.bloqqi.compiler.ast.FeatureConfiguration;
+import org.bloqqi.compiler.ast.OptionalFeature;
 import org.bloqqi.compiler.ast.Program;
-import org.bloqqi.compiler.ast.SpecializeDiagramType;
 import org.bloqqi.editor.Utils;
 
 public class PageFeatures extends AbstractWizardPage  {
@@ -29,7 +29,7 @@ public class PageFeatures extends AbstractWizardPage  {
 
 	
 	protected DiagramType diagramType;
-	protected SpecializeDiagramType specializeDt;
+	protected FeatureConfiguration conf;
 
 	// UI
 	protected Composite container;
@@ -42,8 +42,8 @@ public class PageFeatures extends AbstractWizardPage  {
 		setTitle("Specialize diagram type");
 	}
 
-	public void setSpecializeDiagramType(SpecializeDiagramType specializeDt) {
-		this.specializeDt = specializeDt;
+	public void setFeatureConfiguration(FeatureConfiguration conf) {
+		this.conf = conf;
 	}
 	
 	public void setDiagramType(DiagramType diagramType) {
@@ -116,7 +116,7 @@ public class PageFeatures extends AbstractWizardPage  {
 		treeViewer.getTree().setMenu(menu);
 		
 		// Input
-		treeViewer.setInput(specializeDt);
+		treeViewer.setInput(conf);
 		
 		// Expand selected features (when changing a specialization)
 		expandSelectedFeatures();
@@ -138,22 +138,22 @@ public class PageFeatures extends AbstractWizardPage  {
 	}
 	
 	private void expandSelectedFeatures() {
-		expandSelectedFeatures(specializeDt);
+		expandSelectedFeatures(conf);
 	}
-	private void expandSelectedFeatures(SpecializeDiagramType specDt) {
-		for (ConfComponentGroup g: specDt.getGroups()) {
-			if (g.isSelected()) {
-				treeViewer.expandToLevel(g, 1);
-				if (g.getSelectedComponent().containsChanges()) {
-					expandSelectedFeatures(g.getSelectedComponent().specializeType());
+	private void expandSelectedFeatures(FeatureConfiguration conf) {
+		for (OptionalFeature opt: conf.getOptionalFeatures()) {
+			if (opt.isSelected()) {
+				treeViewer.expandToLevel(opt, 1);
+				if (opt.getSelectedAlternative().containsChanges()) {
+					expandSelectedFeatures(opt.getSelectedAlternative().specialize());
 				}
 			}
 		}
-		for (ConfReplaceable r: specDt.getReplaceables()) {
+		for (ConfReplaceable r: conf.getReplaceables()) {
 			if (r.isRedeclared()) {
 				treeViewer.expandToLevel(r, 1);
 				if (r.getSelectedAlternative().containsChanges()) {
-					expandSelectedFeatures(r.getSelectedAlternative().specializeType());
+					expandSelectedFeatures(r.getSelectedAlternative().specialize());
 				}
 			}
 		}

@@ -6,8 +6,8 @@ import java.util.SortedSet;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
 
+import org.bloqqi.compiler.ast.FeatureConfiguration;
 import org.bloqqi.compiler.ast.Parameter;
-import org.bloqqi.compiler.ast.SpecializeDiagramType;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.CheckStateChangedEvent;
@@ -31,7 +31,7 @@ import org.eclipse.swt.widgets.Table;
 public class PageParameters extends AbstractWizardPage {
 	private static final String PAGE_NAME = "SPECIALIZATION_NEW_IN_PARAMETERS";
 	
-	private final SpecializeDiagramType specializeDt;
+	private final FeatureConfiguration conf;
 	private final SortedMap<String, NewInParameter> newInParameters;
 	
 	// UI
@@ -40,9 +40,9 @@ public class PageParameters extends AbstractWizardPage {
 	private CheckboxTableViewer viewer;
 
 	
-	public PageParameters(SpecializeDiagramType specializeDt) {
+	public PageParameters(FeatureConfiguration conf) {
 		super(PAGE_NAME);
-		this.specializeDt = specializeDt;
+		this.conf = conf;
 		this.newInParameters = new TreeMap<>();
 		updateNewInParameters();
 		setTitle("Select parameters");
@@ -127,7 +127,7 @@ public class PageParameters extends AbstractWizardPage {
 	}
 	
 	private void updateNewInParameters() {
-		SortedSet<String> set = specializeDt.getNewInParameters();
+		SortedSet<String> set = conf.getNewInParameters();
 		newInParameters.keySet().retainAll(set);
 		for (String inParName: set) {
 			if (!newInParameters.containsKey(inParName)) {

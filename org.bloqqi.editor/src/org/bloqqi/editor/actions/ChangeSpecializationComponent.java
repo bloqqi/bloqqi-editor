@@ -51,7 +51,7 @@ public class ChangeSpecializationComponent extends MySelectionAction {
 			ChangeComponentSpecializationCommand cmd =
 				new ChangeComponentSpecializationCommand(
 						component,
-						wizard.getConfiguration(),
+						wizard.getFeatureConfiguration(),
 						wizard.getNewInParameters()
 				);
 			execute(cmd);

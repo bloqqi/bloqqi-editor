@@ -41,7 +41,7 @@ public class SpecializeDiagramTypeOutlineAction extends MySelectionAction {
 			CreateDiagramTypeSpecializationCommand cmd;
 			cmd = new CreateDiagramTypeSpecializationCommand(
 					diagramType.compUnit(),
-					wizard.getConfiguration(),
+					wizard.getFeatureConfiguration(),
 					wizard.getNewName(),
 					wizard.getNewInParameters());
 			execute(cmd);

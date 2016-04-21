@@ -6,7 +6,7 @@ import java.util.Set;
 
 import org.bloqqi.compiler.ast.CompilationUnit;
 import org.bloqqi.compiler.ast.DiagramType;
-import org.bloqqi.compiler.ast.SpecializeDiagramType;
+import org.bloqqi.compiler.ast.FeatureConfiguration;
 import org.bloqqi.editor.wizards.specialize.PageParameters.NewInParameter;
 
 public class CreateDiagramTypeSpecializationCommand extends Command {
@@ -17,10 +17,10 @@ public class CreateDiagramTypeSpecializationCommand extends Command {
 	
 	
 	public CreateDiagramTypeSpecializationCommand(CompilationUnit cu,
-			SpecializeDiagramType specializeDt, String newTypeName, Set<NewInParameter> newInParameters) {
+			FeatureConfiguration conf, String newTypeName, Set<NewInParameter> newInParameters) {
 		this.cu = cu;
 		this.newInParameters = newInParameters;
-		newDiagramType = specializeDt.newDiagramType(newTypeName);
+		newDiagramType = conf.newDiagramType(newTypeName);
 		hasExecuted = false;
 	}
 	

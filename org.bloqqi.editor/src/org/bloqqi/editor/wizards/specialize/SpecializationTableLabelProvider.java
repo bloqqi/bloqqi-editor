@@ -3,10 +3,10 @@ package org.bloqqi.editor.wizards.specialize;
 import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.swt.graphics.Image;
-import org.bloqqi.compiler.ast.ConfComponent;
-import org.bloqqi.compiler.ast.ConfComponentGroup;
 import org.bloqqi.compiler.ast.ConfReplaceable;
 import org.bloqqi.compiler.ast.ConfReplaceableAlternative;
+import org.bloqqi.compiler.ast.OptionalFeature;
+import org.bloqqi.compiler.ast.OptionalFeatureAlternative;
 
 public class SpecializationTableLabelProvider implements ITableLabelProvider {
 	private final Image mandatoryImage;
@@ -26,22 +26,22 @@ public class SpecializationTableLabelProvider implements ITableLabelProvider {
 	@Override
 	public Image getColumnImage(Object element, int columnIndex) {
 		if (columnIndex == 0) {
-			if (element instanceof ConfComponentGroup) {
+			if (element instanceof OptionalFeature) {
 				return optionalImage;
 			} else if (element instanceof ConfReplaceable) {
 				return mandatoryImage;
-			} else if (element instanceof ConfComponent 
+			} else if (element instanceof OptionalFeatureAlternative 
 					|| element instanceof ConfReplaceableAlternative) {
 				return alternativeImage;
 			}
 		} else if (columnIndex == 1) {
-			if (element instanceof ConfComponentGroup) {
-				ConfComponentGroup group = (ConfComponentGroup) element;
-				return group.isSelected() ? checkedImage : uncheckedImage;
-			} else if (element instanceof ConfComponent) {
-				ConfComponent component = (ConfComponent) element;
-				ConfComponentGroup group = component.getGroup();
-				return group.isSelected() && group.getSelectedComponent() == component
+			if (element instanceof OptionalFeature) {
+				OptionalFeature opt = (OptionalFeature) element;
+				return opt.isSelected() ? checkedImage : uncheckedImage;
+			} else if (element instanceof OptionalFeatureAlternative) {
+				OptionalFeatureAlternative alt = (OptionalFeatureAlternative) element;
+				OptionalFeature opt = alt.getOptionalFeature();
+				return opt.isSelected() && opt.getSelectedAlternative() == alt
 					? checkedImage
 					: uncheckedImage;	
 			} else if (element instanceof ConfReplaceableAlternative) {
@@ -56,8 +56,8 @@ public class SpecializationTableLabelProvider implements ITableLabelProvider {
 	@Override
 	public String getColumnText(Object element, int columnIndex) {
 		if (columnIndex == 0) {
-			if (element instanceof ConfComponentGroup) {
-				return ((ConfComponentGroup) element).getName();
+			if (element instanceof OptionalFeature) {
+				return ((OptionalFeature) element).getName();
 			} else if (element instanceof ConfReplaceable) {
 				return ((ConfReplaceable) element).getName();
 			} else {

@@ -6,12 +6,12 @@ import org.eclipse.jface.wizard.Wizard;
 import java.util.Set;
 
 import org.bloqqi.compiler.ast.DiagramType;
-import org.bloqqi.compiler.ast.SpecializeDiagramType;
+import org.bloqqi.compiler.ast.FeatureConfiguration;
 import org.bloqqi.editor.wizards.specialize.PageParameters.NewInParameter;
 
 public class WizardDiagramType extends Wizard {
 	private final PageFeatures pageDiagramType;
-	private final SpecializeDiagramType specializeDt;
+	private final FeatureConfiguration conf;
 	private final PageParameters pageNewInParameters;
 	protected String newName;
 	protected Set<NewInParameter> newInParameters;
@@ -20,12 +20,12 @@ public class WizardDiagramType extends Wizard {
 		this(diagramType, diagramType.specialize());
 	}
 
-	public WizardDiagramType(DiagramType diagramType, SpecializeDiagramType specializeDt) {
-		this.specializeDt = specializeDt;
+	public WizardDiagramType(DiagramType diagramType, FeatureConfiguration conf) {
+		this.conf = conf;
 		this.pageDiagramType = createPageFeatures();
-		getPageFeatures().setSpecializeDiagramType(specializeDt);
+		getPageFeatures().setFeatureConfiguration(conf);
 		getPageFeatures().setDiagramType(diagramType);
-		this.pageNewInParameters = new PageParameters(specializeDt);
+		this.pageNewInParameters = new PageParameters(conf);
 		setHelpAvailable(false);
 		setWindowTitle("Specialize diagram type");
 	}
@@ -55,8 +55,8 @@ public class WizardDiagramType extends Wizard {
 		return pageNewInParameters;
 	}
 	
-	public SpecializeDiagramType getConfiguration() {
-		return specializeDt;
+	public FeatureConfiguration getFeatureConfiguration() {
+		return conf;
 	}
 	
 	public String getNewName() {
