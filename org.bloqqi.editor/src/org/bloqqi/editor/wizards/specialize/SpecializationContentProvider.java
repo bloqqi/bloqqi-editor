@@ -4,9 +4,9 @@ import java.util.ArrayList;
 
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
-import org.bloqqi.compiler.ast.ConfReplaceable;
-import org.bloqqi.compiler.ast.ConfReplaceableAlternative;
 import org.bloqqi.compiler.ast.FeatureConfiguration;
+import org.bloqqi.compiler.ast.MandatoryFeature;
+import org.bloqqi.compiler.ast.MandatoryFeatureAlternative;
 import org.bloqqi.compiler.ast.OptionalFeature;
 import org.bloqqi.compiler.ast.OptionalFeatureAlternative;
 
@@ -31,7 +31,7 @@ public class SpecializationContentProvider implements ITreeContentProvider {
 	private Object[] getChildrenOfNewSpecialization(FeatureConfiguration conf) {
 		ArrayList<Object> list = new ArrayList<Object>();
 		list.addAll(conf.getOptionalFeatures());
-		list.addAll(conf.getReplaceables());
+		list.addAll(conf.getMandatoryFeatures());
 		return list.toArray();
 	}
 
@@ -48,15 +48,15 @@ public class SpecializationContentProvider implements ITreeContentProvider {
 		} else if (parent instanceof OptionalFeatureAlternative) {
 			OptionalFeatureAlternative alt = (OptionalFeatureAlternative) parent;
 			children = getChildrenOfNewSpecialization(alt.specialize());
-		} else if (parent instanceof ConfReplaceable) {
-			ConfReplaceable repl = (ConfReplaceable) parent;
-			if (repl.getAlternatives().size() > 1) {
-				children = repl.getAlternatives().toArray();
+		} else if (parent instanceof MandatoryFeature) {
+			MandatoryFeature mandatory = (MandatoryFeature) parent;
+			if (mandatory.getAlternatives().size() > 1) {
+				children = mandatory.getAlternatives().toArray();
 			} else {
-				children = getChildren(repl.getAlternatives().first());
+				children = getChildren(mandatory.getAlternatives().first());
 			}
-		} else if (parent instanceof ConfReplaceableAlternative) {
-			ConfReplaceableAlternative alt = (ConfReplaceableAlternative) parent;
+		} else if (parent instanceof MandatoryFeatureAlternative) {
+			MandatoryFeatureAlternative alt = (MandatoryFeatureAlternative) parent;
 			children = getChildrenOfNewSpecialization(alt.specialize());
 		}
 		return children;
@@ -78,10 +78,10 @@ public class SpecializationContentProvider implements ITreeContentProvider {
 		} else if (element instanceof OptionalFeatureAlternative) {
 			OptionalFeatureAlternative alt = (OptionalFeatureAlternative) element;
 			return getChildrenOfNewSpecialization(alt.specialize()).length > 0;
-		} else if (element instanceof ConfReplaceable) {
-			return ((ConfReplaceable) element).getAlternatives().size() > 0;
-		} else if (element instanceof ConfReplaceableAlternative) {
-			ConfReplaceableAlternative alt = (ConfReplaceableAlternative) element;
+		} else if (element instanceof MandatoryFeature) {
+			return ((MandatoryFeature) element).getAlternatives().size() > 0;
+		} else if (element instanceof MandatoryFeatureAlternative) {
+			MandatoryFeatureAlternative alt = (MandatoryFeatureAlternative) element;
 			return getChildrenOfNewSpecialization(alt.specialize()).length > 0;
 		}
 		return false;

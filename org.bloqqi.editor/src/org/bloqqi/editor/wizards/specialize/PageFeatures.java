@@ -15,9 +15,9 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.TreeColumn;
-import org.bloqqi.compiler.ast.ConfReplaceable;
 import org.bloqqi.compiler.ast.DiagramType;
 import org.bloqqi.compiler.ast.FeatureConfiguration;
+import org.bloqqi.compiler.ast.MandatoryFeature;
 import org.bloqqi.compiler.ast.OptionalFeature;
 import org.bloqqi.compiler.ast.Program;
 import org.bloqqi.editor.Utils;
@@ -149,11 +149,11 @@ public class PageFeatures extends AbstractWizardPage  {
 				}
 			}
 		}
-		for (ConfReplaceable r: conf.getReplaceables()) {
-			if (r.isRedeclared()) {
-				treeViewer.expandToLevel(r, 1);
-				if (r.getSelectedAlternative().containsChanges()) {
-					expandSelectedFeatures(r.getSelectedAlternative().specialize());
+		for (MandatoryFeature m: conf.getMandatoryFeatures()) {
+			if (m.isRedeclared()) {
+				treeViewer.expandToLevel(m, 1);
+				if (m.getSelectedAlternative().containsChanges()) {
+					expandSelectedFeatures(m.getSelectedAlternative().specialize());
 				}
 			}
 		}

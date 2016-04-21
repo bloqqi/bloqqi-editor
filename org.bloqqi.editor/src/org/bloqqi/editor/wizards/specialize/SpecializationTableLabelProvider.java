@@ -3,8 +3,8 @@ package org.bloqqi.editor.wizards.specialize;
 import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.swt.graphics.Image;
-import org.bloqqi.compiler.ast.ConfReplaceable;
-import org.bloqqi.compiler.ast.ConfReplaceableAlternative;
+import org.bloqqi.compiler.ast.MandatoryFeature;
+import org.bloqqi.compiler.ast.MandatoryFeatureAlternative;
 import org.bloqqi.compiler.ast.OptionalFeature;
 import org.bloqqi.compiler.ast.OptionalFeatureAlternative;
 
@@ -28,10 +28,10 @@ public class SpecializationTableLabelProvider implements ITableLabelProvider {
 		if (columnIndex == 0) {
 			if (element instanceof OptionalFeature) {
 				return optionalImage;
-			} else if (element instanceof ConfReplaceable) {
+			} else if (element instanceof MandatoryFeature) {
 				return mandatoryImage;
 			} else if (element instanceof OptionalFeatureAlternative 
-					|| element instanceof ConfReplaceableAlternative) {
+					|| element instanceof MandatoryFeatureAlternative) {
 				return alternativeImage;
 			}
 		} else if (columnIndex == 1) {
@@ -44,10 +44,10 @@ public class SpecializationTableLabelProvider implements ITableLabelProvider {
 				return opt.isSelected() && opt.getSelectedAlternative() == alt
 					? checkedImage
 					: uncheckedImage;	
-			} else if (element instanceof ConfReplaceableAlternative) {
-				ConfReplaceableAlternative alt = (ConfReplaceableAlternative) element;
-				ConfReplaceable repl = alt.getConfReplaceable();
-				return repl.getSelectedAlternative() == alt ? checkedImage : uncheckedImage;
+			} else if (element instanceof MandatoryFeatureAlternative) {
+				MandatoryFeatureAlternative alt = (MandatoryFeatureAlternative) element;
+				MandatoryFeature m = alt.getMandatoryFeature();
+				return m.getSelectedAlternative() == alt ? checkedImage : uncheckedImage;
 			}
 		}
 		return null;
@@ -58,8 +58,8 @@ public class SpecializationTableLabelProvider implements ITableLabelProvider {
 		if (columnIndex == 0) {
 			if (element instanceof OptionalFeature) {
 				return ((OptionalFeature) element).getName();
-			} else if (element instanceof ConfReplaceable) {
-				return ((ConfReplaceable) element).getName();
+			} else if (element instanceof MandatoryFeature) {
+				return ((MandatoryFeature) element).getName();
 			} else {
 				return element.toString();
 			}

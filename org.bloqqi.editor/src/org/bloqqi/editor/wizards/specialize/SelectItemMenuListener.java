@@ -8,8 +8,8 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
-import org.bloqqi.compiler.ast.ConfReplaceable;
-import org.bloqqi.compiler.ast.ConfReplaceableAlternative;
+import org.bloqqi.compiler.ast.MandatoryFeature;
+import org.bloqqi.compiler.ast.MandatoryFeatureAlternative;
 import org.bloqqi.compiler.ast.OptionalFeature;
 import org.bloqqi.compiler.ast.OptionalFeatureAlternative;
 
@@ -32,8 +32,8 @@ public class SelectItemMenuListener extends MenuAdapter {
 			createMenuOptionalFeature(menu, (OptionalFeature) element);
 		} else if (element instanceof OptionalFeatureAlternative) {
 			createMenuOptionalAlternative(menu, (OptionalFeatureAlternative) element);
-		} else if (element instanceof ConfReplaceableAlternative) {
-			createMenuReplaceable(menu, (ConfReplaceableAlternative) element);
+		} else if (element instanceof MandatoryFeatureAlternative) {
+			createMenuMandatoryAlternative(menu, (MandatoryFeatureAlternative) element);
 		}
 	}
 
@@ -64,14 +64,14 @@ public class SelectItemMenuListener extends MenuAdapter {
 		newItem.setText("Select " + alt.getType().name());
 	}
 	
-	private void createMenuReplaceable(final Menu menu, final ConfReplaceableAlternative alt) {
+	private void createMenuMandatoryAlternative(final Menu menu, final MandatoryFeatureAlternative alt) {
 		MenuItem newItem = new MenuItem(menu, SWT.NONE);
 		newItem.addSelectionListener(new SelectionAdapter() {
 			@Override public void widgetSelected(SelectionEvent e) {
-				ConfReplaceable repl = alt.getConfReplaceable();
-				repl.setSelectedAlternative(alt);
-				treeViewer.update(repl, null);
-				treeViewer.update(repl.getAlternatives().toArray(), null);
+				MandatoryFeature mandatory = alt.getMandatoryFeature();
+				mandatory.setSelectedAlternative(alt);
+				treeViewer.update(mandatory, null);
+				treeViewer.update(mandatory.getAlternatives().toArray(), null);
 			}
 		});
 		newItem.setText("Select " + alt.getType().name());
