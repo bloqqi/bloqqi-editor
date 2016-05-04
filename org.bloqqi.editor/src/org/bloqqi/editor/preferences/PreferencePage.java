@@ -27,6 +27,11 @@ public class PreferencePage
 				PreferenceConstants.LAYOUT_OPERATIONS,
 				"Show layout operations in context menu",
 				getFieldEditorParent()));
+		addField(
+			new BooleanFieldEditor(
+				PreferenceConstants.ENABLE_EXPERIMENTAL_FEATURES,
+				"Enable experimental features",
+				getFieldEditorParent()));
 	}
 
 	@Override

@@ -61,7 +61,9 @@ public class ContextMenu extends ContextMenuProvider {
 		
 		menu.appendToGroup(GEFActionConstants.GROUP_EDIT, new Separator());
 
-		addActionToRest(menu, ExtractSubTypeAsRecommendationAction.ID);
+		if (Activator.isPreferenceSet(PreferenceConstants.ENABLE_EXPERIMENTAL_FEATURES)) {
+			addActionToRest(menu, ExtractSubTypeAsRecommendationAction.ID);
+		}
 		addActionToRest(menu, DiagramTypePropertiesAction.ID);
 	}
 	
