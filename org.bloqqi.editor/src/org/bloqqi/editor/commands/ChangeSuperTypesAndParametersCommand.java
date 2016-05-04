@@ -61,6 +61,7 @@ public class ChangeSuperTypesAndParametersCommand extends Command {
 		
 		removedSuperTypes.addAll(diagramType.superTypesLinearized());
 		removedSuperTypes.removeAll(allNewSuperTypes);
+		removedSuperTypes.remove(diagramType);
 	}
 	
 	public void setNewInParameters(java.util.List<InParameter> inParameters) {
