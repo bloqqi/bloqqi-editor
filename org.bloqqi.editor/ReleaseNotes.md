@@ -2,6 +2,14 @@
 
 This file contains the important changes for each release. For a comprehension list of changes, see the commit log.
 
+## 0.1.14 - 2016-05-04
+
+- Feature: Add Eclipse Preference "Enable experimental features"
+- Feature: Specialization wizard allows the user to expose inner parameters as outer parameters on the newly created component/diagram type
+- Feature: Component specialization can now be changed after creation. However, manually added functionality to the component will be lost!
+- Experimental Feature: Subtypes can be extracted as recommendations (right click on a diagram).
+- Fix: Connections were lost when changing parameters/diagram properties
+
 ## 0.1.13 - 2016-03-16
 
 - Changed plugin name from PicoDiagram Editor (org.picodiagram.editor) to Bloqqi Editor (org.bloqqi.editor)
