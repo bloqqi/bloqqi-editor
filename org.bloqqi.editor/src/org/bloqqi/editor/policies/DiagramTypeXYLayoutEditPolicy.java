@@ -11,10 +11,12 @@ import org.eclipse.gef.requests.CreateRequest;
 import org.bloqqi.compiler.ast.Component;
 import org.bloqqi.compiler.ast.DiagramType;
 import org.bloqqi.compiler.ast.Node;
+import org.bloqqi.compiler.ast.Variable;
 import org.bloqqi.editor.BloqqiEditor;
 import org.bloqqi.editor.commands.ChangeConstraintComponentCommand;
 import org.bloqqi.editor.commands.ChangeConstraintNodeCommand;
 import org.bloqqi.editor.commands.CreateComponentCommand;
+import org.bloqqi.editor.commands.CreateVariableCommand;
 import org.bloqqi.editor.editparts.ComponentPart;
 
 public class DiagramTypeXYLayoutEditPolicy extends XYLayoutEditPolicy {
@@ -41,12 +43,17 @@ public class DiagramTypeXYLayoutEditPolicy extends XYLayoutEditPolicy {
 	@Override
 	protected Command getCreateCommand(CreateRequest request) {
 		if (request.getNewObjectType().equals(Component.class)) {
-			CreateComponentCommand result = new CreateComponentCommand();
-			result.setLocation(getLocation(request));
-			result.setComponent((Component)request.getNewObject());
-			result.setDiagramType((DiagramType)getHost().getModel());
-			result.setCoordinates(editor.getCoordinates());
-			return result;
+			return new CreateComponentCommand(
+					getLocation(request),
+					(Component) request.getNewObject(),
+					(DiagramType) getHost().getModel(),
+					editor.getCoordinates());
+		} else if (request.getNewObjectType().equals(Variable.class)) {
+			return new CreateVariableCommand(
+					getLocation(request),
+					(Variable) request.getNewObject(),
+					(DiagramType) getHost().getModel(),
+					editor.getCoordinates());
 		}
 		return null; 
 	}

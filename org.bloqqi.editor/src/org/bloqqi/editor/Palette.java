@@ -14,9 +14,11 @@ import org.bloqqi.compiler.ast.Connection;
 import org.bloqqi.compiler.ast.Program;
 import org.bloqqi.compiler.ast.TypeDecl;
 import org.bloqqi.compiler.ast.TypeUse;
+import org.bloqqi.compiler.ast.Variable;
 import org.bloqqi.editor.tools.ComponentCreationTool;
 import org.bloqqi.editor.tools.ConnectionCreationToolFeedback;
 import org.bloqqi.editor.tools.LiteralCreationTool;
+import org.bloqqi.editor.tools.VariableCreationTool;
 
 
 public class Palette extends PaletteRoot {
@@ -39,6 +41,7 @@ public class Palette extends PaletteRoot {
 		createSelectionToolEntry(group);
 		createConnectionCreationToolEntry(group);
 		createLiteralCreationToolEntry(group);
+		createVariableCreationToolEntry(group);
 		return group;
 	}
 
@@ -68,12 +71,28 @@ public class Palette extends PaletteRoot {
 				"Creates a new Literal.",
 				connectionFactory, null, null);
 		toolEntry.setToolClass(LiteralCreationTool.class);
-		toolEntry.setToolProperty(
-				LiteralCreationTool.PROPERTY_ROOT_EDITPART,
-				editor.getRootEditPart());
-		toolEntry.setToolProperty(
-				LiteralCreationTool.PROPERTY_EDITOR,
-				editor);
+		toolEntry.setToolProperty(LiteralCreationTool.PROPERTY_ROOT_EDITPART, editor.getRootEditPart());
+		toolEntry.setToolProperty(LiteralCreationTool.PROPERTY_EDITOR, editor);
+		group.add(toolEntry);
+	}
+	
+	private void createVariableCreationToolEntry(PaletteGroup group) {
+		CreationFactory nodeFactory = new CreationFactory() {
+			@Override
+			public Object getNewObject() {
+				return new Variable();
+			}
+			@Override
+			public Object getObjectType() {
+				return Variable.class;
+			}
+		};
+		CreationToolEntry toolEntry;
+		toolEntry = new CreationToolEntry("Variable",
+						"Creates a new variable",
+						nodeFactory, null, null);
+		toolEntry.setToolClass(VariableCreationTool.class);
+		toolEntry.setToolProperty(VariableCreationTool.PROPERTY_EDITOR, editor);
 		group.add(toolEntry);
 	}
 	

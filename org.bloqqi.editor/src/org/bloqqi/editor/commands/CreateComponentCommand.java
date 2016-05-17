@@ -20,15 +20,19 @@ import org.bloqqi.editor.figures.ComponentFigure;
 import org.bloqqi.editor.wizards.specialize.PageParameters.NewInParameter;
 
 public class CreateComponentCommand extends Command {
-	private Coordinates coordinates;
+	private final Point location;
 	private Component component;
-	private DiagramType diagramType;
-	private Point location;
+	private final DiagramType diagramType;
+	private final Coordinates coordinates;
 	private Set<NewInParameter> newInParameters;
 
 	private boolean hasExecuted;
 	
-	public CreateComponentCommand() {
+	public CreateComponentCommand(Point location, Component component, DiagramType diagramType, Coordinates coordinates) {
+		this.location = location;
+		this.component = component;
+		this.diagramType = diagramType;
+		this.coordinates = coordinates;
 		setNewInParameters(new HashSet<>());
 		hasExecuted = false;
 	}
@@ -103,18 +107,6 @@ public class CreateComponentCommand extends Command {
 
 	public void setComponent(Component component) {
 		this.component = component;
-	}
-
-	public void setLocation(Point location) {
-		this.location = location;
-	}
-
-	public void setDiagramType(DiagramType diagramType) {
-		this.diagramType = diagramType;
-	}
-
-	public void setCoordinates(Coordinates coordinates) {
-		this.coordinates = coordinates;
 	}
 
 	public void setNewInParameters(Set<NewInParameter> newInParameters) {
