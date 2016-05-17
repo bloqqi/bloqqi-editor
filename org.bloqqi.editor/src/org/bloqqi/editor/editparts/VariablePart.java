@@ -19,6 +19,7 @@ import org.bloqqi.compiler.ast.Variable;
 import org.bloqqi.editor.figures.VariableFigure;
 import org.bloqqi.editor.policies.NodeGraphicalNodeEditPolicy;
 import org.bloqqi.editor.policies.NodeSelectionEditPolicy;
+import org.bloqqi.editor.policies.VariableComponentEditPolicy;
 
 public class VariablePart extends AbstractNodePart<Variable> 
 		implements ASTObserver, NodeEditPart {
@@ -33,8 +34,8 @@ public class VariablePart extends AbstractNodePart<Variable>
 
 	@Override
 	protected void createEditPolicies() {
-//		installEditPolicy(EditPolicy.COMPONENT_ROLE,
-//				new ComponentComponentEditPolicy());
+		installEditPolicy(EditPolicy.COMPONENT_ROLE,
+				new VariableComponentEditPolicy());
 		installEditPolicy(EditPolicy.SELECTION_FEEDBACK_ROLE,
 				new NodeSelectionEditPolicy());
 		installEditPolicy(EditPolicy.GRAPHICAL_NODE_ROLE, 
