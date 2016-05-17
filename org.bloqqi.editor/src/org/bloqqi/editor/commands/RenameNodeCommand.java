@@ -96,6 +96,5 @@ public abstract class RenameNodeCommand extends PostConditionCommand {
 		coordinates.setRectangle(forDiagramType, accessString, oldR);
 		coordinates.removeRectangle(forDiagramType, oldAccessString);
 	}
-
 	abstract protected String getNewAccessString(DiagramType forDiagramType);
 }

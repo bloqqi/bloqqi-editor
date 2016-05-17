@@ -6,9 +6,11 @@ import org.bloqqi.editor.BloqqiEditor;
 import org.bloqqi.editor.commands.RenameNodeCommand;
 import org.bloqqi.editor.commands.RenameComponentCommand;
 import org.bloqqi.editor.commands.RenameParameterCommand;
+import org.bloqqi.editor.commands.RenameVariableCommand;
 import org.bloqqi.editor.editparts.AbstractNodePart;
 import org.bloqqi.editor.editparts.ComponentPart;
 import org.bloqqi.editor.editparts.ParameterPart;
+import org.bloqqi.editor.editparts.VariablePart;
 
 public class RenameAction extends MySelectionAction {
 	public static final String ID = "org.bloqqi." + RenameAction.class.getSimpleName();
@@ -42,6 +44,8 @@ public class RenameAction extends MySelectionAction {
 				cmd = new RenameComponentCommand(((ComponentPart) editPart).getModel());
 			} else if (editPart instanceof ParameterPart) {
 				cmd = new RenameParameterCommand(((ParameterPart<?>) editPart).getModel());
+			} else if (editPart instanceof VariablePart) {
+				cmd = new RenameVariableCommand(((VariablePart) editPart).getModel());
 			}
 			if (cmd != null) {
 				cmd.setCoordinates(getEditor().getCoordinates());

@@ -22,7 +22,6 @@ public class RenameComponentCommand extends RenameNodeCommand {
 				inhComp = ic;
 			}
 		}
-		String accessString = inhComp.accessString();
-		return accessString;
+		return inhComp.accessString();
 	}
 }
