@@ -10,17 +10,9 @@ import org.eclipse.draw2d.XYLayout;
 import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
-import org.eclipse.swt.graphics.LineAttributes;
 
 
 public class ComponentFigure extends Figure {
-	public static final Color INHERITED_COLOR = new Color(null, 220, 220, 220);
-//	public static final Color INLINE_COLOR = new Color(null, 202, 202, 232);
-	public static final Color INLINE_COLOR = ColorConstants.white;
-//	public static final Color INLINE_COLOR = new Color(null, 195, 195, 219);
-	public static final Color INLINE_FEEDBACK_COLOR = ColorConstants.lightBlue;
-//	Color lightBlue = new Color(null, 127, 127, 255);
-
 	public static final int MIN_HEIGHT = 20;
 	public static final int WIDTH = 60;
 
@@ -73,16 +65,13 @@ public class ComponentFigure extends Figure {
 			setBackgroundColor(ColorConstants.white);
 			borderColor = ColorConstants.blue;
 		} else {
-			LineAttributes attributesInherited = new LineAttributes(1);
-			attributesInherited.style = SWT.LINE_CUSTOM;
-			attributesInherited.dash = new float[]{4, 2};
-			rectangle.setLineAttributes(attributesInherited);
+			rectangle.setLineAttributes(FigureUtils.LINE_ATTRIBUTES_INHERITED);
 			if (showInlineFeedback) {
-				setBackgroundColor(INLINE_FEEDBACK_COLOR);
+				setBackgroundColor(FigureUtils.INLINE_FEEDBACK_COLOR);
 			} else if (isInlined) {
-				setBackgroundColor(INLINE_COLOR);
+				setBackgroundColor(FigureUtils.INLINE_COLOR);
 			} else {
-				setBackgroundColor(INHERITED_COLOR);
+				setBackgroundColor(FigureUtils.INHERITED_COLOR);
 			}
 			borderColor = ColorConstants.black;
 		}
@@ -91,8 +80,8 @@ public class ComponentFigure extends Figure {
 		label.setForegroundColor(textColor);
 
 		if (isRedeclared) {
-			innerRectangle.setBackgroundColor(INHERITED_COLOR);
-			innerRectangle.setForegroundColor(INHERITED_COLOR);
+			innerRectangle.setBackgroundColor(FigureUtils.INHERITED_COLOR);
+			innerRectangle.setForegroundColor(FigureUtils.INHERITED_COLOR);
 			innerRectangle.setVisible(true);
 		} else {
 			innerRectangle.setVisible(false);

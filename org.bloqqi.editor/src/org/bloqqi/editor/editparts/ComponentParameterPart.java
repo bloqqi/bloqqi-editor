@@ -28,7 +28,7 @@ import org.bloqqi.compiler.ast.Connection;
 import org.bloqqi.compiler.ast.Node;
 import org.bloqqi.editor.figures.ComponentFigure;
 import org.bloqqi.editor.figures.ComponentParameterFigure;
-import org.bloqqi.editor.policies.ComponentGraphicalNodeEditPolicy;
+import org.bloqqi.editor.policies.NodeGraphicalNodeEditPolicy;
 
 public class ComponentParameterPart
 		extends GenericAbstractGraphicalPart<ComponentParameter>
@@ -57,7 +57,7 @@ public class ComponentParameterPart
 	@Override
 	protected void createEditPolicies() {
 		installEditPolicy(EditPolicy.GRAPHICAL_NODE_ROLE,
-				new ComponentGraphicalNodeEditPolicy());
+				new NodeGraphicalNodeEditPolicy());
 	}
 
 	@Override

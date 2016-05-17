@@ -10,7 +10,6 @@ import org.eclipse.draw2d.Triangle;
 import org.eclipse.draw2d.XYLayout;
 import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.LineAttributes;
 
 abstract public class ParameterFigure extends Figure {
 	public static final int HEIGHT = 30;
@@ -44,12 +43,12 @@ abstract public class ParameterFigure extends Figure {
 		
 		if (isInherited) {
 			rectangle.setForegroundColor(ColorConstants.black);
-			rectangle.setBackgroundColor(ComponentFigure.INHERITED_COLOR);
-			rectangle.setLineAttributes(createLineAttributesInherited());
+			rectangle.setBackgroundColor(FigureUtils.INHERITED_COLOR);
+			rectangle.setLineAttributes(FigureUtils.LINE_ATTRIBUTES_INHERITED);
 			
 			triangle.setForegroundColor(ColorConstants.black);
-			triangle.setBackgroundColor(ComponentFigure.INHERITED_COLOR);
-			triangle.setLineAttributes(createLineAttributesInherited());
+			triangle.setBackgroundColor(FigureUtils.INHERITED_COLOR);
+			triangle.setLineAttributes(FigureUtils.LINE_ATTRIBUTES_INHERITED);
 		} else {
 			rectangle.setForegroundColor(ColorConstants.blue);
 			rectangle.setBackgroundColor(ColorConstants.white);
@@ -72,13 +71,6 @@ abstract public class ParameterFigure extends Figure {
 	    label.invalidate();
 	}
 
-	private LineAttributes createLineAttributesInherited() {
-		LineAttributes attributesInherited = new LineAttributes(1);
-		attributesInherited.style = SWT.LINE_CUSTOM;
-		attributesInherited.dash = new float[]{4, 2};
-		return attributesInherited;
-	}
-	
 	public void setIsInherited(boolean isInherited) {
 		this.isInherited = isInherited;
 	}

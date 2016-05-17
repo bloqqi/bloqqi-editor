@@ -16,12 +16,10 @@ import org.bloqqi.compiler.ast.Component;
 import org.bloqqi.compiler.ast.ComponentParameter;
 import org.bloqqi.editor.figures.ComponentFigure;
 import org.bloqqi.editor.policies.ComponentComponentEditPolicy;
-import org.bloqqi.editor.policies.ComponentSelectionEditPolicy;
+import org.bloqqi.editor.policies.NodeSelectionEditPolicy;
 
-public class ComponentPart extends GenericAbstractGraphicalPart<Component> 
+public class ComponentPart extends AbstractNodePart<Component>
 		implements ASTObserver {
-	private boolean showInlineFeedback;
-
 	public ComponentPart(Component component) {
 		super(component);
 	}
@@ -36,7 +34,7 @@ public class ComponentPart extends GenericAbstractGraphicalPart<Component>
 		installEditPolicy(EditPolicy.COMPONENT_ROLE,
 				new ComponentComponentEditPolicy());
 		installEditPolicy(EditPolicy.SELECTION_FEEDBACK_ROLE,
-				new ComponentSelectionEditPolicy());
+				new NodeSelectionEditPolicy());
 		installEditPolicy("Snap Feedback", new SnapFeedbackPolicy());
 	}
 
@@ -67,8 +65,7 @@ public class ComponentPart extends GenericAbstractGraphicalPart<Component>
 		if (component.type().isFunction()) {
 			name = component.type().name();
 		} else {
-			name = component.name();
-			name = name.substring(name.lastIndexOf(ASTNode.INLINE_SEP)+1);
+			name = component.inlinedName();
 			if (component.isNameAmbiguous()) {
 				name = component.declaredInDiagramType().name() + ASTNode.DECLARED_IN_SEP + name;
 			}
@@ -99,7 +96,7 @@ public class ComponentPart extends GenericAbstractGraphicalPart<Component>
 		figure.setIsCircular(component.isCircular());
 		figure.setCanDelete(component.canDelete());
 		figure.setIsInlined(component.isInlined());
-		figure.setShowInlineFeedback(showInlineFeedback);
+		figure.setShowInlineFeedback(showInlineFeedback());
 		figure.setIsRedeclared(component.isLocallyRedeclared());
 		
 		Rectangle r = getRectangle();
@@ -137,13 +134,5 @@ public class ComponentPart extends GenericAbstractGraphicalPart<Component>
 	@Override
 	public void update(ASTObservable o, Object v) {
 		refresh();
-	}
-
-	public void setShowInlineFeedback(boolean showInlineFeedback) {
-		if (this.showInlineFeedback != showInlineFeedback) {
-			this.showInlineFeedback = showInlineFeedback;
-			refreshVisuals();
-			getFigure().repaint();
-		}
 	}
 }

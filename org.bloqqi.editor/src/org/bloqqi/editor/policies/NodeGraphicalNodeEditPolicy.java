@@ -16,7 +16,7 @@ import org.bloqqi.editor.tools.CreateInterceptRequest;
 import org.bloqqi.editor.tools.InterceptTool;
 import org.bloqqi.editor.tools.CreateInterceptRequest.InterceptKind;
 
-public class ComponentGraphicalNodeEditPolicy extends GraphicalNodeEditPolicy {
+public class NodeGraphicalNodeEditPolicy extends GraphicalNodeEditPolicy {
 	@Override
 	public Command getCommand(Request request) {
 		if (InterceptTool.REQ_INTERCEPT_FIRST.equals(request.getType())) {

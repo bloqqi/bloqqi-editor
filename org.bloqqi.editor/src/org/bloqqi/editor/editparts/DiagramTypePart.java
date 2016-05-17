@@ -20,6 +20,7 @@ import org.bloqqi.compiler.ast.InParameter;
 import org.bloqqi.compiler.ast.Literal;
 import org.bloqqi.compiler.ast.Node;
 import org.bloqqi.compiler.ast.OutParameter;
+import org.bloqqi.compiler.ast.Variable;
 import org.bloqqi.editor.policies.DiagramTypeXYLayoutEditPolicy;
 
 public class DiagramTypePart extends GenericAbstractGraphicalPart<DiagramType> 
@@ -79,6 +80,9 @@ public class DiagramTypePart extends GenericAbstractGraphicalPart<DiagramType>
 		}
 		for (Literal l: getModel().literals()) {
 			list.add(l);
+		}
+		for (Variable v: getModel().variables()) {
+			list.add(v);
 		}
 		return list;
 	}

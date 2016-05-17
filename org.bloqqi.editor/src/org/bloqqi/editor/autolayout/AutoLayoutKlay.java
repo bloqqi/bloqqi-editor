@@ -14,6 +14,7 @@ import org.bloqqi.compiler.ast.InParameter;
 import org.bloqqi.compiler.ast.Node;
 import org.bloqqi.compiler.ast.OutParameter;
 import org.bloqqi.compiler.ast.Parameter;
+import org.bloqqi.compiler.ast.Variable;
 import org.bloqqi.editor.editparts.ComponentParameterPart;
 import org.bloqqi.editor.figures.ComponentFigure;
 
@@ -66,6 +67,7 @@ public class AutoLayoutKlay {
 		KNode graphNode = KimlUtil.createInitializedNode();
 		addParameters(graphNode);
 		addComponents(graphNode);
+		addVariables(graphNode);
 		addConnections();
 		return graphNode;
 	}
@@ -96,6 +98,16 @@ public class AutoLayoutKlay {
 				toKPort.put(par, port);
 				toAnchor.put(port, par);
 			}
+		}
+	}
+	
+	private void addVariables(KNode graphNode) {
+		for (Variable v: diagramType.variables()) {
+			KNode node = createKNode(graphNode, v);
+			KPort port = KimlUtil.createInitializedPort();
+			port.setNode(node);
+			toKPort.put(v, port);
+			toAnchor.put(port, v);
 		}
 	}
 	
@@ -133,8 +145,8 @@ public class AutoLayoutKlay {
 	private KNode createKNode(KNode graphNode, Node node) {
 		KNode knode = KimlUtil.createInitializedNode();
 		knode.setParent(graphNode);
-		KLabel nodeLabel1 = KimlUtil.createInitializedLabel(knode);
-		nodeLabel1.setText(node.name());
+		KLabel nodeLabel = KimlUtil.createInitializedLabel(knode);
+		nodeLabel.setText(node.name());
 		toKNode.put(node, knode);
 		toNode.put(knode, node);
 		return knode;
@@ -149,7 +161,6 @@ public class AutoLayoutKlay {
 			Node node = toNode.get(knode);
 			
 			KShapeLayout nodeLayout = knode.getData(KShapeLayout.class);
-//			final int width = node.isInlined() ? ComponentFigure.WIDTH+30 : ComponentFigure.WIDTH;
 			int width = ComponentFigure.WIDTH;
 			if (node.hasIncomingLiterals()) {
 				width += EXTRA_SPACE_LITERAL;
@@ -162,7 +173,9 @@ public class AutoLayoutKlay {
 			// set fixed size for the child
 			//           childLayout.setProperty(LayoutOptions.FIXED_SIZE, Boolean.TRUE);
 			// set port constraints to fixed port positions
-			nodeLayout.setProperty(LayoutOptions.PORT_CONSTRAINTS, PortConstraints.FIXED_POS);
+			if (node.isComponent() || node.isParameter()) {
+				nodeLayout.setProperty(LayoutOptions.PORT_CONSTRAINTS, PortConstraints.FIXED_POS);
+			}
 			for (KPort port : knode.getPorts()) {
 				KShapeLayout portLayout = port.getData(KShapeLayout.class);
 				Anchor anchor = toAnchor.get(port);

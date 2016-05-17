@@ -11,6 +11,7 @@ import org.bloqqi.compiler.ast.DiagramType;
 import org.bloqqi.compiler.ast.InParameter;
 import org.bloqqi.compiler.ast.Literal;
 import org.bloqqi.compiler.ast.OutParameter;
+import org.bloqqi.compiler.ast.Variable;
 import org.bloqqi.editor.BloqqiEditor;
 
 public class DiagramTypePartFactory implements EditPartFactory {
@@ -33,6 +34,8 @@ public class DiagramTypePartFactory implements EditPartFactory {
 			part = new ComponentParameterPart((ComponentParameter) model);
 		} else if (model instanceof Literal) {
 			part = new LiteralPart((Literal) model);
+		} else if (model instanceof Variable) {
+			part = new VariablePart((Variable) model);
 		}
 		if (part != null) {
 			part.setEditor(editor);
