@@ -8,8 +8,7 @@ import org.bloqqi.editor.actions.DiagramTypePropertiesAction;
 import org.bloqqi.editor.actions.ExtractSubTypeAsRecommendationAction;
 import org.bloqqi.editor.actions.InlineAction;
 import org.bloqqi.editor.actions.OpenComponentTypeAction;
-import org.bloqqi.editor.actions.RenameComponentAction;
-import org.bloqqi.editor.actions.RenameParameterAction;
+import org.bloqqi.editor.actions.RenameAction;
 import org.bloqqi.editor.actions.SourceInterceptAction;
 import org.bloqqi.editor.actions.TargetInterceptAction;
 import org.bloqqi.editor.preferences.PreferenceConstants;
@@ -54,8 +53,7 @@ public class ContextMenu extends ContextMenuProvider {
 		
 		addActionToRest(menu, OpenComponentTypeAction.ID);
 		addActionToRest(menu, InlineAction.ID);
-		addActionToRest(menu, RenameComponentAction.ID);
-		addActionToRest(menu, RenameParameterAction.ID);
+		addActionToRest(menu, RenameAction.ID);
 		addActionToRest(menu, ChangeSpecializationComponent.ID);
 		addActionToRest(menu, ActionFactory.DELETE.getId());
 		

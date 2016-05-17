@@ -11,8 +11,7 @@ import org.bloqqi.editor.actions.DiagramTypePropertiesAction;
 import org.bloqqi.editor.actions.ExtractSubTypeAsRecommendationAction;
 import org.bloqqi.editor.actions.InlineAction;
 import org.bloqqi.editor.actions.OpenComponentTypeAction;
-import org.bloqqi.editor.actions.RenameComponentAction;
-import org.bloqqi.editor.actions.RenameParameterAction;
+import org.bloqqi.editor.actions.RenameAction;
 import org.bloqqi.editor.actions.SourceInterceptAction;
 import org.bloqqi.editor.actions.TargetInterceptAction;
 import org.bloqqi.editor.outline.actions.DeleteDiagramTypeAction;
@@ -66,8 +65,7 @@ public class Actions {
 	private void createSelectionActions() {
 		addSelectionAction(new DeleteAction((WorkbenchPart)editor));
 		addSelectionAction(new ChangeConnectionRouterAction(editor));
-		addSelectionAction(new RenameComponentAction(editor));
-		addSelectionAction(new RenameParameterAction(editor));
+		addSelectionAction(new RenameAction(editor));
 		addSelectionAction(new InlineAction(editor));
 		addSelectionAction(new TargetInterceptAction(editor));
 		addSelectionAction(new SourceInterceptAction(editor));

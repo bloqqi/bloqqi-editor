@@ -15,7 +15,7 @@ import org.bloqqi.editor.Properties;
 import org.bloqqi.editor.figures.ParameterFigure;
 import org.bloqqi.editor.policies.NodeGraphicalNodeEditPolicy;
 
-abstract public class ParameterPart<T extends Parameter> extends GenericAbstractGraphicalPart<T> 
+abstract public class ParameterPart<T extends Parameter> extends AbstractNodePart<T>
 		implements ASTObserver, NodeEditPart {
 	
 	public ParameterPart(T parameter) {
