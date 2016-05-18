@@ -11,7 +11,7 @@ public class AddParameterDialog extends AddVariableDialog {
 	protected Combo parameterKindCombo;
 	protected boolean inParameter;
 	
-	protected AddParameterDialog(Shell parentShell) {
+	public AddParameterDialog(Shell parentShell) {
 		super(parentShell);
 	}
 

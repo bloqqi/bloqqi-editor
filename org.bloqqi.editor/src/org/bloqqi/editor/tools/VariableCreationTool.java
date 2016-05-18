@@ -5,9 +5,10 @@ import org.bloqqi.editor.wizards.AddVariableDialog;
 
 public class VariableCreationTool
 		extends AbstractDialogCreationTool<CreateVariableCommand, AddVariableDialog> {
-
-	public VariableCreationTool() {
-		super(CreateVariableCommand.class);
+	
+	@Override
+	protected Class<CreateVariableCommand> getCommandClass() {
+		return CreateVariableCommand.class;
 	}
 
 	@Override

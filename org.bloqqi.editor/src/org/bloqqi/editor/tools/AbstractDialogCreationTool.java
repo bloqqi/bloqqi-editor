@@ -9,18 +9,12 @@ public abstract class AbstractDialogCreationTool
 		<C extends Command, D extends Dialog>
 		extends AbstractCreationTool {
 	
-	private Class<C> classC;
-
-	public AbstractDialogCreationTool(Class<C> classC) {
-		this.classC = classC;
-	}
-
 	@Override
 	protected void performCreation(int button) {
 		Command cmd = getCurrentCommand();
 
 		boolean performCreation = false;
-		if (classC.isInstance(cmd)) {
+		if (getCommandClass().isInstance(cmd)) {
 			performCreation = createVariableDialog(cmd);
 		}
 		
@@ -33,8 +27,8 @@ public abstract class AbstractDialogCreationTool
 
 	protected boolean createVariableDialog(Command cmd) {
 		boolean performCreation = true;
-		C createCmd = classC.cast(cmd);
-		
+
+		C createCmd = getCommandClass().cast(cmd);
 		D dialog = createDialog();;
 		if (dialog.open() == Window.OK) {
 			if (nameExists(createCmd, getName(dialog))) {
@@ -53,6 +47,7 @@ public abstract class AbstractDialogCreationTool
 		return performCreation;
 	}
 	
+	abstract protected Class<C> getCommandClass();
 	abstract protected boolean nameExists(C cmd, String newName);
 	abstract protected String getName(D dialog);
 	abstract protected D createDialog();

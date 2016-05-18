@@ -14,6 +14,7 @@ import java.util.function.Supplier;
 import org.bloqqi.compiler.ast.CompilationUnit;
 import org.bloqqi.compiler.ast.Component;
 import org.bloqqi.compiler.ast.Connection;
+import org.bloqqi.compiler.ast.InParameter;
 import org.bloqqi.compiler.ast.Program;
 import org.bloqqi.compiler.ast.TypeDecl;
 import org.bloqqi.compiler.ast.TypeUse;
@@ -21,6 +22,7 @@ import org.bloqqi.compiler.ast.Variable;
 import org.bloqqi.editor.tools.ComponentCreationTool;
 import org.bloqqi.editor.tools.ConnectionCreationToolFeedback;
 import org.bloqqi.editor.tools.LiteralCreationTool;
+import org.bloqqi.editor.tools.ParameterCreationTool;
 import org.bloqqi.editor.tools.ToolProperties;
 import org.bloqqi.editor.tools.VariableCreationTool;
 
@@ -45,6 +47,7 @@ public class Palette extends PaletteRoot {
 		createSelectionToolEntry(group);
 		createConnectionCreationToolEntry(group);
 		createLiteralCreationToolEntry(group);
+		createParameterCreationToolEntry(group);
 		createVariableCreationToolEntry(group);
 		return group;
 	}
@@ -77,12 +80,23 @@ public class Palette extends PaletteRoot {
 		group.add(toolEntry);
 	}
 
+	private void createParameterCreationToolEntry(PaletteGroup group) {
+		CreationFactory factory = createFactory(() -> new InParameter(), InParameter.class);
+		CreationToolEntry toolEntry = new CreationToolEntry(
+				"Parameter",
+				"Creates a new parameter",
+				factory, null, null);
+		toolEntry.setToolClass(ParameterCreationTool.class);
+		setToolProperties(toolEntry);
+		group.add(toolEntry);
+	}
+	
 	private void createVariableCreationToolEntry(PaletteGroup group) {
 		CreationFactory factory = createFactory(() -> new Variable(), Variable.class);
-		CreationToolEntry toolEntry;
-		toolEntry = new CreationToolEntry("Variable",
-						"Creates a new variable",
-						factory, null, null);
+		CreationToolEntry toolEntry = new CreationToolEntry(
+				"Variable",
+				"Creates a new variable",
+				factory, null, null);
 		toolEntry.setToolClass(VariableCreationTool.class);
 		setToolProperties(toolEntry);
 		group.add(toolEntry);

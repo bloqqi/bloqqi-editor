@@ -10,12 +10,14 @@ import org.eclipse.gef.editpolicies.XYLayoutEditPolicy;
 import org.eclipse.gef.requests.CreateRequest;
 import org.bloqqi.compiler.ast.Component;
 import org.bloqqi.compiler.ast.DiagramType;
+import org.bloqqi.compiler.ast.InParameter;
 import org.bloqqi.compiler.ast.Node;
 import org.bloqqi.compiler.ast.Variable;
 import org.bloqqi.editor.BloqqiEditor;
 import org.bloqqi.editor.commands.ChangeConstraintComponentCommand;
 import org.bloqqi.editor.commands.ChangeConstraintNodeCommand;
 import org.bloqqi.editor.commands.CreateComponentCommand;
+import org.bloqqi.editor.commands.CreateParameterCommand;
 import org.bloqqi.editor.commands.CreateVariableCommand;
 import org.bloqqi.editor.editparts.ComponentPart;
 
@@ -52,6 +54,11 @@ public class DiagramTypeXYLayoutEditPolicy extends XYLayoutEditPolicy {
 			return new CreateVariableCommand(
 					getLocation(request),
 					(Variable) request.getNewObject(),
+					(DiagramType) getHost().getModel(),
+					editor.getCoordinates());
+		} else if (request.getNewObjectType().equals(InParameter.class)) {
+			return new CreateParameterCommand(
+					getLocation(request),
 					(DiagramType) getHost().getModel(),
 					editor.getCoordinates());
 		}
