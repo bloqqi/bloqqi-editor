@@ -1,41 +1,20 @@
 package org.bloqqi.editor.tools;
 
 import org.eclipse.gef.commands.Command;
-import org.eclipse.gef.tools.CreationTool;
 import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.widgets.Shell;
 import org.bloqqi.compiler.ast.Component;
 import org.bloqqi.compiler.ast.DiagramType;
-import org.bloqqi.compiler.ast.Program;
 import org.bloqqi.compiler.ast.TypeDecl;
 import org.bloqqi.editor.Activator;
-import org.bloqqi.editor.BloqqiEditor;
 import org.bloqqi.editor.commands.CreateComponentCommand;
 import org.bloqqi.editor.preferences.PreferenceConstants;
 import org.bloqqi.editor.wizards.specialize.MyWizardDialog;
 import org.bloqqi.editor.wizards.specialize.WizardComponent;
 
-public class ComponentCreationTool extends CreationTool {
-	public static final String PROPERTY_PROGRAM = "program";
-	public static final String PROPERTY_EDITOR = "editor";
-	
-	private Program program;
-	private BloqqiEditor editor;
-	
-	@Override
-	protected void applyProperty(Object key, Object value) {
-		if (PROPERTY_PROGRAM.equals(key)) {
-			program = (Program) value;
-			return;
-		} else if (PROPERTY_EDITOR.equals(key)) {
-			editor = (BloqqiEditor) value;
-			return;
-		}
-		super.applyProperty(key, value);
-	}
-	
+public class ComponentCreationTool extends AbstractCreationTool {
 	@Override
 	protected void performCreation(int button) {
 		Command cmd = getCurrentCommand();
@@ -44,7 +23,7 @@ public class ComponentCreationTool extends CreationTool {
 		if (cmd instanceof CreateComponentCommand) {
 			CreateComponentCommand createCmd = (CreateComponentCommand) cmd;
 
-			TypeDecl td = program.lookupType(createCmd.getComponent().getType().name());
+			TypeDecl td = properties.getProgram().lookupType(createCmd.getComponent().getType().name());
 			if (td.isDiagramType()) {
 				DiagramType diagramType = (DiagramType) td;
 				if (diagramType.hasRecommendations()) {
@@ -64,7 +43,7 @@ public class ComponentCreationTool extends CreationTool {
 
 	private boolean showWizardDialog(CreateComponentCommand createCmd, TypeDecl td, DiagramType diagramType) {
 		boolean performCreation;
-		Shell shell = editor.getSite().getShell();
+		Shell shell = properties.getEditor().getSite().getShell();
 		String title = "Specialize type";
 		String message = "Type \"" + td.name() + "\" can be specialized. Do you want to specialize it?";
 		MessageDialog dialog = new MessageDialog(shell, title, null,
@@ -79,8 +58,8 @@ public class ComponentCreationTool extends CreationTool {
 	}
 	
 	private boolean showSpecializationWizard(CreateComponentCommand createCmd, DiagramType dt) {
-		Shell shell = editor.getSite().getShell();
-		WizardComponent wizard = new WizardComponent(dt, editor.getDiagramType());
+		Shell shell = properties.getEditor().getSite().getShell();
+		WizardComponent wizard = new WizardComponent(dt, properties.getEditor().getDiagramType());
 		MyWizardDialog dialog = new MyWizardDialog(shell, wizard);
 
 		if (dialog.open() == Window.OK) {
@@ -99,7 +78,7 @@ public class ComponentCreationTool extends CreationTool {
 		}
 		
 		boolean performCreation = true;
-		Shell shell = editor.getSite().getShell();
+		Shell shell = properties.getEditor().getSite().getShell();
 		String name = createCmd.computeNewName();
 		InputDialog dialog = new InputDialog(shell, "Component name", "Enter component name", name, null);
 		if(dialog.open() == InputDialog.OK) {

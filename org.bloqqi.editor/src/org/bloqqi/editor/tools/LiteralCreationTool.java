@@ -1,24 +1,14 @@
 package org.bloqqi.editor.tools;
 
-import org.eclipse.gef.EditPart;
-import org.eclipse.gef.tools.ConnectionCreationTool;
 import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Shell;
 import org.bloqqi.compiler.ast.Literal;
 import org.bloqqi.compiler.ast.Program;
-import org.bloqqi.editor.BloqqiEditor;
 import org.bloqqi.editor.commands.CreateConnectionCommand;
 import org.bloqqi.editor.commands.CreateLiteralCommand;
 
-public class LiteralCreationTool extends ConnectionCreationTool {
-	public static final String PROPERTY_ROOT_EDITPART = "root-editpart";
-	public static final String PROPERTY_EDITOR = "editor";
-	
-	// Set as properties
-	private EditPart rootEditPart;
-	private BloqqiEditor editor;
-	
+public class LiteralCreationTool extends AbstractConnectionCreationTool {
 	private PortsFeedback portsFeedback;
 
 	public LiteralCreationTool() {
@@ -28,7 +18,7 @@ public class LiteralCreationTool extends ConnectionCreationTool {
 	@Override
 	public void activate() {
 		super.activate();
-		portsFeedback = new PortsFeedback(rootEditPart);
+		portsFeedback = new PortsFeedback(properties.getRootEditPart());
 		portsFeedback.showInPorts();
 	}
 	
@@ -38,23 +28,13 @@ public class LiteralCreationTool extends ConnectionCreationTool {
 		super.deactivate();
 	}
 	
-	@Override
-	protected void applyProperty(Object key, Object value) {
-		if (PROPERTY_ROOT_EDITPART.equals(key)) {
-			rootEditPart = (EditPart) value;
-			return;
-		} else if (PROPERTY_EDITOR.equals(key)) {
-			editor = (BloqqiEditor) value;
-			return;
-		}
-		super.applyProperty(key, value);
-	}
+
 
 	@Override
 	protected boolean handleButtonUp(int button) {
 		boolean rv = super.handleButtonUp(button);
 		if (isInState(STATE_CONNECTION_STARTED)) {
-			Shell shell = editor.getSite().getShell();
+			Shell shell = properties.getEditor().getSite().getShell();
 			InputDialog dialog = new InputDialog(shell, "Literal value", "Enter literal value", "", null);
 
 			// Needs to be called before dialog.open by some reason
