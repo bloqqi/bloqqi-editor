@@ -21,11 +21,11 @@ public class OutParameterPart extends ParameterPart<OutParameter> {
 	
 	@Override
 	public ConnectionAnchor getSourceConnectionAnchor(ConnectionEditPart connection) {
-		throw new Error("Out parameters should not have outgoing connections");
+		return new OutParameterAnchor(getFigure());
 	}
 	@Override
 	public ConnectionAnchor getSourceConnectionAnchor(Request request) {
-		throw new Error("Out parameters should not have outgoing connections");
+		return new OutParameterAnchor(getFigure());
 	}
 
 	@Override
