@@ -2,6 +2,13 @@
 
 This file contains the important changes for each release. For a comprehension list of changes, see the commit log.
 
+## 0.2.0 - 2016-05-19
+
+- Feature: Visualize variables. Variables can be added, deleted and renamed.
+- Feature: Add parameters in palette view, making it easier to create new parameters.
+- Feature: Operation *Extract subtype as recommendation* is no longer an experimental feature.
+- Fix: When extracting a subtype as a recommendation, check that this is possible, complain otherwise.
+
 ## 0.1.14 - 2016-05-04
 
 - Feature: Add Eclipse Preference "Enable experimental features"
