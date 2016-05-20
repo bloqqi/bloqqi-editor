@@ -58,8 +58,7 @@ public class AutoLayoutDraw2D {
 		}
 		
 		for (Connection c: dt.getConnections()) {
-			if (!c.isBroken()
-					&& c.getSource().node() != null
+			if (c.getSource().node() != null
 					&& c.getTarget().node() != null) {
 				Node source = map.get(c.getSource().node());
 				Node target = map.get(c.getTarget().node());

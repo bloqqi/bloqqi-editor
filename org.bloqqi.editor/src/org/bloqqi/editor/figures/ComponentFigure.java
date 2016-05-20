@@ -22,7 +22,7 @@ public class ComponentFigure extends Figure {
 
 	private boolean hasInParameters;
 	private boolean hasOutParameters;
-	private boolean isOnTypeCycle;
+	private boolean hasErrors;
 	private boolean canDelete;
 	private boolean isInlined;
 	private boolean showInlineFeedback;
@@ -58,7 +58,7 @@ public class ComponentFigure extends Figure {
 	}
 
 	private void updateVisual() {
-		Color textColor = isOnTypeCycle ? ColorConstants.red : ColorConstants.black;
+		Color textColor = hasErrors ? ColorConstants.red : ColorConstants.black;
 		Color borderColor;
 		if (canDelete) {
 			rectangle.setLineStyle(SWT.LINE_SOLID);
@@ -75,7 +75,7 @@ public class ComponentFigure extends Figure {
 			}
 			borderColor = ColorConstants.black;
 		}
-		borderColor = isOnTypeCycle ? ColorConstants.red : borderColor;
+		borderColor = hasErrors ? ColorConstants.red : borderColor;
 		rectangle.setForegroundColor(borderColor);
 		label.setForegroundColor(textColor);
 
@@ -120,8 +120,8 @@ public class ComponentFigure extends Figure {
 	public void setIsInlined(boolean isInlined) {
 		this.isInlined = isInlined;
 	}
-	public void setIsOnTypeCycle(boolean isOnTypeCycle) {
-		this.isOnTypeCycle = isOnTypeCycle;
+	public void hasErrors(boolean hasErrors) {
+		this.hasErrors = hasErrors;
 	}
 	public void setShowInlineFeedback(boolean showInlineFeedback) {
 		this.showInlineFeedback = showInlineFeedback;

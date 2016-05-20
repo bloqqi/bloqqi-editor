@@ -22,7 +22,6 @@ import org.bloqqi.editor.figures.SplitPolylineConnection;
 import org.bloqqi.editor.policies.ConnectionEditPolicy;
 
 public class ConnectionPart extends AbstractConnectionEditPart {
-	private static final Color BROKEN_CONNECTION_COLOR = new Color(null, 255, 110, 0); // orange
 	private static final Color COLOR = ColorConstants.blue;
 	private static final Color INHERITED_COLOR = ColorConstants.black;
 	private RectangleFigure rectangleFigure;
@@ -56,11 +55,9 @@ public class ConnectionPart extends AbstractConnectionEditPart {
 		LineAttributes attributesNormal = new LineAttributes(1);
 		attributesNormal.style = SWT.LINE_SOLID;
 		
-		if (conn.hasErrors()) {
+		if (conn.hasErrors() || conn.isOnDataflowCycle()) {
 			figure.setForegroundColor(ColorConstants.red);
 			figure.setLineWidth(2);
-		} else if(conn.isBroken()) {
-			figure.setForegroundColor(BROKEN_CONNECTION_COLOR);
 		} else {
 			figure.setForegroundColor(COLOR);
 			figure.setLineAttributes(attributesNormal);
