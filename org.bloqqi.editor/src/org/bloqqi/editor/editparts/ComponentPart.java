@@ -93,7 +93,7 @@ public class ComponentPart extends AbstractNodePart<Component>
 		
 		figure.setHasInParameters(component.getNumInParameter() > 0);
 		figure.setHasOutParameters(component.getNumOutParameter() > 0);
-		figure.setIsCircular(component.isCircular());
+		figure.setIsOnTypeCycle(component.isOnTypeCycle());
 		figure.setCanDelete(component.canDelete());
 		figure.setIsInlined(component.isInlined());
 		figure.setShowInlineFeedback(showInlineFeedback());
