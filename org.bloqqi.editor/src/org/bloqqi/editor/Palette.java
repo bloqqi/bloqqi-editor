@@ -15,6 +15,7 @@ import org.bloqqi.compiler.ast.CompilationUnit;
 import org.bloqqi.compiler.ast.Component;
 import org.bloqqi.compiler.ast.Connection;
 import org.bloqqi.compiler.ast.InParameter;
+import org.bloqqi.compiler.ast.Modifiers;
 import org.bloqqi.compiler.ast.Program;
 import org.bloqqi.compiler.ast.TypeDecl;
 import org.bloqqi.compiler.ast.TypeUse;
@@ -128,7 +129,7 @@ public class Palette extends PaletteRoot {
 
 	private ToolEntry createToolEntry(final TypeDecl td) {
 		CreationFactory factory = createFactory(
-				() -> new Component(false, new TypeUse(td.name()), null, true),
+				() -> new Component(new Modifiers(), new TypeUse(td.name()), null, true),
 				Component.class);
 		CreationToolEntry toolEntry = new CreationToolEntry(
 				td.name(), "Creates a new component of type " + td.name(),

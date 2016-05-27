@@ -28,7 +28,7 @@ public class SetComponentInlineCommand extends Command {
 		this.diagramType = component.diagramType();
 		this.component = component;
 		this.newInlineValue = newInlineValue;
-		this.oldInlineValue = component.getInline();
+		this.oldInlineValue = component.getModifiers().isInline();
 	}
 	
 	@Override
@@ -42,7 +42,7 @@ public class SetComponentInlineCommand extends Command {
 			// Compute the coordinate before the change
 			autoLayoutCollapsedBlock();
 		}
-		component.setInline(newInlineValue);
+		setInline(newInlineValue);
 		component.program().flushAllAttributes();
 		if (newInlineValue) {
 			// Compute the coordinates after the change
@@ -118,8 +118,16 @@ public class SetComponentInlineCommand extends Command {
 
 	@Override
 	public void undo() {
-		component.setInline(oldInlineValue);
+		setInline(oldInlineValue);
 		component.program().flushAllAttributes();
 		component.diagramType().notifyObservers();
+	}
+	
+	private void setInline(boolean inline) {
+		if (inline) {
+			component.getModifiers().addModifier("inline");
+		} else {
+			component.getModifiers().removeModifier("inline");
+		}
 	}
 }
