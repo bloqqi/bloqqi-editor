@@ -2,6 +2,7 @@ package org.bloqqi.editor.commands;
 
 import org.eclipse.gef.commands.Command;
 import org.bloqqi.compiler.ast.DiagramType;
+import org.bloqqi.compiler.ast.Modifiers;
 import org.bloqqi.compiler.ast.Program;
 
 public class CreateDiagramTypeCommand extends Command {
@@ -20,6 +21,7 @@ public class CreateDiagramTypeCommand extends Command {
 		this.canUndo = canUndo;
 		newDiagramType = new DiagramType();
 		newDiagramType.setID(newName);
+		newDiagramType.setModifiers(new Modifiers());
 	}
 
 	@Override
