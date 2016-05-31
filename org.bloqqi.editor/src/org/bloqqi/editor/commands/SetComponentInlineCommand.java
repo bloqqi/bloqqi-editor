@@ -118,7 +118,7 @@ public class SetComponentInlineCommand extends Command {
 
 	@Override
 	public void undo() {
-		component.getModifiers().setModifier("inline", newInlineValue);
+		component.getModifiers().setModifier("inline", oldInlineValue);
 		component.program().flushAllAttributes();
 		component.diagramType().notifyObservers();
 	}
