@@ -8,6 +8,7 @@ import org.eclipse.gef.commands.Command;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.bloqqi.compiler.ast.ASTNode;
 import org.bloqqi.compiler.ast.Component;
 import org.bloqqi.compiler.ast.DiagramType;
 import org.bloqqi.compiler.ast.IdName;
@@ -72,12 +73,12 @@ public class CreateComponentCommand extends Command {
 	
 	public void setName(String name) {
 		component.setName(new IdName(name));
-		component.setHasSimpleName(false);
+		component.getModifiers().removeModifier(ASTNode.MODIFIER_SIMPLE);
 	}
 	
 	public void setSimpleName(String name) {
 		component.setName(new IdName(name));
-		component.setHasSimpleName(true);
+		component.getModifiers().addModifier(ASTNode.MODIFIER_SIMPLE);
 	}
 	
 	public String computeNewName() {

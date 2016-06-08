@@ -129,7 +129,7 @@ public class Palette extends PaletteRoot {
 
 	private ToolEntry createToolEntry(final TypeDecl td) {
 		CreationFactory factory = createFactory(
-				() -> new Component(new Modifiers(), new TypeUse(td.name()), null, true),
+				() -> new Component(new Modifiers(), new TypeUse(td.name()), null),
 				Component.class);
 		CreationToolEntry toolEntry = new CreationToolEntry(
 				td.name(), "Creates a new component of type " + td.name(),
