@@ -62,7 +62,7 @@ public class ComponentPart extends AbstractNodePart<Component>
 
 		String text = "";
 		String name;
-		if (component.type().isFunction()) {
+		if (component.getModifiers().isOnSimpleNameForm()) {
 			name = component.type().name();
 		} else {
 			name = component.inlinedName();
