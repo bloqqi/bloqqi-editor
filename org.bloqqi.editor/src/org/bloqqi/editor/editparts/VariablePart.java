@@ -62,7 +62,7 @@ public class VariablePart extends AbstractNodePart<Variable>
 	public void refreshVisuals() {
 		VariableFigure figure = (VariableFigure) getFigure();
 		DiagramTypePart parent = (DiagramTypePart) getParent();
-		
+		figure.setKind(getModel().prettyPrintKind());
 		figure.setName(getModel().inlinedName());
 		figure.setType(getModel().type().name());
 		figure.setIsInherited(getModel().isInherited());

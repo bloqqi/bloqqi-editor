@@ -14,24 +14,29 @@ import org.bloqqi.editor.figures.ComponentFigure;
 
 public class CreateVariableCommand extends Command {
 	private final Point location;
-	private final Variable variable;
 	private final DiagramType diagramType;
 	private final Coordinates coordinates;
 
-	public CreateVariableCommand(Point location, Variable variable, DiagramType diagramType, Coordinates coordinates) {
+	private Variable variable;
+	private String name;
+	private TypeUse typeUse;
+	
+	public CreateVariableCommand(Point location, DiagramType diagramType, Coordinates coordinates) {
 		this.location = location;
-		this.variable = variable;
 		this.diagramType = diagramType;
 		this.coordinates = coordinates;
 	}
 	
 	@Override
 	public boolean canExecute() {
-		return !nameExists(variable.name());
+		return variable != null && !nameExists(variable.name());
 	}
 	
 	@Override
 	public void execute() {
+		variable.setID(name);
+		variable.setTypeUse(typeUse);
+
 		diagramType.addLocalVariable(variable);
 		diagramType.program().flushAllAttributes();
 		coordinates.setRectangle(diagramType, variable.accessString(), createRectangle());
@@ -55,12 +60,16 @@ public class CreateVariableCommand extends Command {
 		return new Rectangle(location, dim);
 	}
 	
+	public void setVariable(Variable variable) {
+		this.variable = variable;
+	}
+	
 	public void setName(String name) {
-		variable.setID(name);
+		this.name = name;
 	}
 	
 	public void setType(String type) {
-		variable.setTypeUse(new TypeUse(type));
+		this.typeUse = new TypeUse(type);
 	}
 
 	public boolean nameExists(String name) {

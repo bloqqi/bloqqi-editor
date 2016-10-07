@@ -17,6 +17,7 @@ import org.bloqqi.compiler.ast.Connection;
 import org.bloqqi.compiler.ast.InParameter;
 import org.bloqqi.compiler.ast.Modifiers;
 import org.bloqqi.compiler.ast.Program;
+import org.bloqqi.compiler.ast.StateVariable;
 import org.bloqqi.compiler.ast.TypeDecl;
 import org.bloqqi.compiler.ast.TypeUse;
 import org.bloqqi.compiler.ast.Variable;
@@ -93,7 +94,7 @@ public class Palette extends PaletteRoot {
 	}
 	
 	private void createVariableCreationToolEntry(PaletteGroup group) {
-		CreationFactory factory = createFactory(() -> new Variable(), Variable.class);
+		CreationFactory factory = createFactory(() -> new StateVariable(), Variable.class);
 		CreationToolEntry toolEntry = new CreationToolEntry(
 				"Variable",
 				"Creates a new variable",

@@ -1,5 +1,8 @@
 package org.bloqqi.editor.tools;
 
+import org.bloqqi.compiler.ast.InputVariable;
+import org.bloqqi.compiler.ast.OutputVariable;
+import org.bloqqi.compiler.ast.StateVariable;
 import org.bloqqi.editor.commands.CreateVariableCommand;
 import org.bloqqi.editor.wizards.AddVariableDialog;
 
@@ -30,5 +33,17 @@ public class VariableCreationTool
 	protected void setValues(CreateVariableCommand cmd, AddVariableDialog dialog) {
 		cmd.setName(dialog.getName());
 		cmd.setType(dialog.getType());
+
+		switch (dialog.getKind()) {
+		case AddVariableDialog.KIND_STATE:
+			cmd.setVariable(new StateVariable());
+			break;
+		case AddVariableDialog.KIND_INPUT:
+			cmd.setVariable(new InputVariable());
+			break;
+		case AddVariableDialog.KIND_OUTPUT:
+			cmd.setVariable(new OutputVariable());
+			break;
+		}
 	}
 }

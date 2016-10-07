@@ -18,6 +18,7 @@ public class VariableFigure extends Figure {
 	private boolean isInherited;
 	private boolean isInlined;
 	private boolean showInlineFeedback;
+	private String kind;
 	
 	public VariableFigure() {
 		setLayoutManager(new XYLayout());
@@ -55,7 +56,7 @@ public class VariableFigure extends Figure {
 			rectangle.setLineStyle(SWT.LINE_SOLID);
 		}
 		
-		label.setText(name + ":" + type);
+		label.setText(kind + " " + name + ":" + type);
 		
 		int h = r.height;
 		int w = r.width;
@@ -66,6 +67,10 @@ public class VariableFigure extends Figure {
 	    label.invalidate();
 	}
 
+	public void setKind(String kind) {
+		this.kind = kind;
+	}
+	
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -85,4 +90,6 @@ public class VariableFigure extends Figure {
 	public void setShowInlineFeedback(boolean showInlineFeedback) {
 		this.showInlineFeedback = showInlineFeedback;
 	}
+
+
 }

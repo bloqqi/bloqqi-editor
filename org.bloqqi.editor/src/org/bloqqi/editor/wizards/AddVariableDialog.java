@@ -17,11 +17,17 @@ import org.bloqqi.compiler.ast.Program;
 
 
 public class AddVariableDialog extends Dialog {
+	public static final String KIND_STATE = "state";
+	public static final String KIND_INPUT = "input";
+	public static final String KIND_OUTPUT = "output";
+	
 	protected Text nameText;
 	protected Combo typeCombo;
+	protected Combo kindCombo;
 	
 	protected String name;
 	protected String type;
+	protected String kind;
 	
 	
 	public AddVariableDialog(Shell parentShell) {
@@ -34,11 +40,15 @@ public class AddVariableDialog extends Dialog {
 	public String getType() {
 		return type;
 	}
+	public String getKind() {
+		return kind;
+	}
 	
 	@Override
 	protected void okPressed() {
 		name = nameText.getText().trim();
 		type = typeCombo.getItem(typeCombo.getSelectionIndex());
+		kind = kindCombo.getItem(kindCombo.getSelectionIndex());
 		super.okPressed();
 	}
 	
@@ -64,6 +74,12 @@ public class AddVariableDialog extends Dialog {
 			}
 		});
 		
+		new Label(container, SWT.NONE).setText("Kind");
+		kindCombo = new Combo (container, SWT.READ_ONLY);
+		kindCombo.setItems (new String [] {KIND_STATE, KIND_INPUT, KIND_OUTPUT});
+		kindCombo.select(0);
+		kindCombo.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+
 		new Label(container, SWT.NONE).setText("Type");
 		typeCombo = new Combo (container, SWT.READ_ONLY);
 		typeCombo.setItems (new String [] {"Int", "Bool", "Real"});

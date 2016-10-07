@@ -6,7 +6,7 @@ public class WizardComponent extends WizardDiagramType {
 	public WizardComponent(DiagramType diagramType, DiagramType enclosingDiagramType) {
 		super(diagramType);
 		getPageFeatures().setEnclosingDiagramType(enclosingDiagramType);
-		setWindowTitle("Create new specialized component");
+		setWindowTitle("Create new specialized block");
 	}
 	
 	@Override

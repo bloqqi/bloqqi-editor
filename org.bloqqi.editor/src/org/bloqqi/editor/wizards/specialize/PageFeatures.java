@@ -39,7 +39,8 @@ public class PageFeatures extends AbstractWizardPage  {
 
 	public PageFeatures() {
 		super(PAGE_NAME);
-		setTitle("Specialize diagram type");
+		//setTitle("Specialize diagram type");
+		setTitle("Specialize block");
 	}
 
 	public void setFeatureConfiguration(FeatureConfiguration conf) {

@@ -53,7 +53,6 @@ public class DiagramTypeXYLayoutEditPolicy extends XYLayoutEditPolicy {
 		} else if (request.getNewObjectType().equals(Variable.class)) {
 			return new CreateVariableCommand(
 					getLocation(request),
-					(Variable) request.getNewObject(),
 					(DiagramType) getHost().getModel(),
 					editor.getCoordinates());
 		} else if (request.getNewObjectType().equals(InParameter.class)) {
