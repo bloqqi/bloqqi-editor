@@ -7,7 +7,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 
-public class AddParameterDialog extends AddVariableDialog {
+public class AddParameterDialog extends AbstractAddNameDialog {
 	protected Combo parameterKindCombo;
 	protected boolean inParameter;
 	
