@@ -28,48 +28,48 @@ public class PortsFeedback {
 	}
 	
 	public void showInPorts() {
-		updateComponentParameters(true, ParameterKind.IN);
+		updatePorts(true, ParameterKind.IN);
 	}
 
 	public void showOutPorts() {
-		updateComponentParameters(true, ParameterKind.OUT);
+		updatePorts(true, ParameterKind.OUT);
 	}
 
 	public void hide() {
-		updateComponentParameters(false, ParameterKind.NONE);
+		updatePorts(false, ParameterKind.NONE);
 	}
 
-	private void updateComponentParameters(boolean showFeedback, ParameterKind kind) {
+	private void updatePorts(boolean showFeedback, ParameterKind kind) {
 		if (rootPart != null) {
-			updateComponentParameters(rootPart, showFeedback, kind);
+			updatePorts(rootPart, showFeedback, kind);
 		}
 	}
-	private void updateComponentParameters(EditPart part, boolean showFeedback, ParameterKind kind) {
+	private void updatePorts(EditPart part, boolean showFeedback, ParameterKind kind) {
 		if (part != null) {
 			if (part instanceof PortPart) {
-				showComponentParameterFeedback((PortPart) part, showFeedback, kind);
+				showPortFeedback((PortPart) part, showFeedback, kind);
 			} else {
 				for (Object o: part.getChildren()) {
 					EditPart c = (EditPart) o;
-					updateComponentParameters(c, showFeedback, kind);
+					updatePorts(c, showFeedback, kind);
 				}
 			}
 		}
 	}
 
-	private void showComponentParameterFeedback(PortPart cpp, boolean showFeedback, ParameterKind kind) {
-		boolean canAccess = cpp.getModel().canAccess() || cpp.getModel().canModifyToAccess();
-		boolean showInPort = showFeedback && kind == ParameterKind.IN && cpp.getModel().isInParameter();
-		boolean showOutPort = showFeedback && kind == ParameterKind.OUT && !cpp.getModel().isInParameter();
+	private void showPortFeedback(PortPart portPart, boolean showFeedback, ParameterKind kind) {
+		boolean canAccess = portPart.getModel().canAccess() || portPart.getModel().canModifyToAccess();
+		boolean showInPort = showFeedback && kind == ParameterKind.IN && portPart.getModel().isInParameter();
+		boolean showOutPort = showFeedback && kind == ParameterKind.OUT && !portPart.getModel().isInParameter();
 		if (canAccess && (showInPort || showOutPort)) {
-			if (isTypeCompatible(cpp.getModel().type())
-					&& cpp.getModel().ingoingConnections().isEmpty()) {
-				cpp.showFeedback(FEEDBACK_VALID_ANCHOR, true);
+			if (isTypeCompatible(portPart.getModel().type())
+					&& portPart.getModel().ingoingConnections().isEmpty()) {
+				portPart.showFeedback(FEEDBACK_VALID_ANCHOR, true);
 			} else {
-				cpp.showFeedback(FEEDBACK_INVALID_ANCHOR, false);
+				portPart.showFeedback(FEEDBACK_INVALID_ANCHOR, false);
 			}
 		} else {
-			cpp.hideFeedback();
+			portPart.hideFeedback();
 		}
 	}
 	

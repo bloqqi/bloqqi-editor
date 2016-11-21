@@ -27,7 +27,7 @@ import org.bloqqi.compiler.ast.Connection;
 import org.bloqqi.compiler.ast.Node;
 import org.bloqqi.compiler.ast.Port;
 import org.bloqqi.editor.figures.BlockFigure;
-import org.bloqqi.editor.figures.ComponentParameterFigure;
+import org.bloqqi.editor.figures.PortFigure;
 import org.bloqqi.editor.policies.NodeGraphicalNodeEditPolicy;
 
 public class PortPart
@@ -40,7 +40,7 @@ public class PortPart
 	
 	private boolean feedbackLargeSize;
 	private Color feedbackColor;
-	private ComponentParameterMouseListener mouseListener;
+	private PortMouseListener mouseListener;
 
 	public PortPart(Port port) {
 		super(port);
@@ -48,8 +48,8 @@ public class PortPart
 	
 	@Override
 	protected IFigure createFigure() {
-		ComponentParameterFigure figure = new ComponentParameterFigure();
-		mouseListener = new ComponentParameterMouseListener();
+		PortFigure figure = new PortFigure();
+		mouseListener = new PortMouseListener();
 		figure.addMouseMotionListener(mouseListener);
 		return figure;
 	}
@@ -107,7 +107,7 @@ public class PortPart
 	@Override
 	public void refreshVisuals() {
 		BlockPart parent = (BlockPart) getParent();
-		ComponentParameterFigure f = (ComponentParameterFigure) getFigure();
+		PortFigure f = (PortFigure) getFigure();
 		
 		int x = getModel().isInParameter() ? 1 : parent.getRectangle().width+SIZE-1;
 		int y = getYPos(getModel());
@@ -186,7 +186,7 @@ public class PortPart
 		}
 	}
 	
-	private class ComponentParameterMouseListener extends MouseMotionListener.Stub {
+	private class PortMouseListener extends MouseMotionListener.Stub {
 		private Label label = null;
 		
 		@Override

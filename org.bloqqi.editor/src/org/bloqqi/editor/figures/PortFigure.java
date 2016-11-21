@@ -5,11 +5,11 @@ import org.eclipse.draw2d.Graphics;
 import org.eclipse.draw2d.RectangleFigure;
 import org.eclipse.swt.graphics.Color;
 
-public class ComponentParameterFigure extends RectangleFigure {
+public class PortFigure extends RectangleFigure {
 	private boolean canDelete;
 	private Color feedbackColor;
 
-	public ComponentParameterFigure() {
+	public PortFigure() {
 		setOpaque(true);
 	}
 	

@@ -14,7 +14,7 @@ import org.bloqqi.compiler.ast.InParameter;
 import org.bloqqi.compiler.ast.Node;
 import org.bloqqi.compiler.ast.Variable;
 import org.bloqqi.editor.BloqqiEditor;
-import org.bloqqi.editor.commands.ChangeConstraintComponentCommand;
+import org.bloqqi.editor.commands.ChangeConstraintBlockCommand;
 import org.bloqqi.editor.commands.ChangeConstraintNodeCommand;
 import org.bloqqi.editor.commands.CreateBlockCommand;
 import org.bloqqi.editor.commands.CreateParameterCommand;
@@ -32,7 +32,7 @@ public class DiagramTypeXYLayoutEditPolicy extends XYLayoutEditPolicy {
 	protected Command createChangeConstraintCommand(EditPart child, Object constraint) {
 		ChangeConstraintNodeCommand command;
 		if (child instanceof BlockPart) {
-			command = new ChangeConstraintComponentCommand();
+			command = new ChangeConstraintBlockCommand();
 		} else {
 			command = new ChangeConstraintNodeCommand();
 		}
