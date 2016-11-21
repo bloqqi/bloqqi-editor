@@ -2,7 +2,7 @@ package org.bloqqi.editor.commands;
 
 import org.bloqqi.compiler.ast.Anchor;
 import org.bloqqi.compiler.ast.Block;
-import org.bloqqi.compiler.ast.ComponentParameter;
+import org.bloqqi.compiler.ast.Port;
 import org.bloqqi.compiler.ast.Connection;
 import org.bloqqi.compiler.ast.Pair;
 import org.bloqqi.compiler.ast.VarUse;
@@ -27,7 +27,7 @@ public abstract class AbstractCreateConnectionCommand extends PostConditionComma
 			if (oldBlock != null) {
 				return null;
 			}
-			oldBlock = ((ComponentParameter) anchor).block().inlinedBlock();
+			oldBlock = ((Port) anchor).block().inlinedBlock();
 			Pair<Block, VarUse> p = anchor.modifyToAccess();
 			newBlock = p.first;
 			return p.second;

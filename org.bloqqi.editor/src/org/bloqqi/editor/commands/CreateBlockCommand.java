@@ -16,7 +16,7 @@ import org.bloqqi.compiler.ast.Pair;
 import org.bloqqi.compiler.ast.Program;
 import org.bloqqi.compiler.ast.VarUse;
 import org.bloqqi.editor.Coordinates;
-import org.bloqqi.editor.editparts.ComponentParameterPart;
+import org.bloqqi.editor.editparts.PortPart;
 import org.bloqqi.editor.figures.BlockFigure;
 import org.bloqqi.editor.wizards.specialize.PageParameters.NewInParameter;
 
@@ -65,8 +65,8 @@ public class CreateBlockCommand extends Command {
 	}
 
 	private Rectangle createRectangle() {
-		int ports = Math.max(block.getNumInParameter(), block.getNumOutParameter());
-		int height = ports * (ComponentParameterPart.SIZE + ComponentParameterPart.PADDING);
+		int ports = Math.max(block.getNumInPort(), block.getNumOutPort());
+		int height = ports * (PortPart.SIZE + PortPart.PADDING);
 		Dimension dim = new Dimension(BlockFigure.WIDTH, Math.max(BlockFigure.MIN_HEIGHT, height));
 		return new Rectangle(location, dim);
 	}

@@ -17,7 +17,7 @@ import org.bloqqi.compiler.ast.Connection;
 import org.bloqqi.compiler.ast.DiagramType;
 import org.bloqqi.compiler.ast.Parameter;
 import org.bloqqi.editor.Coordinates;
-import org.bloqqi.editor.editparts.ComponentParameterPart;
+import org.bloqqi.editor.editparts.PortPart;
 import org.bloqqi.editor.figures.BlockFigure;
 
 public class AutoLayoutDraw2D {
@@ -74,7 +74,7 @@ public class AutoLayoutDraw2D {
 			Map<org.bloqqi.compiler.ast.Node, Node> map, org.bloqqi.compiler.ast.Node astNode) {
 		Node n = new Node();
 		n.data = astNode;
-		n.height = ComponentParameterPart.computeNodeMinHeight(astNode);
+		n.height = PortPart.computeNodeMinHeight(astNode);
 		n.width = BlockFigure.WIDTH;
 		graph.nodes.add(n);
 		map.put(astNode, n);

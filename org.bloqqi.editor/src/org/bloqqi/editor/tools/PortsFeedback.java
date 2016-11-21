@@ -4,7 +4,7 @@ import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.gef.EditPart;
 import org.eclipse.swt.graphics.Color;
 import org.bloqqi.compiler.ast.TypeDecl;
-import org.bloqqi.editor.editparts.ComponentParameterPart;
+import org.bloqqi.editor.editparts.PortPart;
 
 public class PortsFeedback {
 	public static final Color FEEDBACK_VALID_ANCHOR = ColorConstants.green;
@@ -46,8 +46,8 @@ public class PortsFeedback {
 	}
 	private void updateComponentParameters(EditPart part, boolean showFeedback, ParameterKind kind) {
 		if (part != null) {
-			if (part instanceof ComponentParameterPart) {
-				showComponentParameterFeedback((ComponentParameterPart) part, showFeedback, kind);
+			if (part instanceof PortPart) {
+				showComponentParameterFeedback((PortPart) part, showFeedback, kind);
 			} else {
 				for (Object o: part.getChildren()) {
 					EditPart c = (EditPart) o;
@@ -57,7 +57,7 @@ public class PortsFeedback {
 		}
 	}
 
-	private void showComponentParameterFeedback(ComponentParameterPart cpp, boolean showFeedback, ParameterKind kind) {
+	private void showComponentParameterFeedback(PortPart cpp, boolean showFeedback, ParameterKind kind) {
 		boolean canAccess = cpp.getModel().canAccess() || cpp.getModel().canModifyToAccess();
 		boolean showInPort = showFeedback && kind == ParameterKind.IN && cpp.getModel().isInParameter();
 		boolean showOutPort = showFeedback && kind == ParameterKind.OUT && !cpp.getModel().isInParameter();

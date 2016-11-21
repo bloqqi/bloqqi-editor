@@ -7,15 +7,15 @@ import java.util.Map;
 import org.eclipse.draw2d.geometry.Rectangle;
 import org.bloqqi.compiler.ast.Anchor;
 import org.bloqqi.compiler.ast.Block;
-import org.bloqqi.compiler.ast.ComponentParameter;
 import org.bloqqi.compiler.ast.Connection;
 import org.bloqqi.compiler.ast.DiagramType;
 import org.bloqqi.compiler.ast.InParameter;
 import org.bloqqi.compiler.ast.Node;
 import org.bloqqi.compiler.ast.OutParameter;
 import org.bloqqi.compiler.ast.Parameter;
+import org.bloqqi.compiler.ast.Port;
 import org.bloqqi.compiler.ast.Variable;
-import org.bloqqi.editor.editparts.ComponentParameterPart;
+import org.bloqqi.editor.editparts.PortPart;
 import org.bloqqi.editor.figures.BlockFigure;
 
 import de.cau.cs.kieler.core.alg.IKielerProgressMonitor;
@@ -86,17 +86,17 @@ public class AutoLayoutKlay {
 	private void addBlocks(KNode graphNode) {
 		for (Block b: diagramType.blocks()) {
 			KNode node = createKNode(graphNode, b);
-			for (ComponentParameter par: b.getInParameterList()) {
-				KPort port = KimlUtil.createInitializedPort();
-				port.setNode(node);
-				toKPort.put(par, port);
-				toAnchor.put(port, par);
+			for (Port inPort: b.getInPorts()) {
+				KPort kPort = KimlUtil.createInitializedPort();
+				kPort.setNode(node);
+				toKPort.put(inPort, kPort);
+				toAnchor.put(kPort, inPort);
 			}
-			for (ComponentParameter par: b.getOutParameterList()) {
-				KPort port = KimlUtil.createInitializedPort();
-				port.setNode(node);
-				toKPort.put(par, port);
-				toAnchor.put(port, par);
+			for (Port outPort: b.getOutPorts()) {
+				KPort kPort = KimlUtil.createInitializedPort();
+				kPort.setNode(node);
+				toKPort.put(outPort, kPort);
+				toAnchor.put(kPort, outPort);
 			}
 		}
 	}
@@ -166,7 +166,7 @@ public class AutoLayoutKlay {
 				width += EXTRA_SPACE_LITERAL;
 			}
 
-			final int height = ComponentParameterPart.computeNodeMinHeight(node);
+			final int height = PortPart.computeNodeMinHeight(node);
 			nodeLayout.setWidth(width);
 			nodeLayout.setHeight(height);
 
@@ -176,9 +176,9 @@ public class AutoLayoutKlay {
 			if (node.isBlock() || node.isParameter()) {
 				nodeLayout.setProperty(LayoutOptions.PORT_CONSTRAINTS, PortConstraints.FIXED_POS);
 			}
-			for (KPort port : knode.getPorts()) {
-				KShapeLayout portLayout = port.getData(KShapeLayout.class);
-				Anchor anchor = toAnchor.get(port);
+			for (KPort kPort : knode.getPorts()) {
+				KShapeLayout portLayout = kPort.getData(KShapeLayout.class);
+				Anchor anchor = toAnchor.get(kPort);
 
 				if (node.isInParameter()) {
 					portLayout.setXpos(width);
@@ -189,7 +189,7 @@ public class AutoLayoutKlay {
 					portLayout.setYpos(height/2);
 					portLayout.setProperty(LayoutOptions.PORT_SIDE, PortSide.WEST);
 				} else if (node.isBlock()) {
-					ComponentParameter compPar = (ComponentParameter) anchor;
+					Port port = (Port) anchor;
 					if (anchor.isInParameter()) {
 						portLayout.setXpos(0.0f);
 						portLayout.setProperty(LayoutOptions.PORT_SIDE, PortSide.WEST);
@@ -197,7 +197,7 @@ public class AutoLayoutKlay {
 						portLayout.setXpos(width);
 						portLayout.setProperty(LayoutOptions.PORT_SIDE, PortSide.EAST);
 					}
-					portLayout.setYpos(ComponentParameterPart.getMidYPos(compPar));
+					portLayout.setYpos(PortPart.getMidYPos(port));
 				}
 			}
 		}

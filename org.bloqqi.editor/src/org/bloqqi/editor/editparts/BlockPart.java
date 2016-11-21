@@ -13,7 +13,7 @@ import org.bloqqi.compiler.ast.ASTNode;
 import org.bloqqi.compiler.ast.ASTObservable;
 import org.bloqqi.compiler.ast.ASTObserver;
 import org.bloqqi.compiler.ast.Block;
-import org.bloqqi.compiler.ast.ComponentParameter;
+import org.bloqqi.compiler.ast.Port;
 import org.bloqqi.editor.figures.BlockFigure;
 import org.bloqqi.editor.policies.BlockComponentEditPolicy;
 import org.bloqqi.editor.policies.NodeSelectionEditPolicy;
@@ -91,8 +91,8 @@ public class BlockPart extends AbstractNodePart<Block>
 		figure.getLabel().setText(name + "");
 		figure.getLabel().setText(String.valueOf(component.dfo()));*/
 		
-		figure.setHasInParameters(block.getNumInParameter() > 0);
-		figure.setHasOutParameters(block.getNumOutParameter() > 0);
+		figure.setHasInParameters(block.getNumInPort() > 0);
+		figure.setHasOutParameters(block.getNumOutPort() > 0);
 		figure.hasErrors(block.isOnTypeCycle() || block.isDataflowCircular());
 		figure.setCanDelete(block.canDelete());
 		figure.setIsInlined(block.isInlined());
@@ -101,8 +101,8 @@ public class BlockPart extends AbstractNodePart<Block>
 		
 		Rectangle r = getRectangle();
 		
-		int x = r.x-ComponentParameterPart.SIZE;
-		int width = r.width+ComponentParameterPart.SIZE*2;
+		int x = r.x-PortPart.SIZE;
+		int width = r.width+PortPart.SIZE*2;
 		Rectangle newR = new Rectangle(x, r.y, width, r.height);
 		parent.setLayoutConstraint(this, figure, newR);
 	}
@@ -112,13 +112,13 @@ public class BlockPart extends AbstractNodePart<Block>
 	}
 	
 	@Override
-	protected List<ComponentParameter> getModelChildren() {
-		ArrayList<ComponentParameter> list = new ArrayList<ComponentParameter>();
-        for (ComponentParameter cp: getModel().getInParameterList()) {
-        	list.add(cp);
+	protected List<Port> getModelChildren() {
+		ArrayList<Port> list = new ArrayList<Port>();
+        for (Port port: getModel().getInPorts()) {
+        	list.add(port);
         } 
-        for (ComponentParameter cp: getModel().getOutParameterList()) {
-        	list.add(cp);
+        for (Port port: getModel().getOutPorts()) {
+        	list.add(port);
         }
         return list;
 	}

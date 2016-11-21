@@ -23,15 +23,15 @@ import org.eclipse.swt.graphics.Color;
 import org.bloqqi.compiler.ast.ASTObservable;
 import org.bloqqi.compiler.ast.ASTObserver;
 import org.bloqqi.compiler.ast.Block;
-import org.bloqqi.compiler.ast.ComponentParameter;
 import org.bloqqi.compiler.ast.Connection;
 import org.bloqqi.compiler.ast.Node;
+import org.bloqqi.compiler.ast.Port;
 import org.bloqqi.editor.figures.BlockFigure;
 import org.bloqqi.editor.figures.ComponentParameterFigure;
 import org.bloqqi.editor.policies.NodeGraphicalNodeEditPolicy;
 
-public class ComponentParameterPart
-		extends GenericAbstractGraphicalPart<ComponentParameter>
+public class PortPart
+		extends GenericAbstractGraphicalPart<Port>
 		implements NodeEditPart, ASTObserver {
 
 	public final static int SIZE = 6;
@@ -42,8 +42,8 @@ public class ComponentParameterPart
 	private Color feedbackColor;
 	private ComponentParameterMouseListener mouseListener;
 
-	public ComponentParameterPart(ComponentParameter par) {
-		super(par);
+	public PortPart(Port port) {
+		super(port);
 	}
 	
 	@Override
@@ -164,20 +164,20 @@ public class ComponentParameterPart
 		showFeedback(null, false);
 	}
 	
-	public static int getYPos(ComponentParameter compPar) {
-		int y = Y0 + compPar.index() * (SIZE+PADDING);
+	public static int getYPos(Port port) {
+		int y = Y0 + port.index() * (SIZE+PADDING);
 		return y;
 	}
 	
-	public static int getMidYPos(ComponentParameter compPar) {
-		return getYPos(compPar) + (int) Math.round(SIZE/2.0);
+	public static int getMidYPos(Port port) {
+		return getYPos(port) + (int) Math.round(SIZE/2.0);
 	}
 	
 	public static int computeNodeMinHeight(Node node) {
 		if (node instanceof Block) {
 			Block b = (Block) node;
-			int nIn = b.getNumInParameter();
-			int nOut = b.getNumOutParameter();
+			int nIn = b.getNumInPort();
+			int nOut = b.getNumOutPort();
 			int minIn = Y0*2 + nIn*SIZE + (nIn-1)*PADDING;
 			int minOut = Y0*2 + nOut*SIZE + (nOut-1)*PADDING;
 			return Math.max(Math.max(minIn, minOut), BlockFigure.MIN_HEIGHT);

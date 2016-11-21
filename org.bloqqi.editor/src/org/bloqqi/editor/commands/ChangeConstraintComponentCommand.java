@@ -1,6 +1,6 @@
 package org.bloqqi.editor.commands;
 
-import org.bloqqi.editor.editparts.ComponentParameterPart;
+import org.bloqqi.editor.editparts.PortPart;
 import org.bloqqi.editor.figures.BlockFigure;
 import org.eclipse.draw2d.geometry.Rectangle;
 
@@ -10,8 +10,8 @@ public class ChangeConstraintComponentCommand extends ChangeConstraintNodeComman
 			newConstraint.height = BlockFigure.MIN_HEIGHT;
 		}
 		Rectangle r = newConstraint.getCopy();
-		r.x += ComponentParameterPart.SIZE;
-		r.width -= ComponentParameterPart.SIZE*2;
+		r.x += PortPart.SIZE;
+		r.width -= PortPart.SIZE*2;
 		this.newConstraint = r;
 	}
 }

@@ -11,10 +11,10 @@ import org.eclipse.gef.EditPolicy;
 import org.bloqqi.compiler.ast.ASTObservable;
 import org.bloqqi.compiler.ast.ASTObserver;
 import org.bloqqi.compiler.ast.Anchor;
-import org.bloqqi.compiler.ast.ComponentParameter;
 import org.bloqqi.compiler.ast.Connection;
 import org.bloqqi.compiler.ast.Literal;
 import org.bloqqi.compiler.ast.Node;
+import org.bloqqi.compiler.ast.Port;
 import org.bloqqi.editor.policies.LiteralComponentEditPolicy;
 
 public class LiteralPart extends GenericAbstractGraphicalPart<Literal> implements ASTObserver {
@@ -51,8 +51,8 @@ public class LiteralPart extends GenericAbstractGraphicalPart<Literal> implement
 		r.x -= d.width + 12;
 		r.height = d.height;
 		r.width = d.width;
-		if (anchor instanceof ComponentParameter) {
-			r.y += ComponentParameterPart.getYPos((ComponentParameter) anchor) - 3;
+		if (anchor instanceof Port) {
+			r.y += PortPart.getYPos((Port) anchor) - 3;
 		} else {
 			r.y += 20;
 		}

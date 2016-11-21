@@ -1,6 +1,6 @@
 package org.bloqqi.editor.figures;
 
-import org.bloqqi.editor.editparts.ComponentParameterPart;
+import org.bloqqi.editor.editparts.PortPart;
 import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.draw2d.Figure;
 import org.eclipse.draw2d.Graphics;
@@ -90,10 +90,10 @@ public class BlockFigure extends Figure {
 	
 	private void updateCoordinates() {
 		Rectangle r = getBounds().getCopy(); 
-		int x = hasInParameters ? ComponentParameterPart.SIZE : 0;
+		int x = hasInParameters ? PortPart.SIZE : 0;
 		int w = r.width;
-		if (hasInParameters) w -= ComponentParameterPart.SIZE;
-		if (hasOutParameters) w -= ComponentParameterPart.SIZE;
+		if (hasInParameters) w -= PortPart.SIZE;
+		if (hasOutParameters) w -= PortPart.SIZE;
 
 		setConstraint(rectangle, new Rectangle(x, 0, w, r.height));
 		setConstraint(innerRectangle, new Rectangle(x+1, 0+1, w-2, r.height/2));
