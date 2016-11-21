@@ -6,29 +6,29 @@ import java.util.Map;
 import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.gef.commands.Command;
 import org.bloqqi.compiler.ast.ASTNode;
-import org.bloqqi.compiler.ast.Component;
+import org.bloqqi.compiler.ast.Block;
 import org.bloqqi.compiler.ast.DiagramType;
-import org.bloqqi.compiler.ast.InheritedComponent;
+import org.bloqqi.compiler.ast.InheritedBlock;
 import org.bloqqi.compiler.ast.Node;
 import org.bloqqi.editor.Coordinates;
 import org.bloqqi.editor.autolayout.AutoLayoutKlay;
 
-public class SetComponentInlineCommand extends Command {
+public class SetBlockInlineCommand extends Command {
 	private final static int RELATIVE_X_OFFSET = -50;
 	private final static int RELATIVE_Y_OFFSET = -30;
 	
 	private final Coordinates coordinates;
 	private final DiagramType diagramType;
-	private final Component component;
+	private final Block block;
 	private final boolean newInlineValue;
 	private final boolean oldInlineValue;
 	
-	public SetComponentInlineCommand(Coordinates coordinates, Component component, boolean newInlineValue) {
+	public SetBlockInlineCommand(Coordinates coordinates, Block block, boolean newInlineValue) {
 		this.coordinates = coordinates;
-		this.diagramType = component.diagramType();
-		this.component = component;
+		this.diagramType = block.diagramType();
+		this.block = block;
 		this.newInlineValue = newInlineValue;
-		this.oldInlineValue = component.getModifiers().isInline();
+		this.oldInlineValue = block.getModifiers().isInline();
 	}
 	
 	@Override
@@ -42,20 +42,20 @@ public class SetComponentInlineCommand extends Command {
 			// Compute the coordinate before the change
 			autoLayoutCollapsedBlock();
 		}
-		component.getModifiers().setModifier("inline", newInlineValue);
-		component.program().flushAllAttributes();
+		block.getModifiers().setModifier("inline", newInlineValue);
+		block.program().flushAllAttributes();
 		if (newInlineValue) {
 			// Compute the coordinates after the change
 			autoLayoutInlinedBlocks();
 		}
-		component.diagramType().notifyObservers();
+		block.diagramType().notifyObservers();
 	}
 
 	private void autoLayoutInlinedBlocks() {
-		// Compute auto layout for the inlined components and adjust them
-		// according to the position of the component that is inlined.
-		Rectangle componentRectangle = coordinates.getRectangle(diagramType, component.accessString());
-		DiagramType dt = (DiagramType) component.type();
+		// Compute auto layout for the inlined blocks and adjust them
+		// according to the position of the blocks that is inlined.
+		Rectangle blockRectangle = coordinates.getRectangle(diagramType, block.accessString());
+		DiagramType dt = (DiagramType) block.type();
 		Map<Node, Rectangle> layout = new AutoLayoutKlay(dt, false).layoutAsNodeMap();
 		Map<String, Rectangle> adjustedLayout = new HashMap<>();
 		for (Map.Entry<Node, Rectangle> e: layout.entrySet()) {
@@ -67,42 +67,42 @@ public class SetComponentInlineCommand extends Command {
 			if (name.contains(ASTNode.DECLARED_IN_SEP)) {
 				name = name.substring(name.indexOf(ASTNode.DECLARED_IN_SEP)+ASTNode.DECLARED_IN_SEP.length());
 			}
-			String key = component.accessString() + ASTNode.INLINE_SEP + name;
+			String key = block.accessString() + ASTNode.INLINE_SEP + name;
 			
-			r.x += componentRectangle.x + RELATIVE_X_OFFSET;
-			r.y += componentRectangle.y + RELATIVE_Y_OFFSET;
+			r.x += blockRectangle.x + RELATIVE_X_OFFSET;
+			r.y += blockRectangle.y + RELATIVE_Y_OFFSET;
 			
 			adjustedLayout.put(key, r);
 		}
 
-		// Update coordinates of the inlined components
-		for (InheritedComponent c: diagramType.getComponents()) {
-			if (c.isInlined()
-					&& c.inlinedComponent() == component
-					&& coordinates.getRectangle(diagramType, c.accessString()) == Coordinates.RECTANGLE_NOT_FOUND) {
-				Rectangle r = adjustedLayout.get(c.accessString());
+		// Update coordinates of the inlined blocks
+		for (InheritedBlock block: diagramType.getBlocks()) {
+			if (block.isInlined()
+					&& block.inlinedBlock() == block
+					&& coordinates.getRectangle(diagramType, block.accessString()) == Coordinates.RECTANGLE_NOT_FOUND) {
+				Rectangle r = adjustedLayout.get(block.accessString());
 				if (r == null) r = Coordinates.RECTANGLE_NOT_FOUND;
 				coordinates.setRectangle(
 						diagramType,
-						c.accessString(),
+						block.accessString(),
 						r);
 			}
 		}
 	}
 
 	private void autoLayoutCollapsedBlock() {
-		if (coordinates.getRectangle(diagramType, component.accessString()) == Coordinates.RECTANGLE_NOT_FOUND) {
+		if (coordinates.getRectangle(diagramType, block.accessString()) == Coordinates.RECTANGLE_NOT_FOUND) {
 			Rectangle closestToOrigin = null;
-			for (InheritedComponent c: diagramType.getComponents()) {
-				if (c.isInlined() && c.inlinedComponent() == component) {
-					Rectangle r = coordinates.getRectangle(diagramType, c.accessString());
+			for (InheritedBlock block: diagramType.getBlocks()) {
+				if (block.isInlined() && block.inlinedBlock() == block) {
+					Rectangle r = coordinates.getRectangle(diagramType, block.accessString());
 					if (closestToOrigin == null || distance(r) < distance(closestToOrigin)) {
 						closestToOrigin = r;
 					}
 				}
 			}
 			if (closestToOrigin != null) {
-				coordinates.setRectangle(diagramType, component.accessString(), closestToOrigin);
+				coordinates.setRectangle(diagramType, block.accessString(), closestToOrigin);
 			}
 		}
 	}
@@ -118,8 +118,8 @@ public class SetComponentInlineCommand extends Command {
 
 	@Override
 	public void undo() {
-		component.getModifiers().setModifier("inline", oldInlineValue);
-		component.program().flushAllAttributes();
-		component.diagramType().notifyObservers();
+		block.getModifiers().setModifier("inline", oldInlineValue);
+		block.program().flushAllAttributes();
+		block.diagramType().notifyObservers();
 	}
 }

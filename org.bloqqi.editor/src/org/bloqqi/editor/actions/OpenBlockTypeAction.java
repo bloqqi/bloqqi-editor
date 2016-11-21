@@ -1,15 +1,15 @@
 	package org.bloqqi.editor.actions;
 
-import org.bloqqi.compiler.ast.Component;
+import org.bloqqi.compiler.ast.Block;
 import org.bloqqi.compiler.ast.DiagramType;
 import org.bloqqi.editor.BloqqiEditor;
-import org.bloqqi.editor.editparts.ComponentPart;
+import org.bloqqi.editor.editparts.BlockPart;
 
-public class OpenComponentTypeAction extends MySelectionAction {
-	public static final String ID = "org.bloqqi." + OpenComponentTypeAction.class.getSimpleName();
+public class OpenBlockTypeAction extends MySelectionAction {
+	public static final String ID = "org.bloqqi." + OpenBlockTypeAction.class.getSimpleName();
 	public static final String TEXT = "Open Declaration";
 	
-	public OpenComponentTypeAction(BloqqiEditor editor) {
+	public OpenBlockTypeAction(BloqqiEditor editor) {
 		super(editor);
 		setId(ID);
 		setText(TEXT);
@@ -17,7 +17,7 @@ public class OpenComponentTypeAction extends MySelectionAction {
 
 	@Override
 	protected boolean calculateEnabled() {
-		ComponentPart part = getSelected(ComponentPart.class);
+		BlockPart part = getSelected(BlockPart.class);
 		if (part != null) {
 			setText(TEXT + " (" + part.getModel().type().name() + ")");
 			return part.getModel().type().isDiagramType();
@@ -27,8 +27,8 @@ public class OpenComponentTypeAction extends MySelectionAction {
 
 	@Override
 	public void run() {
-		Component comp = getSelected(ComponentPart.class).getModel();
-		DiagramType diagramType = ((DiagramType) comp.type());
+		Block block = getSelected(BlockPart.class).getModel();
+		DiagramType diagramType = ((DiagramType) block.type());
 		getEditor().showDiagramType(diagramType);
 	}
 }

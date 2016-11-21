@@ -2,8 +2,8 @@ package org.bloqqi.editor.wizards.specialize;
 
 import org.bloqqi.compiler.ast.DiagramType;
 
-public class WizardComponent extends WizardDiagramType {
-	public WizardComponent(DiagramType diagramType, DiagramType enclosingDiagramType) {
+public class WizardBlock extends WizardDiagramType {
+	public WizardBlock(DiagramType diagramType, DiagramType enclosingDiagramType) {
 		super(diagramType);
 		getPageFeatures().setEnclosingDiagramType(enclosingDiagramType);
 		setWindowTitle("Create new specialized block");
@@ -11,11 +11,11 @@ public class WizardComponent extends WizardDiagramType {
 	
 	@Override
 	protected PageFeatures createPageFeatures() {
-		return new PageFeaturesNewComponent();
+		return new PageFeaturesNewBlock();
 	}
 	
 	@Override
-	protected PageFeaturesNewComponent getPageFeatures() {
-		return (PageFeaturesNewComponent) super.getPageFeatures();
+	protected PageFeaturesNewBlock getPageFeatures() {
+		return (PageFeaturesNewBlock) super.getPageFeatures();
 	}
 }

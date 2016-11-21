@@ -3,7 +3,7 @@ package org.bloqqi.editor.wizards.specialize;
 import org.bloqqi.compiler.ast.DiagramType;
 import org.bloqqi.compiler.ast.Program;
 
-public class PageFeaturesNewComponent extends PageFeatures {
+public class PageFeaturesNewBlock extends PageFeatures {
 	protected DiagramType enclosingDiagramType;
 	
 	public void setEnclosingDiagramType(DiagramType enclosingDiagramType) {
@@ -13,7 +13,7 @@ public class PageFeaturesNewComponent extends PageFeatures {
 	@Override
 	protected void createNewNameUI() {
 		super.createNewNameUI();
-		nameLabel.setText("Component name");
+		nameLabel.setText("Block name");
 	}
 	
 	@Override

@@ -30,8 +30,8 @@ public class ChangeAllConnectionRoutersAction extends MyWorkbenchPartAction {
 		DiagramTypePart dtp = (DiagramTypePart) root.getContents();
 		
 		for (Object child: dtp.getChildren()) {
-			EditPart component = (EditPart) child;
-			for (Object child2: component.getChildren()) {
+			EditPart block = (EditPart) child;
+			for (Object child2: block.getChildren()) {
 				AbstractGraphicalEditPart port = (AbstractGraphicalEditPart) child2;
 				for (Object conn: port.getSourceConnections()) {
 					ConnectionPart connectionPart = (ConnectionPart) conn;

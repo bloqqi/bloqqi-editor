@@ -14,8 +14,8 @@ import org.eclipse.ui.IFileEditorInput;
 import org.bloqqi.compiler.ast.ASTNode;
 import org.bloqqi.compiler.ast.Annotation;
 import org.bloqqi.compiler.ast.AutoLayoutConfig;
+import org.bloqqi.compiler.ast.Block;
 import org.bloqqi.compiler.ast.CompilationUnit;
-import org.bloqqi.compiler.ast.Component;
 import org.bloqqi.compiler.ast.DiagramType;
 import org.bloqqi.compiler.ast.Node;
 import org.bloqqi.compiler.ast.BloqqiParser;
@@ -139,12 +139,12 @@ public final class Utils {
 		
 		Map<String, Rectangle> map = new HashMap<String, Rectangle>();
 		int maxX = 0;
-		for (Component comp: dt.getComponents()) {
-			int x = comp.autoLayoutX(c);
-			int y = comp.autoLayoutY(c);
+		for (Block block: dt.getBlocks()) {
+			int x = block.autoLayoutX(c);
+			int y = block.autoLayoutY(c);
 			if (maxX < x) maxX = x;
 			Rectangle r = new Rectangle(x, y, c.width, c.height);
-			map.put(comp.accessString(), r);
+			map.put(block.accessString(), r);
 		}
 		
 		for (int i = 0; i < dt.getNumInParameter(); i++) {

@@ -5,19 +5,19 @@ import org.eclipse.swt.widgets.Shell;
 
 import java.util.Iterator;
 
-import org.bloqqi.compiler.ast.Component;
+import org.bloqqi.compiler.ast.Block;
 import org.bloqqi.compiler.ast.DiagramType;
 import org.bloqqi.editor.BloqqiEditor;
-import org.bloqqi.editor.commands.ChangeComponentSpecializationCommand;
-import org.bloqqi.editor.editparts.ComponentPart;
+import org.bloqqi.editor.commands.ChangeBlockSpecializationCommand;
+import org.bloqqi.editor.editparts.BlockPart;
 import org.bloqqi.editor.wizards.specialize.MyWizardDialog;
-import org.bloqqi.editor.wizards.specialize.WizardChangeComponent;
+import org.bloqqi.editor.wizards.specialize.WizardChangeBlock;
 import org.bloqqi.editor.wizards.specialize.WizardDiagramType;
 
-public class ChangeSpecializationComponent extends MySelectionAction {
-	public static final String ID = "org.bloqqi." + ChangeSpecializationComponent.class.getSimpleName();
+public class ChangeSpecializationBlock extends MySelectionAction {
+	public static final String ID = "org.bloqqi." + ChangeSpecializationBlock.class.getSimpleName();
 
-	public ChangeSpecializationComponent(BloqqiEditor editor) {
+	public ChangeSpecializationBlock(BloqqiEditor editor) {
 		super(editor);
 		setId(ID);
 		setText("Change specialization...");
@@ -25,7 +25,7 @@ public class ChangeSpecializationComponent extends MySelectionAction {
 	
 	@Override
 	protected boolean calculateEnabled() {
-		ComponentPart part = getSelected(ComponentPart.class);
+		BlockPart part = getSelected(BlockPart.class);
 		if (part != null 
 				&& !part.getModel().isInherited() 
 				&& part.getModel().hasAnonymousDiagramType()) {
@@ -37,20 +37,20 @@ public class ChangeSpecializationComponent extends MySelectionAction {
 
 	@Override 
 	public void run() {
-		Component component = getSelected(ComponentPart.class).getModel().declaredComponent();
-		DiagramType superDt = getDirectSuperType(component);
+		Block block = getSelected(BlockPart.class).getModel().declaredBlock();
+		DiagramType superDt = getDirectSuperType(block);
 		
 		Shell shell = getEditor().getSite().getShell();
-		WizardDiagramType wizard = new WizardChangeComponent(
+		WizardDiagramType wizard = new WizardChangeBlock(
 				superDt, 
-				component.diagramType(),
-				component);
+				block.diagramType(),
+				block);
 		MyWizardDialog dialog = new MyWizardDialog(shell, wizard);
 
 		if (dialog.open() == Window.OK) {
-			ChangeComponentSpecializationCommand cmd =
-				new ChangeComponentSpecializationCommand(
-						component,
+			ChangeBlockSpecializationCommand cmd =
+				new ChangeBlockSpecializationCommand(
+						block,
 						wizard.getFeatureConfiguration(),
 						wizard.getNewInParameters()
 				);
@@ -58,8 +58,8 @@ public class ChangeSpecializationComponent extends MySelectionAction {
 		}
 	}
 	
-	private DiagramType getDirectSuperType(Component c) {
-		Iterator<DiagramType> itr = c.anonymousDiagramType()
+	private DiagramType getDirectSuperType(Block b) {
+		Iterator<DiagramType> itr = b.anonymousDiagramType()
 				.directSuperTypes().iterator();
 		return itr.hasNext() ? itr.next() : null;
 	}

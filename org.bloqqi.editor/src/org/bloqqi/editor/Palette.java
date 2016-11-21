@@ -11,8 +11,8 @@ import org.eclipse.gef.requests.CreationFactory;
 
 import java.util.function.Supplier;
 
+import org.bloqqi.compiler.ast.Block;
 import org.bloqqi.compiler.ast.CompilationUnit;
-import org.bloqqi.compiler.ast.Component;
 import org.bloqqi.compiler.ast.Connection;
 import org.bloqqi.compiler.ast.InParameter;
 import org.bloqqi.compiler.ast.Modifiers;
@@ -21,7 +21,7 @@ import org.bloqqi.compiler.ast.StateVariable;
 import org.bloqqi.compiler.ast.TypeDecl;
 import org.bloqqi.compiler.ast.TypeUse;
 import org.bloqqi.compiler.ast.Variable;
-import org.bloqqi.editor.tools.ComponentCreationTool;
+import org.bloqqi.editor.tools.BlockCreationTool;
 import org.bloqqi.editor.tools.ConnectionCreationToolFeedback;
 import org.bloqqi.editor.tools.LiteralCreationTool;
 import org.bloqqi.editor.tools.ParameterCreationTool;
@@ -130,12 +130,12 @@ public class Palette extends PaletteRoot {
 
 	private ToolEntry createToolEntry(final TypeDecl td) {
 		CreationFactory factory = createFactory(
-				() -> new Component(new Modifiers(), new TypeUse(td.name()), null),
-				Component.class);
+				() -> new Block(new Modifiers(), new TypeUse(td.name()), null),
+				Block.class);
 		CreationToolEntry toolEntry = new CreationToolEntry(
-				td.name(), "Creates a new component of type " + td.name(),
+				td.name(), "Creates a new block of type " + td.name(),
 				factory, null, null);
-		toolEntry.setToolClass(ComponentCreationTool.class);
+		toolEntry.setToolClass(BlockCreationTool.class);
 		setToolProperties(toolEntry);
 		return toolEntry;
 	}

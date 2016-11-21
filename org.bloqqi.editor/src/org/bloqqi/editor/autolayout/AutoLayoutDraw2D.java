@@ -12,13 +12,13 @@ import org.eclipse.draw2d.graph.DirectedGraph;
 import org.eclipse.draw2d.graph.DirectedGraphLayout;
 import org.eclipse.draw2d.graph.Edge;
 import org.eclipse.draw2d.graph.Node;
-import org.bloqqi.compiler.ast.Component;
+import org.bloqqi.compiler.ast.Block;
 import org.bloqqi.compiler.ast.Connection;
 import org.bloqqi.compiler.ast.DiagramType;
 import org.bloqqi.compiler.ast.Parameter;
 import org.bloqqi.editor.Coordinates;
 import org.bloqqi.editor.editparts.ComponentParameterPart;
-import org.bloqqi.editor.figures.ComponentFigure;
+import org.bloqqi.editor.figures.BlockFigure;
 
 public class AutoLayoutDraw2D {
 	public static void layout(DiagramType dt, Coordinates coordinates) {
@@ -42,12 +42,12 @@ public class AutoLayoutDraw2D {
 	@SuppressWarnings("unchecked")
 	private static void fromModelToGraph(DiagramType dt, DirectedGraph graph) {
 		Map<org.bloqqi.compiler.ast.Node, Node> map = new HashMap<org.bloqqi.compiler.ast.Node, Node>();
-		for (Component c: dt.getComponents()) {
-			createGraphNode(graph, map, c);
+		for (Block b: dt.getBlocks()) {
+			createGraphNode(graph, map, b);
 		}
 		Collections.sort(graph.nodes, new Comparator<Node>() {
 			public int compare(Node n1, Node n2) {
-				return ((Component) n1.data).dfo() - ((Component) n2.data).dfo();
+				return ((Block) n1.data).dfo() - ((Block) n2.data).dfo();
 			}
 		});
 		for (Parameter p: dt.getInParameters()) {
@@ -75,7 +75,7 @@ public class AutoLayoutDraw2D {
 		Node n = new Node();
 		n.data = astNode;
 		n.height = ComponentParameterPart.computeNodeMinHeight(astNode);
-		n.width = ComponentFigure.WIDTH;
+		n.width = BlockFigure.WIDTH;
 		graph.nodes.add(n);
 		map.put(astNode, n);
 	}

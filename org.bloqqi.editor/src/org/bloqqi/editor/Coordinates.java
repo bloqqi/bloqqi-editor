@@ -11,11 +11,11 @@ import org.eclipse.draw2d.geometry.Rectangle;
 import org.bloqqi.compiler.ast.ASTNode;
 import org.bloqqi.compiler.ast.DiagramType;
 import org.bloqqi.compiler.ast.Node;
-import org.bloqqi.editor.figures.ComponentFigure;
+import org.bloqqi.editor.figures.BlockFigure;
 
 public class Coordinates {
 	public final static Rectangle RECTANGLE_NOT_FOUND
-		= new Rectangle(10, 10, ComponentFigure.WIDTH, ComponentFigure.MIN_HEIGHT);
+		= new Rectangle(10, 10, BlockFigure.WIDTH, BlockFigure.MIN_HEIGHT);
 	
 	private WeakHashMap<DiagramType, Map<String, Rectangle>> coordinates;
 	

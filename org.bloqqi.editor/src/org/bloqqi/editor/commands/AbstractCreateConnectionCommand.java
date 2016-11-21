@@ -1,7 +1,7 @@
 package org.bloqqi.editor.commands;
 
 import org.bloqqi.compiler.ast.Anchor;
-import org.bloqqi.compiler.ast.Component;
+import org.bloqqi.compiler.ast.Block;
 import org.bloqqi.compiler.ast.ComponentParameter;
 import org.bloqqi.compiler.ast.Connection;
 import org.bloqqi.compiler.ast.Pair;
@@ -10,13 +10,13 @@ import org.bloqqi.editor.PostConditionCommand;
 
 public abstract class AbstractCreateConnectionCommand extends PostConditionCommand {
 	protected Connection connection;
-	protected Component oldComponent;
-	protected Component newComponent;
+	protected Block oldBlock;
+	protected Block newBlock;
 
 	protected boolean couldExecute;
 
 	public AbstractCreateConnectionCommand() {
-		oldComponent = null;
+		oldBlock = null;
 		couldExecute = true;
 	}
 	
@@ -24,12 +24,12 @@ public abstract class AbstractCreateConnectionCommand extends PostConditionComma
 		if (anchor.canAccess()) {
 			return anchor.access();
 		} else if (anchor.canModifyToAccess()) {
-			if (oldComponent != null) {
+			if (oldBlock != null) {
 				return null;
 			}
-			oldComponent = ((ComponentParameter) anchor).component().inlinedComponent();
-			Pair<Component, VarUse> p = anchor.modifyToAccess();
-			newComponent = p.first;
+			oldBlock = ((ComponentParameter) anchor).block().inlinedBlock();
+			Pair<Block, VarUse> p = anchor.modifyToAccess();
+			newBlock = p.first;
 			return p.second;
 		} else {
 			throw new RuntimeException("Connection could not be created.");

@@ -8,7 +8,7 @@ import org.eclipse.gef.commands.Command;
 import org.eclipse.gef.editparts.ZoomManager;
 import org.eclipse.gef.editpolicies.XYLayoutEditPolicy;
 import org.eclipse.gef.requests.CreateRequest;
-import org.bloqqi.compiler.ast.Component;
+import org.bloqqi.compiler.ast.Block;
 import org.bloqqi.compiler.ast.DiagramType;
 import org.bloqqi.compiler.ast.InParameter;
 import org.bloqqi.compiler.ast.Node;
@@ -16,10 +16,10 @@ import org.bloqqi.compiler.ast.Variable;
 import org.bloqqi.editor.BloqqiEditor;
 import org.bloqqi.editor.commands.ChangeConstraintComponentCommand;
 import org.bloqqi.editor.commands.ChangeConstraintNodeCommand;
-import org.bloqqi.editor.commands.CreateComponentCommand;
+import org.bloqqi.editor.commands.CreateBlockCommand;
 import org.bloqqi.editor.commands.CreateParameterCommand;
 import org.bloqqi.editor.commands.CreateVariableCommand;
-import org.bloqqi.editor.editparts.ComponentPart;
+import org.bloqqi.editor.editparts.BlockPart;
 
 public class DiagramTypeXYLayoutEditPolicy extends XYLayoutEditPolicy {
 	private final BloqqiEditor editor;
@@ -31,7 +31,7 @@ public class DiagramTypeXYLayoutEditPolicy extends XYLayoutEditPolicy {
 	@Override
 	protected Command createChangeConstraintCommand(EditPart child, Object constraint) {
 		ChangeConstraintNodeCommand command;
-		if (child instanceof ComponentPart) {
+		if (child instanceof BlockPart) {
 			command = new ChangeConstraintComponentCommand();
 		} else {
 			command = new ChangeConstraintNodeCommand();
@@ -44,10 +44,10 @@ public class DiagramTypeXYLayoutEditPolicy extends XYLayoutEditPolicy {
 
 	@Override
 	protected Command getCreateCommand(CreateRequest request) {
-		if (request.getNewObjectType().equals(Component.class)) {
-			return new CreateComponentCommand(
+		if (request.getNewObjectType().equals(Block.class)) {
+			return new CreateBlockCommand(
 					getLocation(request),
-					(Component) request.getNewObject(),
+					(Block) request.getNewObject(),
 					(DiagramType) getHost().getModel(),
 					editor.getCoordinates());
 		} else if (request.getNewObjectType().equals(Variable.class)) {

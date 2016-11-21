@@ -3,12 +3,13 @@ package org.bloqqi.editor.commands;
 import org.eclipse.gef.commands.Command;
 
 
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
 import org.bloqqi.compiler.ast.Anchor;
-import org.bloqqi.compiler.ast.Component;
+import org.bloqqi.compiler.ast.Block;
 import org.bloqqi.compiler.ast.DiagramType;
 import org.bloqqi.compiler.ast.FeatureConfiguration;
 import org.bloqqi.compiler.ast.FlowDecl;
@@ -17,43 +18,43 @@ import org.bloqqi.compiler.ast.Pair;
 import org.bloqqi.compiler.ast.VarUse;
 import org.bloqqi.editor.wizards.specialize.PageParameters.NewInParameter;
 
-public class ChangeComponentSpecializationCommand extends Command {
-	private final Component oldComponent;
-	private final int componentIndex;
+public class ChangeBlockSpecializationCommand extends Command {
+	private final Block oldBlock;
+	private final int blockIndex;
 	private final FeatureConfiguration conf;
 	private final DiagramType enclosingDt;
 	private final Set<NewInParameter> newInParameters;
 
-	private Component newComponent;
+	private Block newBlock;
 	
 	private boolean hasExecuted;
 	private Map<FlowDecl, Integer> removeFlowDecls;
 	
-	public ChangeComponentSpecializationCommand(Component existingComponent,
+	public ChangeBlockSpecializationCommand(Block existingBlock,
 			FeatureConfiguration conf,
 			Set<NewInParameter> newInParameters) {
-		this.oldComponent = existingComponent;
+		this.oldBlock = existingBlock;
 		this.conf = conf;
-		this.enclosingDt = existingComponent.diagramType();
-		this.componentIndex = enclosingDt.getLocalComponents().getIndexOfChild(existingComponent);
+		this.enclosingDt = existingBlock.diagramType();
+		this.blockIndex = enclosingDt.getLocalBlocks().getIndexOfChild(existingBlock);
 		this.newInParameters = newInParameters;
 		hasExecuted = false;
 	}
 	
 	public void execute() {
-		this.newComponent = oldComponent.treeCopy();
-		this.newComponent.setType(conf.newAnonymousComponent("").getType());
+		this.newBlock = oldBlock.treeCopy();
+		this.newBlock.setType(conf.newAnonymousBlock("").getType());
 
-		enclosingDt.getLocalComponentList().setChild(newComponent, componentIndex);
+		enclosingDt.getLocalBlockList().setChild(newBlock, blockIndex);
 		enclosingDt.program().flushAllAttributes();
 		
 		if (!hasExecuted) {
-			// Some parameters of nested components should be exposed as parameters.
+			// Some parameters of nested blocks should be exposed as parameters.
 			// This is set by the user in the specialization wizard.
 			for (NewInParameter in: newInParameters) {
-				String parameter = oldComponent.name() + "." + in.getPath();
-				Pair<Component, VarUse> p = enclosingDt.addConnectionsParameters(parameter, in.getNewName());
-				newComponent = p.first;
+				String parameter = oldBlock.name() + "." + in.getPath();
+				Pair<Block, VarUse> p = enclosingDt.addConnectionsParameters(parameter, in.getNewName());
+				newBlock = p.first;
 			}
 		}
 		enclosingDt.program().flushAllAttributes();
@@ -70,7 +71,7 @@ public class ChangeComponentSpecializationCommand extends Command {
 		removeFlowDecls = new HashMap<>();
 		for (FlowDecl fd: enclosingDt.getFlowDecls()) {
 			for (Pair<Node, Anchor> p: fd.connectedNodesAnchors()) {
-				if (p.first == newComponent && p.second == null) {
+				if (p.first == newBlock && p.second == null) {
 					removeFlowDecls.put(fd, enclosingDt.getFlowDecls().getIndexOfChild(fd));
 					break;
 				}
@@ -88,7 +89,7 @@ public class ChangeComponentSpecializationCommand extends Command {
 	}
 	
 	public void undo() {
-		enclosingDt.getLocalComponentList().setChild(oldComponent, componentIndex);
+		enclosingDt.getLocalBlockList().setChild(oldBlock, blockIndex);
 		for (Map.Entry<FlowDecl, Integer> e: removeFlowDecls.entrySet()) {
 			enclosingDt.getFlowDecls().insertChild(e.getKey(), e.getValue());
 		}

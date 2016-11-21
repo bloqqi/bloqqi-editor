@@ -5,28 +5,28 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.eclipse.gef.commands.Command;
-import org.bloqqi.compiler.ast.Component;
+import org.bloqqi.compiler.ast.Block;
 import org.bloqqi.compiler.ast.ComponentParameter;
 import org.bloqqi.compiler.ast.Connection;
 import org.bloqqi.compiler.ast.DiagramType;
 import org.bloqqi.compiler.ast.FlowDecl;
-import org.bloqqi.compiler.ast.InheritedComponent;
+import org.bloqqi.compiler.ast.InheritedBlock;
 import org.bloqqi.compiler.ast.InheritedConnection;
 import org.bloqqi.compiler.ast.List;
 
-public class DeleteComponentCommand extends Command {
-	private final InheritedComponent inhComponent;
-	private final Component declaredComponent;
+public class DeleteBlockCommand extends Command {
+	private final InheritedBlock inhBlock;
+	private final Block declaredBlock;
 	private final DiagramType diagramType;
 	private final boolean canDelete;
 	private final List<FlowDecl> oldFlowDecls;
 
-	private int indexOfComponent;
+	private int indexOfBlock;
 
-	public DeleteComponentCommand(InheritedComponent inhComponent, DiagramType diagramType) {
-		this.inhComponent = inhComponent;
-		this.declaredComponent = inhComponent.getDeclaredComponent();
-		this.canDelete = inhComponent.canDelete();
+	public DeleteBlockCommand(InheritedBlock inhBlock, DiagramType diagramType) {
+		this.inhBlock = inhBlock;
+		this.declaredBlock = inhBlock.getDeclaredBlock();
+		this.canDelete = inhBlock.canDelete();
 		this.diagramType = diagramType;
 		this.oldFlowDecls = diagramType.getFlowDeclList().treeCopy();
 	}
@@ -41,8 +41,8 @@ public class DeleteComponentCommand extends Command {
 	@Override
 	public void execute() {
 		removeAffectedConnections();
-		indexOfComponent = diagramType.getLocalComponentList().getIndexOfChild(declaredComponent);
-		diagramType.getLocalComponentList().removeChild(indexOfComponent);
+		indexOfBlock = diagramType.getLocalBlockList().getIndexOfChild(declaredBlock);
+		diagramType.getLocalBlockList().removeChild(indexOfBlock);
 		diagramType.program().flushAllAttributes();
 		diagramType.notifyObservers();
 	}
@@ -50,12 +50,12 @@ public class DeleteComponentCommand extends Command {
 	private void removeAffectedConnections() {
 		// Step 1: identify which connections to remove
 		Set<FlowDecl> removeFlowDecls = new HashSet<>();
-		for (ComponentParameter p: inhComponent.getInParameters()) {
+		for (ComponentParameter p: inhBlock.getInParameters()) {
 			for (Connection c: p.ingoingConnections()) {
 				removeFlowDecls.add(((InheritedConnection) c).getDeclaredFlowDecl());
 			}
 		}
-		for (ComponentParameter p: inhComponent.getOutParameters()) {
+		for (ComponentParameter p: inhBlock.getOutParameters()) {
 			for (Connection c: p.outgoingConnections()) {
 				removeFlowDecls.add(((InheritedConnection) c).getDeclaredFlowDecl());
 			}
@@ -75,7 +75,7 @@ public class DeleteComponentCommand extends Command {
 	@Override
 	public void undo() {
 		diagramType.setFlowDeclList(oldFlowDecls);
-		diagramType.getLocalComponentList().insertChild(declaredComponent, indexOfComponent);
+		diagramType.getLocalBlockList().insertChild(declaredBlock, indexOfBlock);
 		diagramType.program().flushAllAttributes();
 		diagramType.notifyObservers();
 	}

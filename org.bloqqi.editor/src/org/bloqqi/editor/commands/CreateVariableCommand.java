@@ -10,7 +10,7 @@ import org.bloqqi.compiler.ast.DiagramType;
 import org.bloqqi.compiler.ast.TypeUse;
 import org.bloqqi.compiler.ast.Variable;
 import org.bloqqi.editor.Coordinates;
-import org.bloqqi.editor.figures.ComponentFigure;
+import org.bloqqi.editor.figures.BlockFigure;
 
 public class CreateVariableCommand extends Command {
 	private final Point location;
@@ -56,7 +56,7 @@ public class CreateVariableCommand extends Command {
 	}
 	
 	private Rectangle createRectangle() {
-		Dimension dim = new Dimension(ComponentFigure.WIDTH, ComponentFigure.MIN_HEIGHT);
+		Dimension dim = new Dimension(BlockFigure.WIDTH, BlockFigure.MIN_HEIGHT);
 		return new Rectangle(location, dim);
 	}
 	

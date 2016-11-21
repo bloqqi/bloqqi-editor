@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Properties {
-	public static String KEY_COMPONENT_NAME;
+	public static String KEY_BLOCK_NAME;
 	
 	private Map<String, Object> map;
 	private Properties() {

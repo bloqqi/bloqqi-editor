@@ -14,7 +14,7 @@ import org.eclipse.ui.PlatformUI;
 import org.bloqqi.compiler.ast.ASTObservable;
 import org.bloqqi.compiler.ast.ASTObserver;
 import org.bloqqi.compiler.ast.AnonymousDiagramType;
-import org.bloqqi.compiler.ast.Component;
+import org.bloqqi.compiler.ast.Block;
 import org.bloqqi.compiler.ast.DiagramType;
 import org.bloqqi.compiler.ast.TypeDecl;
 import org.bloqqi.editor.BloqqiEditor;
@@ -69,7 +69,7 @@ public class DiagramTypePartOutline extends GenericAbstractTreeEditPart<DiagramT
 		Image img;
 		if (dt instanceof AnonymousDiagramType) {
 			AnonymousDiagramType adt = (AnonymousDiagramType) dt;
-			name = adt.enclosingComponentName();
+			name = adt.enclosingBlockName();
 			img = IMG_ANONYMOUS_TYPE;
 		} else {
 			name = dt.name();
@@ -97,9 +97,9 @@ public class DiagramTypePartOutline extends GenericAbstractTreeEditPart<DiagramT
 	@Override
 	public List<TypeDecl> getModelChildren() {
 		List<TypeDecl> list = new ArrayList<>();
-		for (Component c: getModel().getLocalComponents()) {
-			if (c.hasAnonymousDiagramType()) {
-				list.add(c.anonymousDiagramType());
+		for (Block b: getModel().getLocalBlocks()) {
+			if (b.hasAnonymousDiagramType()) {
+				list.add(b.anonymousDiagramType());
 			}
 		}
 		return list;

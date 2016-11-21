@@ -20,8 +20,8 @@ public class ChangeNameDisplayedAction extends MyWorkbenchPartAction {
 	
 	@Override 
 	public void run() {
-		int before = Properties.instance().getInt(Properties.KEY_COMPONENT_NAME, 0);
-		Properties.instance().put(Properties.KEY_COMPONENT_NAME, ++before%3);
+		int before = Properties.instance().getInt(Properties.KEY_BLOCK_NAME, 0);
+		Properties.instance().put(Properties.KEY_BLOCK_NAME, ++before%3);
 		getEditor().refresh();
 	}
 }

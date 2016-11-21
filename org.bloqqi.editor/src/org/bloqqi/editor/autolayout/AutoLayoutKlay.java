@@ -6,7 +6,7 @@ import java.util.Map;
 
 import org.eclipse.draw2d.geometry.Rectangle;
 import org.bloqqi.compiler.ast.Anchor;
-import org.bloqqi.compiler.ast.Component;
+import org.bloqqi.compiler.ast.Block;
 import org.bloqqi.compiler.ast.ComponentParameter;
 import org.bloqqi.compiler.ast.Connection;
 import org.bloqqi.compiler.ast.DiagramType;
@@ -16,7 +16,7 @@ import org.bloqqi.compiler.ast.OutParameter;
 import org.bloqqi.compiler.ast.Parameter;
 import org.bloqqi.compiler.ast.Variable;
 import org.bloqqi.editor.editparts.ComponentParameterPart;
-import org.bloqqi.editor.figures.ComponentFigure;
+import org.bloqqi.editor.figures.BlockFigure;
 
 import de.cau.cs.kieler.core.alg.IKielerProgressMonitor;
 import de.cau.cs.kieler.core.alg.BasicProgressMonitor;
@@ -66,7 +66,7 @@ public class AutoLayoutKlay {
 	private KNode createGraph() {
 		KNode graphNode = KimlUtil.createInitializedNode();
 		addParameters(graphNode);
-		addComponents(graphNode);
+		addBlocks(graphNode);
 		addVariables(graphNode);
 		addConnections();
 		return graphNode;
@@ -83,16 +83,16 @@ public class AutoLayoutKlay {
 		}
 	}
 	
-	private void addComponents(KNode graphNode) {
-		for (Component c: diagramType.components()) {
-			KNode node = createKNode(graphNode, c);
-			for (ComponentParameter par: c.getInParameterList()) {
+	private void addBlocks(KNode graphNode) {
+		for (Block b: diagramType.blocks()) {
+			KNode node = createKNode(graphNode, b);
+			for (ComponentParameter par: b.getInParameterList()) {
 				KPort port = KimlUtil.createInitializedPort();
 				port.setNode(node);
 				toKPort.put(par, port);
 				toAnchor.put(port, par);
 			}
-			for (ComponentParameter par: c.getOutParameterList()) {
+			for (ComponentParameter par: b.getOutParameterList()) {
 				KPort port = KimlUtil.createInitializedPort();
 				port.setNode(node);
 				toKPort.put(par, port);
@@ -161,7 +161,7 @@ public class AutoLayoutKlay {
 			Node node = toNode.get(knode);
 			
 			KShapeLayout nodeLayout = knode.getData(KShapeLayout.class);
-			int width = ComponentFigure.WIDTH;
+			int width = BlockFigure.WIDTH;
 			if (node.hasIncomingLiterals()) {
 				width += EXTRA_SPACE_LITERAL;
 			}
@@ -173,7 +173,7 @@ public class AutoLayoutKlay {
 			// set fixed size for the child
 			//           childLayout.setProperty(LayoutOptions.FIXED_SIZE, Boolean.TRUE);
 			// set port constraints to fixed port positions
-			if (node.isComponent() || node.isParameter()) {
+			if (node.isBlock() || node.isParameter()) {
 				nodeLayout.setProperty(LayoutOptions.PORT_CONSTRAINTS, PortConstraints.FIXED_POS);
 			}
 			for (KPort port : knode.getPorts()) {
@@ -188,7 +188,7 @@ public class AutoLayoutKlay {
 					portLayout.setXpos(0.0f);
 					portLayout.setYpos(height/2);
 					portLayout.setProperty(LayoutOptions.PORT_SIDE, PortSide.WEST);
-				} else if (node.isComponent()) {
+				} else if (node.isBlock()) {
 					ComponentParameter compPar = (ComponentParameter) anchor;
 					if (anchor.isInParameter()) {
 						portLayout.setXpos(0.0f);

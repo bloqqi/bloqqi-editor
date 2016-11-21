@@ -12,27 +12,27 @@ import org.eclipse.gef.editpolicies.SnapFeedbackPolicy;
 import org.bloqqi.compiler.ast.ASTNode;
 import org.bloqqi.compiler.ast.ASTObservable;
 import org.bloqqi.compiler.ast.ASTObserver;
-import org.bloqqi.compiler.ast.Component;
+import org.bloqqi.compiler.ast.Block;
 import org.bloqqi.compiler.ast.ComponentParameter;
-import org.bloqqi.editor.figures.ComponentFigure;
-import org.bloqqi.editor.policies.ComponentComponentEditPolicy;
+import org.bloqqi.editor.figures.BlockFigure;
+import org.bloqqi.editor.policies.BlockComponentEditPolicy;
 import org.bloqqi.editor.policies.NodeSelectionEditPolicy;
 
-public class ComponentPart extends AbstractNodePart<Component>
+public class BlockPart extends AbstractNodePart<Block>
 		implements ASTObserver {
-	public ComponentPart(Component component) {
-		super(component);
+	public BlockPart(Block block) {
+		super(block);
 	}
 
 	@Override
 	protected IFigure createFigure() {
-		return new ComponentFigure();
+		return new BlockFigure();
 	}
 
 	@Override
 	protected void createEditPolicies() {
 		installEditPolicy(EditPolicy.COMPONENT_ROLE,
-				new ComponentComponentEditPolicy());
+				new BlockComponentEditPolicy());
 		installEditPolicy(EditPolicy.SELECTION_FEEDBACK_ROLE,
 				new NodeSelectionEditPolicy());
 		installEditPolicy("Snap Feedback", new SnapFeedbackPolicy());
@@ -56,18 +56,18 @@ public class ComponentPart extends AbstractNodePart<Component>
 
 	@Override
 	public void refreshVisuals() {
-		ComponentFigure figure = (ComponentFigure) getFigure();
-		Component component = getModel();
+		BlockFigure figure = (BlockFigure) getFigure();
+		Block block = getModel();
 		DiagramTypePart parent = (DiagramTypePart) getParent();
 
 		String text = "";
 		String name;
-		if (component.getModifiers().isOnSimpleNameForm()) {
-			name = component.type().name();
+		if (block.getModifiers().isOnSimpleNameForm()) {
+			name = block.type().name();
 		} else {
-			name = component.inlinedName();
-			if (component.isNameAmbiguous()) {
-				name = component.declaredInDiagramType().name() + ASTNode.DECLARED_IN_SEP + name;
+			name = block.inlinedName();
+			if (block.isNameAmbiguous()) {
+				name = block.declaredInDiagramType().name() + ASTNode.DECLARED_IN_SEP + name;
 			}
 		}
 		text = name;
@@ -91,13 +91,13 @@ public class ComponentPart extends AbstractNodePart<Component>
 		figure.getLabel().setText(name + "");
 		figure.getLabel().setText(String.valueOf(component.dfo()));*/
 		
-		figure.setHasInParameters(component.getNumInParameter() > 0);
-		figure.setHasOutParameters(component.getNumOutParameter() > 0);
-		figure.hasErrors(component.isOnTypeCycle() || component.isDataflowCircular());
-		figure.setCanDelete(component.canDelete());
-		figure.setIsInlined(component.isInlined());
+		figure.setHasInParameters(block.getNumInParameter() > 0);
+		figure.setHasOutParameters(block.getNumOutParameter() > 0);
+		figure.hasErrors(block.isOnTypeCycle() || block.isDataflowCircular());
+		figure.setCanDelete(block.canDelete());
+		figure.setIsInlined(block.isInlined());
 		figure.setShowInlineFeedback(showInlineFeedback());
-		figure.setIsRedeclared(component.isLocallyRedeclared());
+		figure.setIsRedeclared(block.isLocallyRedeclared());
 		
 		Rectangle r = getRectangle();
 		

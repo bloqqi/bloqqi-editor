@@ -373,7 +373,7 @@ public class DiagramTypePropertiesPage extends WizardPage {
 						alreadyExists = true;
 					}
 				}
-				if (diagramType.localComponentLookup(name) != null) {
+				if (diagramType.localBlockLookup(name) != null) {
 					alreadyExists = true;
 				}
 				for (DiagramType superType: diagramType.superTypesLinearized()) {

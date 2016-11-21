@@ -12,7 +12,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 
 
-public class ComponentFigure extends Figure {
+public class BlockFigure extends Figure {
 	public static final int MIN_HEIGHT = 20;
 	public static final int WIDTH = 60;
 
@@ -28,7 +28,7 @@ public class ComponentFigure extends Figure {
 	private boolean showInlineFeedback;
 	private boolean isRedeclared;
 	
-	public ComponentFigure() {
+	public BlockFigure() {
 		XYLayout layout = new XYLayout();
 		setLayoutManager(layout);
 	    

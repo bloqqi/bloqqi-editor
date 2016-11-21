@@ -45,9 +45,9 @@ public class ExtractSubTypeAsRecommendationAction extends MyWorkbenchPartAction 
 		
 		String diagramTypeName = getInput("Diagram type name", "Enter new diagram type name", "");
 		if (diagramTypeName != null) {
-			String componentName = getInput("Feature name", "Enter feature name", "");
-			if (componentName != null) {
-				Command cmd = new ExtractSubTypeAsRecommendationCommand(dt, diagramTypeName, componentName);
+			String blockName = getInput("Feature name", "Enter feature name", "");
+			if (blockName != null) {
+				Command cmd = new ExtractSubTypeAsRecommendationCommand(dt, diagramTypeName, blockName);
 				execute(cmd);
 			}
 		}

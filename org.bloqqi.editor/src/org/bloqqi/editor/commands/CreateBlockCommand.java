@@ -9,7 +9,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.bloqqi.compiler.ast.ASTNode;
-import org.bloqqi.compiler.ast.Component;
+import org.bloqqi.compiler.ast.Block;
 import org.bloqqi.compiler.ast.DiagramType;
 import org.bloqqi.compiler.ast.IdName;
 import org.bloqqi.compiler.ast.Pair;
@@ -17,21 +17,21 @@ import org.bloqqi.compiler.ast.Program;
 import org.bloqqi.compiler.ast.VarUse;
 import org.bloqqi.editor.Coordinates;
 import org.bloqqi.editor.editparts.ComponentParameterPart;
-import org.bloqqi.editor.figures.ComponentFigure;
+import org.bloqqi.editor.figures.BlockFigure;
 import org.bloqqi.editor.wizards.specialize.PageParameters.NewInParameter;
 
-public class CreateComponentCommand extends Command {
+public class CreateBlockCommand extends Command {
 	private final Point location;
-	private Component component;
+	private Block block;
 	private final DiagramType diagramType;
 	private final Coordinates coordinates;
 	private Set<NewInParameter> newInParameters;
 
 	private boolean hasExecuted;
 	
-	public CreateComponentCommand(Point location, Component component, DiagramType diagramType, Coordinates coordinates) {
+	public CreateBlockCommand(Point location, Block block, DiagramType diagramType, Coordinates coordinates) {
 		this.location = location;
-		this.component = component;
+		this.block = block;
 		this.diagramType = diagramType;
 		this.coordinates = coordinates;
 		setNewInParameters(new HashSet<>());
@@ -39,46 +39,46 @@ public class CreateComponentCommand extends Command {
 	}
 	
 	public void execute() {
-		if (component.getName() == null
-				|| !Program.isIdValid(component.name())
-				|| diagramType.lookup(component.name()) != null) {
+		if (block.getName() == null
+				|| !Program.isIdValid(block.name())
+				|| diagramType.lookup(block.name()) != null) {
 			setSimpleName(computeNewName());
 		}
-		diagramType.addLocalComponent(component);
+		diagramType.addLocalBlock(block);
 		diagramType.program().flushAllAttributes();
 
 		if (!hasExecuted) {
-			// Some parameters of nested components should be exposed as parameters.
+			// Some parameters of nested blocks should be exposed as parameters.
 			// This is set by the user in the specialization wizard.
 			for (NewInParameter in: newInParameters) {
-				String parameter = component.name() + "." + in.getPath();
-				Pair<Component, VarUse> p = diagramType.addConnectionsParameters(parameter, in.getNewName());
-				component = p.first;
+				String parameter = block.name() + "." + in.getPath();
+				Pair<Block, VarUse> p = diagramType.addConnectionsParameters(parameter, in.getNewName());
+				block = p.first;
 			}
 		}
 		
 		diagramType.program().flushAllAttributes();
-		coordinates.setRectangle(diagramType, component.accessString(), createRectangle());
+		coordinates.setRectangle(diagramType, block.accessString(), createRectangle());
 		diagramType.notifyObservers();
 		
 		hasExecuted = true;
 	}
 
 	private Rectangle createRectangle() {
-		int ports = Math.max(component.getNumInParameter(), component.getNumOutParameter());
+		int ports = Math.max(block.getNumInParameter(), block.getNumOutParameter());
 		int height = ports * (ComponentParameterPart.SIZE + ComponentParameterPart.PADDING);
-		Dimension dim = new Dimension(ComponentFigure.WIDTH, Math.max(ComponentFigure.MIN_HEIGHT, height));
+		Dimension dim = new Dimension(BlockFigure.WIDTH, Math.max(BlockFigure.MIN_HEIGHT, height));
 		return new Rectangle(location, dim);
 	}
 	
 	public void setName(String name) {
-		component.setName(new IdName(name));
-		component.getModifiers().removeModifier(ASTNode.MODIFIER_SIMPLE);
+		block.setName(new IdName(name));
+		block.getModifiers().removeModifier(ASTNode.MODIFIER_SIMPLE);
 	}
 	
 	public void setSimpleName(String name) {
-		component.setName(new IdName(name));
-		component.getModifiers().addModifier(ASTNode.MODIFIER_SIMPLE);
+		block.setName(new IdName(name));
+		block.getModifiers().addModifier(ASTNode.MODIFIER_SIMPLE);
 	}
 	
 	public String computeNewName() {
@@ -86,7 +86,7 @@ public class CreateComponentCommand extends Command {
 		String name;
 		do {
 			i++;
-			name = component.getType().name() + "_" + i;
+			name = block.getType().name() + "_" + i;
 		} while(diagramType.lookup(name) != null);
 		return name;
 	}
@@ -97,17 +97,17 @@ public class CreateComponentCommand extends Command {
 	}
 	
 	public void undo() {
-		diagramType.getLocalComponentList().removeChild(component);
+		diagramType.getLocalBlockList().removeChild(block);
 		diagramType.program().flushAllAttributes();
 		diagramType.notifyObservers();
 	}
 
-	public Component getComponent() {
-		return component;
+	public Block getBlock() {
+		return block;
 	}
 
-	public void setComponent(Component component) {
-		this.component = component;
+	public void setBlock(Block block) {
+		this.block = block;
 	}
 
 	public void setNewInParameters(Set<NewInParameter> newInParameters) {

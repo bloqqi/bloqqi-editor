@@ -1,18 +1,19 @@
 package org.bloqqi.editor.policies;
 
 import org.eclipse.gef.commands.Command;
+
 import org.eclipse.gef.editpolicies.ComponentEditPolicy;
 import org.eclipse.gef.requests.GroupRequest;
 import org.bloqqi.compiler.ast.DiagramType;
-import org.bloqqi.compiler.ast.InheritedComponent;
-import org.bloqqi.editor.commands.DeleteComponentCommand;
+import org.bloqqi.compiler.ast.InheritedBlock;
+import org.bloqqi.editor.commands.DeleteBlockCommand;
 
-public class ComponentComponentEditPolicy extends ComponentEditPolicy {
+public class BlockComponentEditPolicy extends ComponentEditPolicy {
 	@Override
 	protected Command createDeleteCommand(GroupRequest request) { 
 		DiagramType dt = (DiagramType)getHost().getParent().getModel();
-		InheritedComponent inhComp = (InheritedComponent)getHost().getModel();
-		return new DeleteComponentCommand(inhComp, dt);
+		InheritedBlock inhBlock = (InheritedBlock)getHost().getModel();
+		return new DeleteBlockCommand(inhBlock, dt);
 	}
 	
 //	@Override

@@ -22,11 +22,11 @@ import org.eclipse.gef.editparts.ZoomManager;
 import org.eclipse.swt.graphics.Color;
 import org.bloqqi.compiler.ast.ASTObservable;
 import org.bloqqi.compiler.ast.ASTObserver;
-import org.bloqqi.compiler.ast.Component;
+import org.bloqqi.compiler.ast.Block;
 import org.bloqqi.compiler.ast.ComponentParameter;
 import org.bloqqi.compiler.ast.Connection;
 import org.bloqqi.compiler.ast.Node;
-import org.bloqqi.editor.figures.ComponentFigure;
+import org.bloqqi.editor.figures.BlockFigure;
 import org.bloqqi.editor.figures.ComponentParameterFigure;
 import org.bloqqi.editor.policies.NodeGraphicalNodeEditPolicy;
 
@@ -106,7 +106,7 @@ public class ComponentParameterPart
 	
 	@Override
 	public void refreshVisuals() {
-		ComponentPart parent = (ComponentPart) getParent();
+		BlockPart parent = (BlockPart) getParent();
 		ComponentParameterFigure f = (ComponentParameterFigure) getFigure();
 		
 		int x = getModel().isInParameter() ? 1 : parent.getRectangle().width+SIZE-1;
@@ -174,15 +174,15 @@ public class ComponentParameterPart
 	}
 	
 	public static int computeNodeMinHeight(Node node) {
-		if (node instanceof Component) {
-			Component c = (Component) node;
-			int nIn = c.getNumInParameter();
-			int nOut = c.getNumOutParameter();
+		if (node instanceof Block) {
+			Block b = (Block) node;
+			int nIn = b.getNumInParameter();
+			int nOut = b.getNumOutParameter();
 			int minIn = Y0*2 + nIn*SIZE + (nIn-1)*PADDING;
 			int minOut = Y0*2 + nOut*SIZE + (nOut-1)*PADDING;
-			return Math.max(Math.max(minIn, minOut), ComponentFigure.MIN_HEIGHT);
+			return Math.max(Math.max(minIn, minOut), BlockFigure.MIN_HEIGHT);
 		} else {
-			return ComponentFigure.MIN_HEIGHT;
+			return BlockFigure.MIN_HEIGHT;
 		}
 	}
 	

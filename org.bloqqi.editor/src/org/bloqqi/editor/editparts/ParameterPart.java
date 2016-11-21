@@ -58,7 +58,7 @@ abstract public class ParameterPart<T extends Parameter> extends AbstractNodePar
 		DiagramTypePart parent = (DiagramTypePart) getParent();
 
 		figure.setIsInherited(parameter.isInherited());
-		int whatToShow = Properties.instance().getInt(Properties.KEY_COMPONENT_NAME, 0);
+		int whatToShow = Properties.instance().getInt(Properties.KEY_BLOCK_NAME, 0);
 		String text;
 		switch (whatToShow) {
 		case 0:

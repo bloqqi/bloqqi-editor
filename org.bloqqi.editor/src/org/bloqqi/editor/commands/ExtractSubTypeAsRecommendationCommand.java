@@ -5,25 +5,25 @@ import org.bloqqi.compiler.ast.CompilationUnit;
 import org.bloqqi.compiler.ast.DiagramType;
 import org.bloqqi.compiler.ast.Pair;
 import org.bloqqi.compiler.ast.Recommendation;
-import org.bloqqi.compiler.ast.RecommendationComponent;
+import org.bloqqi.compiler.ast.RecommendationBlock;
 import org.bloqqi.compiler.ast.TypeUse;
-import org.bloqqi.compiler.ast.WiredComponent;
+import org.bloqqi.compiler.ast.WiredBlock;
 
 public class ExtractSubTypeAsRecommendationCommand extends Command {
 	private final CompilationUnit compUnit;
 	private final DiagramType subType;
 	private final DiagramType superType;
 	private final String newDiagramTypeName;
-	private final String newComponentName;
+	private final String newBlockName;
 
 	private Recommendation recommendation;
 	private DiagramType newDiagramType;
 	
-	public ExtractSubTypeAsRecommendationCommand(DiagramType subType, String newDiagramType, String newComponentName) {
+	public ExtractSubTypeAsRecommendationCommand(DiagramType subType, String newDiagramType, String newBlockName) {
 		this.compUnit = subType.compUnit();
 		this.subType = subType;
 		this.newDiagramTypeName = newDiagramType;
-		this.newComponentName = newComponentName;
+		this.newBlockName = newBlockName;
 		
 		// Require that there is only one super type
 		if (subType.directSuperTypes().size() == 1) {
@@ -40,13 +40,13 @@ public class ExtractSubTypeAsRecommendationCommand extends Command {
 	
 	@Override
 	public void execute() {
-		Pair<DiagramType, WiredComponent> p = subType.extractsubTypeAsWiredBlock(newDiagramTypeName, newComponentName);
+		Pair<DiagramType, WiredBlock> p = subType.extractsubTypeAsWiredBlock(newDiagramTypeName, newBlockName);
 		newDiagramType = p.first;
 		compUnit.addDeclaration(newDiagramType);
 		
 		recommendation = new Recommendation();
 		recommendation.setDeclaredForType(new TypeUse(superType.name()));
-		recommendation.addRecommendationElement(new RecommendationComponent(p.second));
+		recommendation.addRecommendationElement(new RecommendationBlock(p.second));
 		compUnit.addDeclaration(recommendation);
 		
 		compUnit.program().flushAllAttributes();

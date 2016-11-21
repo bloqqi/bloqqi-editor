@@ -46,9 +46,9 @@ public class CreateConnectionCommand extends AbstractCreateConnectionCommand {
 	@Override
 	public void undo() {
 		DiagramType dt = source.diagramType();
-		if (oldComponent != null) {
-			int i = dt.getLocalComponentList().getIndexOfChild(newComponent);
-			dt.getLocalComponentList().setChild(oldComponent, i);
+		if (oldBlock != null) {
+			int i = dt.getLocalBlockList().getIndexOfChild(newBlock);
+			dt.getLocalBlockList().setChild(oldBlock, i);
 		}
 		dt.getFlowDeclList().removeChild(connection);
 		dt.program().flushAllAttributes();

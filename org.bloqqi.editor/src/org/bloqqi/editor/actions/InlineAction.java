@@ -1,12 +1,12 @@
 package org.bloqqi.editor.actions;
 
 import org.eclipse.gef.commands.Command;
-import org.bloqqi.compiler.ast.Component;
-import org.bloqqi.compiler.ast.InheritedComponent;
-import org.bloqqi.compiler.ast.InlinedComponent;
+import org.bloqqi.compiler.ast.Block;
+import org.bloqqi.compiler.ast.InheritedBlock;
+import org.bloqqi.compiler.ast.InlinedBlock;
 import org.bloqqi.editor.BloqqiEditor;
-import org.bloqqi.editor.commands.SetComponentInlineCommand;
-import org.bloqqi.editor.editparts.ComponentPart;
+import org.bloqqi.editor.commands.SetBlockInlineCommand;
+import org.bloqqi.editor.editparts.BlockPart;
 
 
 public class InlineAction extends MySelectionAction {
@@ -22,18 +22,18 @@ public class InlineAction extends MySelectionAction {
 
 	@Override
 	protected boolean calculateEnabled() {
-		ComponentPart part = getSelected(ComponentPart.class);
+		BlockPart part = getSelected(BlockPart.class);
 		if (part != null) {
-			Component component = part.getModel();
-			if (component.isInlined()) {
+			Block block = part.getModel();
+			if (block.isInlined()) {
 				setText(COLLAPSE_TEXT);
 			} else {
 				setText(INLINE_TEXT);
 			}
-			if (component.isInlined()) {
-				return component.inlinedComponent().declaredInDiagramType() == component.diagramType();
+			if (block.isInlined()) {
+				return block.inlinedBlock().declaredInDiagramType() == block.diagramType();
 			} else {
-				return component.type().isDiagramType() && !component.isInherited();
+				return block.type().isDiagramType() && !block.isInherited();
 			}
 		}
 		return false;
@@ -41,19 +41,19 @@ public class InlineAction extends MySelectionAction {
 
 	@Override 
 	public void run() { 
-		Component comp = getSelected(ComponentPart.class).getModel();
+		Block block = getSelected(BlockPart.class).getModel();
 		Command cmd = null;
-		if (comp.isInlined()) {
-			InlinedComponent inlinedComp = (InlinedComponent) comp;
-			cmd = new SetComponentInlineCommand(
+		if (block.isInlined()) {
+			InlinedBlock inlinedBlock = (InlinedBlock) block;
+			cmd = new SetBlockInlineCommand(
 					getEditor().getCoordinates(),
-					inlinedComp.inlinedComponent(),
+					inlinedBlock.inlinedBlock(),
 					false);
-		} else if (!comp.isInherited()) {
-			InheritedComponent inhComp = (InheritedComponent) comp;
-			cmd = new SetComponentInlineCommand(
+		} else if (!block.isInherited()) {
+			InheritedBlock inhBlock = (InheritedBlock) block;
+			cmd = new SetBlockInlineCommand(
 					getEditor().getCoordinates(),
-					inhComp.getDeclaredComponent(),
+					inhBlock.getDeclaredBlock(),
 					true);
 		}
 		execute(cmd);

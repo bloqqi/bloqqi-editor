@@ -39,7 +39,7 @@ public class NodeGraphicalNodeEditPolicy extends GraphicalNodeEditPolicy {
 	protected Command getInterceptFirstCommand(CreateInterceptRequest request) {
 		AbstractInterceptCommand cmd = null;
 		Anchor anchor = (Anchor) getHost().getModel();
-		if (canAccess(anchor) && anchor.node().isComponent()) {
+		if (canAccess(anchor) && anchor.node().isBlock()) {
 			if (request.getInterceptKind() == InterceptKind.CONNECTION) {
 				cmd = new TargetInterceptCommand();
 			} else {
@@ -55,7 +55,7 @@ public class NodeGraphicalNodeEditPolicy extends GraphicalNodeEditPolicy {
 	protected Command getInterceptSecondCommand(CreateInterceptRequest request) {
 		AbstractInterceptCommand cmd = null;
 		Anchor anchor = (Anchor) getHost().getModel();
-		if (canAccess(anchor) && anchor.node().isComponent()) {
+		if (canAccess(anchor) && anchor.node().isBlock()) {
 			cmd = (AbstractInterceptCommand) request.getStartCommand();
 			cmd.setSource(anchor);
 		}

@@ -15,13 +15,13 @@ public class DeleteDiagramTypeCommand extends Command {
 	private final DiagramType diagramType;
 	private final boolean isAnonymousType;
 	private final CompilationUnit compUnit;
-	
+
 	// Only for ordinary diagram types
 	private final int indexOfDiagramType;
-	
+
 	private final Coordinates coordinates;
 	private final SortedMap<String, Rectangle> coordinatesMap;
-	
+
 	public DeleteDiagramTypeCommand(DiagramType diagramType, Coordinates coordinates) {
 		this.diagramType = diagramType;
 		this.isAnonymousType = diagramType.isAnonymousType();
@@ -34,18 +34,18 @@ public class DeleteDiagramTypeCommand extends Command {
 		this.coordinates = coordinates;
 		this.coordinatesMap = coordinates.getAllRectangles(diagramType);
 	}
-	
+
 	@Override
 	public boolean canExecute() {
 		return true;
 	}
-	
+
 	@Override
 	public void execute() {
 		coordinates.removeAllRectangles(diagramType);
 		if (isAnonymousType) {
 			TypeUse typeUse = diagramType.getSuperType(0).treeCopy();
-			diagramType.enclosingComponent().setType(typeUse);
+			diagramType.enclosingBlock().setType(typeUse);
 		} else {
 			compUnit.getDeclarationList().removeChild(indexOfDiagramType);
 		}
@@ -57,12 +57,12 @@ public class DeleteDiagramTypeCommand extends Command {
 	public boolean canUndo() {
 		return true;
 	}
-	
+
 	@Override
 	public void undo() {
 		coordinates.setAllRectangles(diagramType, coordinatesMap);
 		if (isAnonymousType) {
-			diagramType.enclosingComponent().setType(new AnonymousType((AnonymousDiagramType) diagramType));
+			diagramType.enclosingBlock().setType(new AnonymousType((AnonymousDiagramType) diagramType));
 		} else {
 			compUnit.getDeclarationList().insertChild(diagramType, indexOfDiagramType);
 		}

@@ -14,7 +14,7 @@ import org.eclipse.gef.LayerConstants;
 import org.eclipse.swt.SWT;
 import org.bloqqi.compiler.ast.ASTObservable;
 import org.bloqqi.compiler.ast.ASTObserver;
-import org.bloqqi.compiler.ast.Component;
+import org.bloqqi.compiler.ast.Block;
 import org.bloqqi.compiler.ast.DiagramType;
 import org.bloqqi.compiler.ast.InParameter;
 import org.bloqqi.compiler.ast.Literal;
@@ -75,8 +75,8 @@ public class DiagramTypePart extends GenericAbstractGraphicalPart<DiagramType>
 		for (OutParameter p: getModel().getOutParameters()) {
 			list.add(p);
 		}
-		for (Component c: getModel().getComponents()) {
-			list.add(c);
+		for (Block b: getModel().getBlocks()) {
+			list.add(b);
 		}
 		for (Literal l: getModel().literals()) {
 			list.add(l);

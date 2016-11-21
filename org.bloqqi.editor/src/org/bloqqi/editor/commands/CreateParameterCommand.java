@@ -12,7 +12,7 @@ import org.bloqqi.compiler.ast.OutParameter;
 import org.bloqqi.compiler.ast.Parameter;
 import org.bloqqi.compiler.ast.TypeUse;
 import org.bloqqi.editor.Coordinates;
-import org.bloqqi.editor.figures.ComponentFigure;
+import org.bloqqi.editor.figures.BlockFigure;
 
 public class CreateParameterCommand extends Command {
 	private final Point location;
@@ -67,7 +67,7 @@ public class CreateParameterCommand extends Command {
 	}
 	
 	private Rectangle createRectangle() {
-		Dimension dim = new Dimension(ComponentFigure.WIDTH, ComponentFigure.MIN_HEIGHT);
+		Dimension dim = new Dimension(BlockFigure.WIDTH, BlockFigure.MIN_HEIGHT);
 		return new Rectangle(location, dim);
 	}
 	

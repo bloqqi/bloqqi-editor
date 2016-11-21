@@ -6,11 +6,11 @@ import org.bloqqi.editor.actions.AutoLayoutAction;
 import org.bloqqi.editor.actions.ChangeAllConnectionRoutersAction;
 import org.bloqqi.editor.actions.ChangeConnectionRouterAction;
 import org.bloqqi.editor.actions.ChangeNameDisplayedAction;
-import org.bloqqi.editor.actions.ChangeSpecializationComponent;
+import org.bloqqi.editor.actions.ChangeSpecializationBlock;
 import org.bloqqi.editor.actions.DiagramTypePropertiesAction;
 import org.bloqqi.editor.actions.ExtractSubTypeAsRecommendationAction;
 import org.bloqqi.editor.actions.InlineAction;
-import org.bloqqi.editor.actions.OpenComponentTypeAction;
+import org.bloqqi.editor.actions.OpenBlockTypeAction;
 import org.bloqqi.editor.actions.RenameAction;
 import org.bloqqi.editor.actions.SourceInterceptAction;
 import org.bloqqi.editor.actions.TargetInterceptAction;
@@ -69,8 +69,8 @@ public class Actions {
 		addSelectionAction(new InlineAction(editor));
 		addSelectionAction(new TargetInterceptAction(editor));
 		addSelectionAction(new SourceInterceptAction(editor));
-		addSelectionAction(new OpenComponentTypeAction(editor));
-		addSelectionAction(new ChangeSpecializationComponent(editor));
+		addSelectionAction(new OpenBlockTypeAction(editor));
+		addSelectionAction(new ChangeSpecializationBlock(editor));
 	}
 	
 	private void createOutlineActions() {

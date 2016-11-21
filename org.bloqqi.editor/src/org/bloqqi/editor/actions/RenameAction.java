@@ -4,11 +4,11 @@ import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.swt.widgets.Shell;
 import org.bloqqi.editor.BloqqiEditor;
 import org.bloqqi.editor.commands.RenameNodeCommand;
-import org.bloqqi.editor.commands.RenameComponentCommand;
+import org.bloqqi.editor.commands.RenameBlockCommand;
 import org.bloqqi.editor.commands.RenameParameterCommand;
 import org.bloqqi.editor.commands.RenameVariableCommand;
 import org.bloqqi.editor.editparts.AbstractNodePart;
-import org.bloqqi.editor.editparts.ComponentPart;
+import org.bloqqi.editor.editparts.BlockPart;
 import org.bloqqi.editor.editparts.ParameterPart;
 import org.bloqqi.editor.editparts.VariablePart;
 
@@ -40,8 +40,8 @@ public class RenameAction extends MySelectionAction {
 		
 		if(dialog.open() == InputDialog.OK) {
 			RenameNodeCommand cmd = null;
-			if (editPart instanceof ComponentPart) {
-				cmd = new RenameComponentCommand(((ComponentPart) editPart).getModel());
+			if (editPart instanceof BlockPart) {
+				cmd = new RenameBlockCommand(((BlockPart) editPart).getModel());
 			} else if (editPart instanceof ParameterPart) {
 				cmd = new RenameParameterCommand(((ParameterPart<?>) editPart).getModel());
 			} else if (editPart instanceof VariablePart) {

@@ -50,9 +50,9 @@ public class CreateLiteralCommand extends AbstractCreateConnectionCommand {
 	@Override
 	public void undo() {
 		DiagramType dt = target.diagramType();
-		if (oldComponent != null) {
-			int i = dt.getLocalComponentList().getIndexOfChild(newComponent);
-			dt.getLocalComponentList().setChild(oldComponent, i);
+		if (oldBlock != null) {
+			int i = dt.getLocalBlockList().getIndexOfChild(newBlock);
+			dt.getLocalBlockList().setChild(oldBlock, i);
 		}
 		dt.getFlowDeclList().removeChild(connection);
 		dt.program().flushAllAttributes();

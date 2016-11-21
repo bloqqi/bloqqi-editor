@@ -2,9 +2,7 @@ package org.bloqqi.editor.editparts;
 
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPartFactory;
-
-
-import org.bloqqi.compiler.ast.Component;
+import org.bloqqi.compiler.ast.Block;
 import org.bloqqi.compiler.ast.ComponentParameter;
 import org.bloqqi.compiler.ast.Connection;
 import org.bloqqi.compiler.ast.DiagramType;
@@ -24,8 +22,8 @@ public class DiagramTypePartFactory implements EditPartFactory {
 		GenericAbstractGraphicalPart<?> part = null;
 		if (model instanceof DiagramType) {
 			part = new DiagramTypePart((DiagramType) model);
-		} else if (model instanceof Component) { 
-			part = new ComponentPart((Component) model);
+		} else if (model instanceof Block) { 
+			part = new BlockPart((Block) model);
 		} else if (model instanceof InParameter) {
 			part = new InParameterPart((InParameter) model);
 		} else if (model instanceof OutParameter) {

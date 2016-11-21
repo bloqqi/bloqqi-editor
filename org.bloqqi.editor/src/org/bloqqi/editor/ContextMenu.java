@@ -3,11 +3,11 @@ package org.bloqqi.editor;
 import org.bloqqi.editor.actions.AutoLayoutAction;
 import org.bloqqi.editor.actions.ChangeAllConnectionRoutersAction;
 import org.bloqqi.editor.actions.ChangeConnectionRouterAction;
-import org.bloqqi.editor.actions.ChangeSpecializationComponent;
+import org.bloqqi.editor.actions.ChangeSpecializationBlock;
 import org.bloqqi.editor.actions.DiagramTypePropertiesAction;
 import org.bloqqi.editor.actions.ExtractSubTypeAsRecommendationAction;
 import org.bloqqi.editor.actions.InlineAction;
-import org.bloqqi.editor.actions.OpenComponentTypeAction;
+import org.bloqqi.editor.actions.OpenBlockTypeAction;
 import org.bloqqi.editor.actions.RenameAction;
 import org.bloqqi.editor.actions.SourceInterceptAction;
 import org.bloqqi.editor.actions.TargetInterceptAction;
@@ -51,10 +51,10 @@ public class ContextMenu extends ContextMenuProvider {
 			addAction(layoutSubmenu, ChangeConnectionRouterAction.ID);
 		}
 		
-		addActionToRest(menu, OpenComponentTypeAction.ID);
+		addActionToRest(menu, OpenBlockTypeAction.ID);
 		addActionToRest(menu, InlineAction.ID);
 		addActionToRest(menu, RenameAction.ID);
-		addActionToRest(menu, ChangeSpecializationComponent.ID);
+		addActionToRest(menu, ChangeSpecializationBlock.ID);
 		addActionToRest(menu, ActionFactory.DELETE.getId());
 		
 		menu.appendToGroup(GEFActionConstants.GROUP_EDIT, new Separator());

@@ -60,7 +60,7 @@ public class PageFeatures extends AbstractWizardPage  {
 		
 		createSuperTypeUI();
 		createNewNameUI();
-		createRecommendedComponentsUI();
+		createRecommendedBlocksUI();
 	
 		setControl(container);
 		setPageComplete(false);
@@ -88,7 +88,7 @@ public class PageFeatures extends AbstractWizardPage  {
 		});
 	}
 
-	protected void createRecommendedComponentsUI() {
+	protected void createRecommendedBlocksUI() {
 		Label label = new Label(container, SWT.NONE);
 		label.setText("Features:");
 		label.setLayoutData(new GridData(GridData.VERTICAL_ALIGN_BEGINNING));

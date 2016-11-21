@@ -4,7 +4,7 @@ import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.gef.commands.Command;
 import org.bloqqi.compiler.ast.Node;
 import org.bloqqi.editor.Coordinates;
-import org.bloqqi.editor.figures.ComponentFigure;
+import org.bloqqi.editor.figures.BlockFigure;
 
 public class ChangeConstraintNodeCommand extends Command {
 	protected Coordinates coordinates;
@@ -26,8 +26,8 @@ public class ChangeConstraintNodeCommand extends Command {
 	}
 
 	public void setNewConstraint(Rectangle newConstraint) {
-		if (newConstraint.height < ComponentFigure.MIN_HEIGHT) {
-			newConstraint.height = ComponentFigure.MIN_HEIGHT;
+		if (newConstraint.height < BlockFigure.MIN_HEIGHT) {
+			newConstraint.height = BlockFigure.MIN_HEIGHT;
 		}
 		this.newConstraint = newConstraint;
 	}

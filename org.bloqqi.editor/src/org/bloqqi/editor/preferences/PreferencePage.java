@@ -19,8 +19,8 @@ public class PreferencePage
 	public void createFieldEditors() {
 		addField(
 			new BooleanFieldEditor(
-				PreferenceConstants.ASK_COMPONENT_NAME,
-				"Always ask for component name for new components",
+				PreferenceConstants.ASK_BLOCK_NAME,
+				"Always ask for block name for new blocks",
 				getFieldEditorParent()));
 		addField(
 			new BooleanFieldEditor(

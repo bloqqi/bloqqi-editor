@@ -3,23 +3,23 @@ package org.bloqqi.editor.wizards.specialize;
 import org.bloqqi.compiler.ast.DiagramType;
 import org.eclipse.swt.widgets.Composite;
 
-public class PageFeaturesChangeComponent extends PageFeatures {
+public class PageFeaturesChangeBlock extends PageFeatures {
 	protected DiagramType enclosingDiagramType;
-	protected String componentName;
+	protected String blockName;
 	
 	public void setEnclosingDiagramType(DiagramType enclosingDiagramType) {
 		this.enclosingDiagramType = enclosingDiagramType;
 	}
 	
-	public void setComponentName(String componentName) {
-		this.componentName = componentName;
+	public void setBlockName(String blockName) {
+		this.blockName = blockName;
 	}
 	
 	@Override
 	protected void createNewNameUI() {
 		super.createNewNameUI();
-		nameLabel.setText("Component name");
-		newNameText.setText(componentName);
+		nameLabel.setText("Block name");
+		newNameText.setText(blockName);
 		newNameText.setEnabled(false);
 	}
 	
