@@ -3,6 +3,7 @@ package org.bloqqi.editor.commands;
 import org.eclipse.gef.commands.Command;
 import org.bloqqi.compiler.ast.CompilationUnit;
 import org.bloqqi.compiler.ast.DiagramType;
+import org.bloqqi.compiler.ast.Opt;
 import org.bloqqi.compiler.ast.Pair;
 import org.bloqqi.compiler.ast.Recommendation;
 import org.bloqqi.compiler.ast.RecommendationBlock;
@@ -46,7 +47,7 @@ public class ExtractSubTypeAsRecommendationCommand extends Command {
 		
 		recommendation = new Recommendation();
 		recommendation.setDeclaredForType(new TypeUse(superType.name()));
-		recommendation.addRecommendationElement(new RecommendationBlock(p.second));
+		recommendation.addRecommendationElement(new RecommendationBlock(p.second, new Opt<TypeUse>()));
 		compUnit.addDeclaration(recommendation);
 		
 		compUnit.program().flushAllAttributes();
