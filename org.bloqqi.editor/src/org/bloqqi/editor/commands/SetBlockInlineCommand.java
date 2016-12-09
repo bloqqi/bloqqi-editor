@@ -12,6 +12,7 @@ import org.bloqqi.compiler.ast.InheritedBlock;
 import org.bloqqi.compiler.ast.Node;
 import org.bloqqi.editor.Coordinates;
 import org.bloqqi.editor.autolayout.AutoLayoutKlay;
+import org.bloqqi.editor.figures.BlockFigure;
 
 public class SetBlockInlineCommand extends Command {
 	private final static int RELATIVE_X_OFFSET = -50;
@@ -102,6 +103,7 @@ public class SetBlockInlineCommand extends Command {
 				}
 			}
 			if (closestToOrigin != null) {
+				closestToOrigin.setSize(BlockFigure.computeMinBlockSize(block));
 				coordinates.setRectangle(diagramType, block.accessString(), closestToOrigin);
 			}
 		}

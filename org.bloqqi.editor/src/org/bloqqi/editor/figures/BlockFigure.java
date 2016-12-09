@@ -1,5 +1,6 @@
 package org.bloqqi.editor.figures;
 
+import org.bloqqi.compiler.ast.Block;
 import org.bloqqi.editor.editparts.PortPart;
 import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.draw2d.Figure;
@@ -7,6 +8,7 @@ import org.eclipse.draw2d.Graphics;
 import org.eclipse.draw2d.Label;
 import org.eclipse.draw2d.RoundedRectangle;
 import org.eclipse.draw2d.XYLayout;
+import org.eclipse.draw2d.geometry.Dimension;
 import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
@@ -128,5 +130,16 @@ public class BlockFigure extends Figure {
 	}
 	public void setIsRedeclared(boolean isRedeclared) {
 		this.isRedeclared = isRedeclared;
+	}
+
+	
+	/**
+	 * Utility method for computing minimum block size,
+	 * taking into account the number of ports.
+	 */
+	public static Dimension computeMinBlockSize(Block block) {
+		int ports = Math.max(block.getNumInPort(), block.getNumOutPort());
+		int height = ports * (PortPart.SIZE + PortPart.PADDING);
+		return new Dimension(WIDTH, Math.max(MIN_HEIGHT, height));
 	}
 }
