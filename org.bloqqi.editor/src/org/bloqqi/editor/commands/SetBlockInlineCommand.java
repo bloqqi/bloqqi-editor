@@ -76,15 +76,15 @@ public class SetBlockInlineCommand extends Command {
 		}
 
 		// Update coordinates of the inlined blocks
-		for (InheritedBlock block: diagramType.getBlocks()) {
-			if (block.isInlined()
-					&& block.inlinedBlock() == block
-					&& coordinates.getRectangle(diagramType, block.accessString()) == Coordinates.RECTANGLE_NOT_FOUND) {
-				Rectangle r = adjustedLayout.get(block.accessString());
+		for (InheritedBlock b: diagramType.getBlocks()) {
+			if (b.isInlined()
+					&& b.inlinedBlock() == block
+					&& coordinates.getRectangle(diagramType, b.accessString()) == Coordinates.RECTANGLE_NOT_FOUND) {
+				Rectangle r = adjustedLayout.get(b.accessString());
 				if (r == null) r = Coordinates.RECTANGLE_NOT_FOUND;
 				coordinates.setRectangle(
 						diagramType,
-						block.accessString(),
+						b.accessString(),
 						r);
 			}
 		}
@@ -93,9 +93,9 @@ public class SetBlockInlineCommand extends Command {
 	private void autoLayoutCollapsedBlock() {
 		if (coordinates.getRectangle(diagramType, block.accessString()) == Coordinates.RECTANGLE_NOT_FOUND) {
 			Rectangle closestToOrigin = null;
-			for (InheritedBlock block: diagramType.getBlocks()) {
-				if (block.isInlined() && block.inlinedBlock() == block) {
-					Rectangle r = coordinates.getRectangle(diagramType, block.accessString());
+			for (InheritedBlock b: diagramType.getBlocks()) {
+				if (b.isInlined() && b.inlinedBlock() == block) {
+					Rectangle r = coordinates.getRectangle(diagramType, b.accessString());
 					if (closestToOrigin == null || distance(r) < distance(closestToOrigin)) {
 						closestToOrigin = r;
 					}
