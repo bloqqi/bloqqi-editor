@@ -2,6 +2,19 @@
 
 This file contains the important changes for each release. For a comprehension list of changes, see the commit log.
 
+## 0.2.1 - 2017-03-08
+
+- Feature: Add default type for optional features in recommendations:
+
+        recommendation D {
+          feature: T default S;
+        }
+
+  where S is a subtype of T
+- Feature: Diagram types can now be declared textually as abstract
+- Feature: Show names for function blocks that have an explicit name
+- Feature: Added communication variables, that is, variable kind 'input' and 'output'
+
 ## 0.2.0 - 2016-05-19
 
 - Feature: Visualize variables. Variables can be added, deleted and renamed.
