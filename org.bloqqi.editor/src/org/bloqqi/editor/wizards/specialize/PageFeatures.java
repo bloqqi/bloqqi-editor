@@ -121,6 +121,9 @@ public class PageFeatures extends AbstractWizardPage  {
 		
 		// Expand selected features (when changing a specialization)
 		expandSelectedFeatures();
+		if (!conf.isRecursive()) {
+			treeViewer.expandAll();
+		}
 
 		// Layout
 		GridData layoutData = new GridData(GridData.FILL_BOTH);
