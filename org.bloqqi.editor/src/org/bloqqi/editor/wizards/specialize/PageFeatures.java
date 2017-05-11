@@ -120,8 +120,9 @@ public class PageFeatures extends AbstractWizardPage  {
 		treeViewer.setInput(conf);
 		
 		// Expand selected features (when changing a specialization)
-		expandSelectedFeatures();
-		if (!conf.isRecursive()) {
+		if (conf.isRecursive()) {
+			expandSelectedFeatures();
+		} else {
 			treeViewer.expandAll();
 		}
 
