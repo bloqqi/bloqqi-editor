@@ -30,6 +30,7 @@ import org.eclipse.swt.widgets.Table;
 
 public class PageParameters extends AbstractWizardPage {
 	private static final String PAGE_NAME = "SPECIALIZATION_NEW_IN_PARAMETERS";
+	private static final boolean SELECT_ALL_DEFAULT = true;
 	
 	private final FeatureConfiguration conf;
 	private final SortedMap<String, NewInParameter> newInParameters;
@@ -66,6 +67,7 @@ public class PageParameters extends AbstractWizardPage {
 	private void createSelectAllButton() {
 		selectAllButton = new Button(container, SWT.CHECK);
 		selectAllButton.setText("Select all parameters");
+		selectAllButton.setSelection(SELECT_ALL_DEFAULT);
 		selectAllButton.addSelectionListener(new SelectionAdapter() {
 		    @Override
 		    public void widgetSelected(SelectionEvent e) {
