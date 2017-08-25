@@ -70,7 +70,7 @@ public class BlockPart extends AbstractNodePart<Block>
 				name = block.declaredInDiagramType().name() + ASTNode.DECLARED_IN_SEP + name;
 			}
 		}
-		text = name;
+		text = name + ":" + block.type().name();
 		figure.getLabel().setText(text);
 
 		/*int whatToShow = Properties.instance().getInt(Properties.KEY_COMPONENT_NAME, 0);

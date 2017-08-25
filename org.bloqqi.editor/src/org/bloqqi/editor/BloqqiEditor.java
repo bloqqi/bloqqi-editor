@@ -1,7 +1,6 @@
 package org.bloqqi.editor;
 
 import java.io.InputStream;
-import java.util.EventObject;
 import java.util.Iterator;
 import java.util.Observable;
 
@@ -15,7 +14,8 @@ import org.eclipse.gef.GraphicalViewer;
 import org.eclipse.gef.RootEditPart;
 import org.eclipse.gef.Tool;
 import org.eclipse.gef.commands.CommandStack;
-import org.eclipse.gef.commands.CommandStackListener;
+import org.eclipse.gef.commands.CommandStackEvent;
+import org.eclipse.gef.commands.CommandStackEventListener;
 import org.eclipse.gef.editparts.ScalableFreeformRootEditPart;
 import org.eclipse.gef.editparts.ZoomManager;
 import org.eclipse.gef.ui.actions.ActionRegistry;
@@ -50,7 +50,7 @@ import org.bloqqi.editor.outline.actions.NewDiagramTypeAction;
 
 
 public class BloqqiEditor extends EditorPart 
-		implements CommandStackListener, ISelectionListener {
+		implements CommandStackEventListener, ISelectionListener {
 
 	private EditDomain editDomain;
 	private GraphicalViewer viewer;
@@ -115,7 +115,7 @@ public class BloqqiEditor extends EditorPart
 	private void initEditDomain() {
 		editDomain = new DefaultEditDomain(this);
 		editDomain.setCommandStack(new PostConditionCommandStack());
-		editDomain.getCommandStack().addCommandStackListener(this);
+		editDomain.getCommandStack().addCommandStackEventListener(this);
 	}
 
 	@Override
@@ -202,15 +202,23 @@ public class BloqqiEditor extends EditorPart
 		viewer.getControl().setFocus();
 	}
 
-	@Override
+	/*@Override
 	public void commandStackChanged(EventObject event) {
-		firePropertyChange(IEditorPart.PROP_DIRTY);
-		@SuppressWarnings("rawtypes")
-		Iterator iterator = actions.getActionRegistry().getActions();
-		while (iterator.hasNext()) {
-			Object action = iterator.next();
-			if (action instanceof UpdateAction)
-				((UpdateAction)action).update();
+
+	}*/
+	
+	@Override
+	public void stackChanged(CommandStackEvent event) {
+		if ((event.getDetail() & CommandStack.POST_MASK) != 0) {
+			firePropertyChange(IEditorPart.PROP_DIRTY);
+			@SuppressWarnings("rawtypes")
+			Iterator iterator = actions.getActionRegistry().getActions();
+			while (iterator.hasNext()) {
+				Object action = iterator.next();
+				if (action instanceof UpdateAction) {
+					((UpdateAction)action).update();
+				}
+			}
 		}
 	}
 
@@ -230,7 +238,7 @@ public class BloqqiEditor extends EditorPart
 	
 	@Override
 	public void dispose() {
-		editDomain.getCommandStack().removeCommandStackListener(this);
+		editDomain.getCommandStack().removeCommandStackEventListener(this);
 		getSite().getWorkbenchWindow().getSelectionService().removeSelectionListener(this);
 		if (getEditorInput() instanceof IFileEditorInput) {
 			IFileEditorInput input = (IFileEditorInput) getEditorInput();
