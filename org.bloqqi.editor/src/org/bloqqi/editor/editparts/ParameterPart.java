@@ -14,6 +14,7 @@ import org.bloqqi.compiler.ast.Parameter;
 import org.bloqqi.editor.Properties;
 import org.bloqqi.editor.figures.ParameterFigure;
 import org.bloqqi.editor.policies.NodeGraphicalNodeEditPolicy;
+import org.bloqqi.editor.policies.ParameterComponentEditPolicy;
 
 abstract public class ParameterPart<T extends Parameter> extends AbstractNodePart<T>
 		implements ASTObserver, NodeEditPart {
@@ -87,6 +88,7 @@ abstract public class ParameterPart<T extends Parameter> extends AbstractNodePar
 	@Override
 	protected void createEditPolicies() {
 		installEditPolicy(EditPolicy.GRAPHICAL_NODE_ROLE, new NodeGraphicalNodeEditPolicy());
+		installEditPolicy(EditPolicy.COMPONENT_ROLE, new ParameterComponentEditPolicy());
 	}
 	
 	@Override
