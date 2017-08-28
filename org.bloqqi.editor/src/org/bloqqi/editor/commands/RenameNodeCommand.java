@@ -4,7 +4,7 @@ import org.bloqqi.compiler.ast.ASTNode;
 import org.bloqqi.compiler.ast.DiagramType;
 import org.bloqqi.compiler.ast.Node;
 import org.bloqqi.editor.Coordinates;
-import org.bloqqi.editor.PostConditionCommand;
+import org.bloqqi.editor.commands.PostConditionCommand;
 import org.eclipse.draw2d.geometry.Rectangle;
 
 public abstract class RenameNodeCommand extends PostConditionCommand {

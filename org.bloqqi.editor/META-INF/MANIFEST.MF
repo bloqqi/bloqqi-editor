@@ -19,7 +19,8 @@ Bundle-ActivationPolicy: lazy
 Bundle-ClassPath: .,
  lib/guava-18.0.jar,
  lib/klay_2015-06.jar,
- lib/bloqqi-compiler.jar
+ lib/bloqqi-compiler.jar,
+ lib/bloqqi-editor-commands.jar
 Export-Package: org.bloqqi.compiler.ast
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Import-Package: org.eclipse.emf.common.util

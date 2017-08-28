@@ -6,7 +6,7 @@ import org.bloqqi.compiler.ast.Port;
 import org.bloqqi.compiler.ast.Connection;
 import org.bloqqi.compiler.ast.Pair;
 import org.bloqqi.compiler.ast.VarUse;
-import org.bloqqi.editor.PostConditionCommand;
+import org.bloqqi.editor.commands.PostConditionCommand;
 
 public abstract class AbstractCreateConnectionCommand extends PostConditionCommand {
 	protected Connection connection;

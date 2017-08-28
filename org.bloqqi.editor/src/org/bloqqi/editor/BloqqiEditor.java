@@ -43,6 +43,7 @@ import org.bloqqi.compiler.ast.ErrorMessage;
 import org.bloqqi.compiler.ast.Program;
 import org.bloqqi.compiler.ast.TypeDecl;
 import org.bloqqi.editor.commands.CreateDiagramTypeCommand;
+import org.bloqqi.editor.commands.PostConditionCommandStack;
 import org.bloqqi.editor.editparts.DiagramTypePart;
 import org.bloqqi.editor.editparts.DiagramTypePartFactory;
 import org.bloqqi.editor.outline.Outline;

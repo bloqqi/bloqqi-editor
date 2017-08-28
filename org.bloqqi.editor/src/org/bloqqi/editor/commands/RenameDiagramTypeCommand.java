@@ -7,7 +7,7 @@ import org.eclipse.draw2d.geometry.Rectangle;
 import org.bloqqi.compiler.ast.ASTNode;
 import org.bloqqi.compiler.ast.DiagramType;
 import org.bloqqi.editor.Coordinates;
-import org.bloqqi.editor.PostConditionCommand;
+import org.bloqqi.editor.commands.PostConditionCommand;
 
 public class RenameDiagramTypeCommand extends PostConditionCommand {
 	private final Coordinates coordinates;
