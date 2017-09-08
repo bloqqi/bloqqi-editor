@@ -18,15 +18,18 @@ public class ParameterComponentEditPolicy extends ComponentEditPolicy {
 		Parameter par = (Parameter) getHost().getModel();
 		
 		if (!par.isInherited()) {
+			// This command is created when a parameter is selected.
+			// It would be possible to optimize the code by delaying the copying
+			// of AST structures and only copy when the command is executed.
 			ChangeSuperTypesAndParametersCommand cmd = new ChangeSuperTypesAndParametersCommand(dt);
 			cmd.setNewSuperTypesAsBefore();
 			if (par.isInParameter()) {
-				List<InParameter> inPars = dt.getLocalInParameters().asJavaUtilList();
+				List<InParameter> inPars = dt.getLocalInParameters().treeCopy().asJavaUtilList();
 				inPars.remove(par.declaredParameter());
 				cmd.setNewInParameters(inPars);
 				cmd.setNewOutParametersAsBefore();
 			} else {
-				List<OutParameter> outPars = dt.getLocalOutParameters().asJavaUtilList();
+				List<OutParameter> outPars = dt.getLocalOutParameters().treeCopy().asJavaUtilList();
 				outPars.remove(par.declaredParameter());
 				cmd.setNewOutParameters(outPars);
 				cmd.setNewInParametersAsBefore();
