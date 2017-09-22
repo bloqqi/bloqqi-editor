@@ -5,28 +5,26 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.eclipse.gef.commands.Command;
-import org.bloqqi.compiler.ast.Block;
 import org.bloqqi.compiler.ast.Connection;
 import org.bloqqi.compiler.ast.DiagramType;
 import org.bloqqi.compiler.ast.FlowDecl;
-import org.bloqqi.compiler.ast.InheritedBlock;
 import org.bloqqi.compiler.ast.InheritedConnection;
 import org.bloqqi.compiler.ast.List;
-import org.bloqqi.compiler.ast.Port;
+import org.bloqqi.compiler.ast.Parameter;
 
-public class DeleteBlockCommand extends Command {
-	private final InheritedBlock inhBlock;
-	private final Block declaredBlock;
+public class DeleteParameterCommand extends Command {
+	private final Parameter inhPar;
+	private final Parameter declaredPar;
 	private final DiagramType diagramType;
 	private final boolean canDelete;
 	private List<FlowDecl> oldFlowDecls;
 
-	private int indexOfBlock;
+	private int indexOfVar;
 
-	public DeleteBlockCommand(InheritedBlock inhBlock, DiagramType diagramType) {
-		this.inhBlock = inhBlock;
-		this.declaredBlock = inhBlock.getDeclaredBlock();
-		this.canDelete = inhBlock.canDelete();
+	public DeleteParameterCommand(Parameter inhPar, DiagramType diagramType) {
+		this.inhPar = inhPar;
+		this.declaredPar = inhPar.declaredParameter();
+		this.canDelete = inhPar.canDelete();
 		this.diagramType = diagramType;
 	}
 	
@@ -40,11 +38,16 @@ public class DeleteBlockCommand extends Command {
 	@Override
 	public void execute() {
 		oldFlowDecls = diagramType.getFlowDeclList().treeCopy();
-
+		
 		removeAffectedConnections();
 		
-		indexOfBlock = diagramType.getLocalBlockList().getIndexOfChild(declaredBlock);
-		diagramType.getLocalBlockList().removeChild(indexOfBlock);
+		if (inhPar.isInParameter()) {
+			indexOfVar = diagramType.getLocalInParameterList().getIndexOfChild(declaredPar);
+			diagramType.getLocalInParameterList().removeChild(indexOfVar);
+		} else {
+			indexOfVar = diagramType.getLocalOutParameterList().getIndexOfChild(declaredPar);
+			diagramType.getLocalOutParameterList().removeChild(indexOfVar);
+		}
 		diagramType.program().flushAllAttributes();
 		diagramType.notifyObservers();
 	}
@@ -52,15 +55,11 @@ public class DeleteBlockCommand extends Command {
 	private void removeAffectedConnections() {
 		// Step 1: identify which connections to remove
 		Set<FlowDecl> removeFlowDecls = new HashSet<>();
-		for (Port p: inhBlock.getInPorts()) {
-			for (Connection c: p.ingoingConnections()) {
-				removeFlowDecls.add(((InheritedConnection) c).getDeclaredFlowDecl());
-			}
+		for (Connection c: inhPar.ingoingConnections()) {
+			removeFlowDecls.add(((InheritedConnection) c).getDeclaredFlowDecl());
 		}
-		for (Port p: inhBlock.getOutPorts()) {
-			for (Connection c: p.outgoingConnections()) {
-				removeFlowDecls.add(((InheritedConnection) c).getDeclaredFlowDecl());
-			}
+		for (Connection c: inhPar.outgoingConnections()) {
+			removeFlowDecls.add(((InheritedConnection) c).getDeclaredFlowDecl());
 		}
 		
 		// Step 2: remove connections
@@ -77,7 +76,11 @@ public class DeleteBlockCommand extends Command {
 	@Override
 	public void undo() {
 		diagramType.setFlowDeclList(oldFlowDecls);
-		diagramType.getLocalBlockList().insertChild(declaredBlock, indexOfBlock);
+		if (inhPar.isInParameter()) {
+			diagramType.getLocalInParameterList().insertChild(declaredPar, indexOfVar);
+		} else {
+			diagramType.getLocalOutParameterList().insertChild(declaredPar, indexOfVar);
+		}
 		diagramType.program().flushAllAttributes();
 		diagramType.notifyObservers();
 	}

@@ -18,7 +18,7 @@ public class DeleteVariableCommand extends Command {
 	private final Variable declaredVar;
 	private final DiagramType diagramType;
 	private final boolean canDelete;
-	private final List<FlowDecl> oldFlowDecls;
+	private List<FlowDecl> oldFlowDecls;
 
 	private int indexOfVar;
 
@@ -27,7 +27,6 @@ public class DeleteVariableCommand extends Command {
 		this.declaredVar = inhVar.getDeclaredVariable();
 		this.canDelete = inhVar.canDelete();
 		this.diagramType = diagramType;
-		this.oldFlowDecls = diagramType.getFlowDeclList().treeCopy();
 	}
 	
 	@Override
@@ -39,7 +38,10 @@ public class DeleteVariableCommand extends Command {
 	// Handle sub-classes as well
 	@Override
 	public void execute() {
+		oldFlowDecls = diagramType.getFlowDeclList().treeCopy();
+
 		removeAffectedConnections();
+		
 		indexOfVar = diagramType.getLocalVariableList().getIndexOfChild(declaredVar);
 		diagramType.getLocalVariableList().removeChild(indexOfVar);
 		diagramType.program().flushAllAttributes();

@@ -9,14 +9,13 @@ import org.bloqqi.compiler.ast.InheritedConnection;
 public class DeleteConnectionCommand extends Command {
 	private final boolean canDelete;
 	private final FlowDecl declaredFlowDecl;
-	private final int declaredFlowDeclIndex;
 	private final DiagramType diagramType;
+	private int declaredFlowDeclIndex;
 	
 	public DeleteConnectionCommand(InheritedConnection connection) {
 		this.canDelete = connection.canDelete();
 		this.declaredFlowDecl = connection.getDeclaredFlowDecl();
 		this.diagramType = connection.diagramType();
-		this.declaredFlowDeclIndex = diagramType.getFlowDeclList().getIndexOfChild(declaredFlowDecl);
 	}
 	
 	@Override
@@ -26,6 +25,7 @@ public class DeleteConnectionCommand extends Command {
 
 	@Override 
 	public void execute() {
+		declaredFlowDeclIndex = diagramType.getFlowDeclList().getIndexOfChild(declaredFlowDecl);
 		diagramType.getFlowDeclList().removeChild(declaredFlowDecl);
 		diagramType.program().flushAllAttributes();
 		diagramType.notifyObservers();

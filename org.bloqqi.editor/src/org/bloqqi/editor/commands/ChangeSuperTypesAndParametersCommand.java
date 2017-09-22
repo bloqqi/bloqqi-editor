@@ -63,9 +63,6 @@ public class ChangeSuperTypesAndParametersCommand extends Command {
 		removedSuperTypes.removeAll(allNewSuperTypes);
 		removedSuperTypes.remove(diagramType);
 	}
-	public void setNewSuperTypesAsBefore() {
-		newSuperTypes = diagramType.getSuperTypes().treeCopy();
-	}
 	
 	public void setNewInParameters(java.util.List<InParameter> inParameters) {
 		newInParameters = new List<>();
@@ -84,9 +81,6 @@ public class ChangeSuperTypesAndParametersCommand extends Command {
 				removedInParameters.add(in);
 			}
 		}
-	}
-	public void setNewInParametersAsBefore() {
-		newInParameters = diagramType.getLocalInParameters().treeCopy();
 	}
 	
 	public void setNewOutParameters(java.util.List<OutParameter> outParameters) {
@@ -107,9 +101,6 @@ public class ChangeSuperTypesAndParametersCommand extends Command {
 			}
 		}
 	}
-	public void setNewOutParametersAsBefore() {
-		newOutParameters = diagramType.getLocalOutParameters().treeCopy();
-	}
 
 	@Override
 	public boolean canExecute() {
@@ -129,11 +120,9 @@ public class ChangeSuperTypesAndParametersCommand extends Command {
 	private void removeAffectedConnections() {
 		// Step 1: identify connections to remove
 		Set<FlowDecl> removeFlowDecls = new HashSet<>();
-		if (!removedSuperTypes.isEmpty()) {
-			for (FlowDecl fd: diagramType.getFlowDecls()) {
-				if (connectedToRemovedSuperType(fd)) {
-					removeFlowDecls.add(fd);
-				}
+		for (FlowDecl fd: diagramType.getFlowDecls()) {
+			if (connectedToRemovedSuperType(fd)) {
+				removeFlowDecls.add(fd);
 			}
 		}
 		for (InheritedInParameter in: removedInParameters) {
