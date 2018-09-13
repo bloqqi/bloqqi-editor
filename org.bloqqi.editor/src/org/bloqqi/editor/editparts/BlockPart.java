@@ -14,9 +14,11 @@ import org.bloqqi.compiler.ast.ASTObservable;
 import org.bloqqi.compiler.ast.ASTObserver;
 import org.bloqqi.compiler.ast.Block;
 import org.bloqqi.compiler.ast.Port;
+import org.bloqqi.editor.Activator;
 import org.bloqqi.editor.figures.BlockFigure;
 import org.bloqqi.editor.policies.BlockComponentEditPolicy;
 import org.bloqqi.editor.policies.NodeSelectionEditPolicy;
+import org.bloqqi.editor.preferences.PreferenceConstants;
 
 public class BlockPart extends AbstractNodePart<Block>
 		implements ASTObserver {
@@ -70,7 +72,11 @@ public class BlockPart extends AbstractNodePart<Block>
 				name = block.declaredInDiagramType().name() + ASTNode.DECLARED_IN_SEP + name;
 			}
 		}
-		text = name + ":" + block.type().name();
+		if (Activator.isPreferenceSet(PreferenceConstants.SHOW_TYPES)) {
+			text = name + ":" + block.type().name();
+		} else {
+			text = name;
+		}
 		figure.getLabel().setText(text);
 
 		/*int whatToShow = Properties.instance().getInt(Properties.KEY_COMPONENT_NAME, 0);

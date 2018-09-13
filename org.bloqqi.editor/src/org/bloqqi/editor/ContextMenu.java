@@ -1,6 +1,6 @@
 package org.bloqqi.editor;
 
-import org.bloqqi.editor.actions.AutoLayoutAction;
+import org.bloqqi.editor.actions.ShowTypesAction;
 import org.bloqqi.editor.actions.ChangeAllConnectionRoutersAction;
 import org.bloqqi.editor.actions.ChangeConnectionRouterAction;
 import org.bloqqi.editor.actions.ChangeSpecializationBlock;
@@ -46,7 +46,7 @@ public class ContextMenu extends ContextMenuProvider {
 		if (Activator.isPreferenceSet(PreferenceConstants.LAYOUT_OPERATIONS)) {
 			IMenuManager layoutSubmenu = new MenuManager("Layout", SUBMENU_ID_LAYOUT);
 			menu.appendToGroup(GEFActionConstants.GROUP_EDIT, layoutSubmenu);
-			addAction(layoutSubmenu, AutoLayoutAction.ID);
+			addAction(layoutSubmenu, ShowTypesAction.ID);
 			addAction(layoutSubmenu, ChangeAllConnectionRoutersAction.ID);
 			addAction(layoutSubmenu, ChangeConnectionRouterAction.ID);
 		}

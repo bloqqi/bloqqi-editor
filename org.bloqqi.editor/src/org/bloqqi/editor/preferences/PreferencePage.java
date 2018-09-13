@@ -19,6 +19,11 @@ public class PreferencePage
 	public void createFieldEditors() {
 		addField(
 			new BooleanFieldEditor(
+				PreferenceConstants.SHOW_TYPES,
+				"Show types for blocks and variables",
+				getFieldEditorParent()));
+		addField(
+			new BooleanFieldEditor(
 				PreferenceConstants.ASK_BLOCK_NAME,
 				"Always ask for block name for new blocks",
 				getFieldEditorParent()));

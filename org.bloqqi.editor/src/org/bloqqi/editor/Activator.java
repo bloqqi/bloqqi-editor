@@ -52,6 +52,10 @@ public class Activator extends AbstractUIPlugin {
 		return getDefault().getPreferenceStore().getBoolean(name);
 	}
 	
+	public static void setPreference(String name, boolean value) {
+		getDefault().getPreferenceStore().setValue(name, value);
+	}
+
 	/**
 	 * Returns an image descriptor for the image file at the given
 	 * plug-in relative path

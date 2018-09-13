@@ -1,5 +1,7 @@
 package org.bloqqi.editor.figures;
 
+import org.bloqqi.editor.Activator;
+import org.bloqqi.editor.preferences.PreferenceConstants;
 import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.draw2d.Figure;
 import org.eclipse.draw2d.Graphics;
@@ -56,7 +58,11 @@ public class VariableFigure extends Figure {
 			rectangle.setLineStyle(SWT.LINE_SOLID);
 		}
 		
-		label.setText(kind + " " + name + ":" + type);
+		if (Activator.isPreferenceSet(PreferenceConstants.SHOW_TYPES)) {
+			label.setText(kind + " " + name + ":" + type);
+		} else {
+			label.setText(kind + " " + name);
+		}
 		
 		int h = r.height;
 		int w = r.width;

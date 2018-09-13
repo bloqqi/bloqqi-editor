@@ -64,7 +64,7 @@ public class SpecializationContentProvider implements ITreeContentProvider {
 
 	@Override
 	public Object getParent(Object element) {
-		throw new UnsupportedOperationException();
+		return null;  // TODO: When does this happen?
 	}
 
 	@Override

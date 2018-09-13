@@ -2,6 +2,7 @@ package org.bloqqi.editor;
 
 import java.util.ArrayList;
 
+import org.bloqqi.editor.actions.ShowTypesAction;
 import org.bloqqi.editor.actions.AutoLayoutAction;
 import org.bloqqi.editor.actions.ChangeAllConnectionRoutersAction;
 import org.bloqqi.editor.actions.ChangeConnectionRouterAction;
@@ -56,6 +57,7 @@ public class Actions {
 	 */
 	private void createWorkspaceActions() {
 		addAction(new AutoLayoutAction(editor));
+		addAction(new ShowTypesAction(editor));
 		addAction(new ChangeNameDisplayedAction(editor));
 		addAction(new ChangeAllConnectionRoutersAction(editor));
 		addAction(new DiagramTypePropertiesAction(editor));

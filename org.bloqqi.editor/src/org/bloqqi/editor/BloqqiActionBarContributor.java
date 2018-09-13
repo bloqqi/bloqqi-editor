@@ -1,6 +1,7 @@
 package org.bloqqi.editor;
 
 import org.bloqqi.editor.actions.AutoLayoutAction;
+import org.bloqqi.editor.actions.ShowTypesAction;
 import org.eclipse.gef.ui.actions.ActionBarContributor;
 import org.eclipse.gef.ui.actions.DeleteRetargetAction;
 import org.eclipse.gef.ui.actions.RedoRetargetAction;
@@ -19,6 +20,10 @@ public class BloqqiActionBarContributor extends ActionBarContributor {
 		RetargetAction autoLayout = new RetargetAction(AutoLayoutAction.ID, "Auto layout");
 		autoLayout.setToolTipText("Auto layout");
 		addRetargetAction(autoLayout);
+
+		RetargetAction showTypes = new RetargetAction(ShowTypesAction.ID, "Show types");
+		showTypes.setToolTipText("Show/hide types");
+		addRetargetAction(showTypes);
 	}
 	
 	@Override
@@ -28,7 +33,8 @@ public class BloqqiActionBarContributor extends ActionBarContributor {
 		//toolBarManager.add(getAction(ActionFactory.UNDO.getId()));
 		//toolBarManager.add(getAction(ActionFactory.REDO.getId()));
 		//toolBarManager.add(getAction(ActionFactory.DELETE.getId()));
-	    toolBarManager.add(getAction(AutoLayoutAction.ID));
+		toolBarManager.add(getAction(AutoLayoutAction.ID));
+		toolBarManager.add(getAction(ShowTypesAction.ID));
 		toolBarManager.add(new ZoomComboContributionItem(getPage()));
 	}
 
