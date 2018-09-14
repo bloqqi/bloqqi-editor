@@ -1,6 +1,7 @@
 package org.bloqqi.editor.actions;
 
 import org.bloqqi.compiler.ast.DiagramType;
+import org.bloqqi.compiler.ast.Program;
 import org.bloqqi.editor.BloqqiEditor;
 import org.bloqqi.editor.commands.ExtractSubTypeAsRecommendationCommand;
 import org.eclipse.gef.commands.Command;
@@ -45,8 +46,23 @@ public class ExtractSubTypeAsRecommendationAction extends MyWorkbenchPartAction 
 		
 		String diagramTypeName = getInput("Diagram type name", "Enter new diagram type name", "");
 		if (diagramTypeName != null) {
+			diagramTypeName = diagramTypeName.trim();
+			if (!Program.isIdValid(diagramTypeName)) {
+				MessageDialog.openError(shell, "Invalid diagram type name",
+						"The diagram type name is invalid.");
+				return;
+
+			}
+
 			String blockName = getInput("Feature name", "Enter feature name", "");
 			if (blockName != null) {
+				blockName = blockName.trim();
+				if (!Program.isIdValid(blockName)) {
+					MessageDialog.openError(shell, "Invalid feature name",
+							"The feature name is invalid.");
+					return;
+				}
+
 				Command cmd = new ExtractSubTypeAsRecommendationCommand(dt, diagramTypeName, blockName);
 				execute(cmd);
 			}
