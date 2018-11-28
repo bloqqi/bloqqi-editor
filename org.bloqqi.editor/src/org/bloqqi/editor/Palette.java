@@ -109,7 +109,7 @@ public class Palette extends PaletteRoot {
 		drawer.setInitialState(PaletteDrawer.INITIAL_STATE_PINNED_OPEN);
 		for (CompilationUnit cu: program.getCompilationUnits()) {
 			for (TypeDecl td: cu.typeDecls()) {
-				if (td != openTypeDecl && (td.isDiagramType() || td.isExternalFunction())) {
+				if (td != openTypeDecl && showTypeDecl(td)) {
 					drawer.add(createToolEntry(td));
 				}
 			}
@@ -121,11 +121,18 @@ public class Palette extends PaletteRoot {
 		PaletteDrawer drawer = new PaletteDrawer("Standard lib");
 		drawer.setInitialState(PaletteDrawer.INITIAL_STATE_CLOSED);
 		for (TypeDecl td: program.getStandardLibrary().typeDecls()) {
-			if (td.isDiagramType() || td.isFunction() || td.isExternalFunction()) {
+			if (showTypeDecl(td)) {
 				drawer.add(createToolEntry(td));
 			}
 		}
 		return drawer;
+	}
+
+	private boolean showTypeDecl(TypeDecl td) {
+		return td.isDiagramType()
+				|| td.isFunction()
+				|| td.isExternalFunction()
+				|| td.isStateMachine();
 	}
 
 	private ToolEntry createToolEntry(final TypeDecl td) {

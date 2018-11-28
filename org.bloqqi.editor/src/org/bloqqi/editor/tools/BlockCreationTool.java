@@ -31,6 +31,8 @@ public class BlockCreationTool extends AbstractCreationTool {
 				} else {
 					performCreation = possibleShowNameDialog(createCmd);
 				}
+			} else if (td.isStateMachine()) {
+				performCreation = possibleShowNameDialog(createCmd);
 			}
 		}
 		
