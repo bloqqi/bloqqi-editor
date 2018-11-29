@@ -53,8 +53,6 @@ public class LiteralPart extends GenericAbstractGraphicalPart<Literal> implement
 		r.width = d.width;
 		if (anchor instanceof Port) {
 			r.y += PortPart.getYPos((Port) anchor) - 3;
-		} else {
-			r.y += 20;
 		}
 		parent.setLayoutConstraint(this, figure, r);
 	}
