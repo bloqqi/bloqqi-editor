@@ -2,6 +2,14 @@
 
 This file contains the important changes for each release. For a comprehension list of changes, see the commit log.
 
+## 0.2.2 - 2018-11-29
+
+- Add preference to show/hide types
+- Parameters can be deleted in diagram view
+- Add support for using state machines as blocks, which are defined textually
+- Always expose all parameters when creating new specialization
+- Expand content in feature wizard if feature diagram is non-recursive
+
 ## 0.2.1 - 2017-03-08
 
 - Feature: Add default type for optional features in recommendations:

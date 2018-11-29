@@ -2,7 +2,7 @@
 <feature
       id="org.bloqqi.editor.feature"
       label="Bloqqi Editor Feature"
-      version="0.2.1">
+      version="0.2.2">
 
    <description>
       A Eclipse feature for the Bloqqi editor
