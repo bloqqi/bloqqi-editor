@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
-   <bundle id="org.bloqqi.editor" version="0.2.2">
+   <bundle id="org.bloqqi.editor" version="0.2.3">
       <category name="Bloqqi"/>
    </bundle>
    <category-def name="Bloqqi" label="Bloqqi"/>
