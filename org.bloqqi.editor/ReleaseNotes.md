@@ -2,6 +2,11 @@
 
 This file contains the important changes for each release. For a comprehension list of changes, see the commit log.
 
+## 0.2.3 - 2019-02-28
+
+- Add support for declaring states in state machines as `public`.
+  This creates an implicit boolean output parameter for the state that tells whether the state is active or not.
+
 ## 0.2.2 - 2018-11-29
 
 - Add preference to show/hide types
