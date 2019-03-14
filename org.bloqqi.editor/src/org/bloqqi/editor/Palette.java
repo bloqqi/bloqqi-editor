@@ -20,6 +20,7 @@ import org.bloqqi.compiler.ast.Program;
 import org.bloqqi.compiler.ast.StateVariable;
 import org.bloqqi.compiler.ast.TypeDecl;
 import org.bloqqi.compiler.ast.TypeUse;
+import org.bloqqi.compiler.ast.UserDefType;
 import org.bloqqi.compiler.ast.Variable;
 import org.bloqqi.editor.tools.BlockCreationTool;
 import org.bloqqi.editor.tools.ConnectionCreationToolFeedback;
@@ -64,7 +65,7 @@ public class Palette extends PaletteRoot {
 		CreationFactory factory = createFactory(() -> new Connection(), Connection.class);
 		ConnectionCreationToolEntry toolEntry = new ConnectionCreationToolEntry(
 				"Connection",
-				"Creates a new connection.", 
+				"Create a connection",
 				factory, null, null);
 		toolEntry.setToolClass(ConnectionCreationToolFeedback.class);
 		setToolProperties(toolEntry);
@@ -75,7 +76,7 @@ public class Palette extends PaletteRoot {
 		CreationFactory factory = createFactory(() -> new Connection(), Connection.class);
 		ConnectionCreationToolEntry toolEntry = new ConnectionCreationToolEntry(
 				"Literal",
-				"Creates a new Literal.",
+				"Create a literal",
 				factory, null, null);
 		toolEntry.setToolClass(LiteralCreationTool.class);
 		setToolProperties(toolEntry);
@@ -86,7 +87,7 @@ public class Palette extends PaletteRoot {
 		CreationFactory factory = createFactory(() -> new InParameter(), InParameter.class);
 		CreationToolEntry toolEntry = new CreationToolEntry(
 				"Parameter",
-				"Creates a new parameter",
+				"Create a parameter",
 				factory, null, null);
 		toolEntry.setToolClass(ParameterCreationTool.class);
 		setToolProperties(toolEntry);
@@ -97,7 +98,7 @@ public class Palette extends PaletteRoot {
 		CreationFactory factory = createFactory(() -> new StateVariable(), Variable.class);
 		CreationToolEntry toolEntry = new CreationToolEntry(
 				"Variable",
-				"Creates a new variable",
+				"Create a variable",
 				factory, null, null);
 		toolEntry.setToolClass(VariableCreationTool.class);
 		setToolProperties(toolEntry);
@@ -139,8 +140,18 @@ public class Palette extends PaletteRoot {
 		CreationFactory factory = createFactory(
 				() -> new Block(new Modifiers(), new TypeUse(td.name()), null),
 				Block.class);
+		String desc = "Create a block of " + td.name();
+		if (td instanceof UserDefType) {
+			UserDefType utd = (UserDefType) td;
+			if (utd.hasDocString()) {
+				String content = utd.getDocString().getDoc().getContent().trim();
+				int index = content.indexOf("\n");
+				String firstLine = index > 0 ? content.substring(0, index) : content;
+				desc += ":\n" + firstLine;
+			}
+		}
 		CreationToolEntry toolEntry = new CreationToolEntry(
-				td.name(), "Creates a new block of type " + td.name(),
+				td.name(), desc,
 				factory, null, null);
 		toolEntry.setToolClass(BlockCreationTool.class);
 		setToolProperties(toolEntry);

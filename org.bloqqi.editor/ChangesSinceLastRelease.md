@@ -2,4 +2,13 @@
 
 This files contains a list of changes that are not yet released.
 
--
+- Add multi-line strings enclosed by """
+- Add documentation strings for user-defined types. Example of a multi-line documentation string:
+
+    """
+    Description of what D does
+    """
+    diagramtype D(...) {
+       ...
+    }
+- Show documentation string (first line) in palette when creating blocks
