@@ -67,7 +67,7 @@ public class NodeGraphicalNodeEditPolicy extends GraphicalNodeEditPolicy {
 	protected Command getConnectionCreateCommand(CreateConnectionRequest request) {
 		CreateConnectionCommand cmd = null;
 		Anchor anchor = (Anchor) getHost().getModel();
-		if (canAccess(anchor) && !anchor.node().isOutParameter()) {
+		if (canAccess(anchor)) {
 			cmd = new CreateConnectionCommand();
 			cmd.setSource(anchor);
 			cmd.setConnection((Connection) request.getNewObject());
@@ -80,7 +80,7 @@ public class NodeGraphicalNodeEditPolicy extends GraphicalNodeEditPolicy {
 	protected Command getConnectionCompleteCommand(CreateConnectionRequest request) {
 		CreateConnectionCommand cmd = null;
 		Anchor anchor = (Anchor) getHost().getModel();
-		if (canAccess(anchor) && !anchor.node().isInParameter()) {
+		if (canAccess(anchor)) {
 			cmd = (CreateConnectionCommand) request.getStartCommand();
 			cmd.setTarget(anchor);
 		}

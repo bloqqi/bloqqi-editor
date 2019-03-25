@@ -38,9 +38,15 @@ public class ConnectionCreationToolFeedback extends AbstractConnectionCreationTo
 		if (portsFeedback == null && REQ_CONNECTION_END.equals(request.getType())) {
 			CreateConnectionRequest createReq = (CreateConnectionRequest) request;
 			RootEditPart root = createReq.getSourceEditPart().getRoot();
-			TypeDecl type = ((Anchor) createReq.getSourceEditPart().getModel()).type();
+			Anchor anchor = (Anchor) createReq.getSourceEditPart().getModel();
+			TypeDecl type = anchor.type();
+			
 			portsFeedback = new PortsFeedback(root, type);
-			portsFeedback.showInPorts();
+			if (anchor.isSource()) {
+				portsFeedback.showInPorts();
+			} else {
+				portsFeedback.showOutPorts();
+			}
 		}
 		super.showSourceFeedback();
 	}

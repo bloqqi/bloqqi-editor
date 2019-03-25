@@ -22,6 +22,13 @@ public class CreateConnectionCommand extends AbstractCreateConnectionCommand {
 			return;
 		}
 		
+		// Automatically reverse the connection if the user connected it "backwards"
+		if (!source.isSource() && target.isSource()) {
+			Anchor tmp = source;
+			source = target;
+			target = tmp;
+		}
+
 		VarUse sourceUse = access(source);
 		VarUse targetUse = access(target);
 		if (sourceUse == null || targetUse == null) {
