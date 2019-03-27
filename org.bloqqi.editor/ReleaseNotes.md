@@ -8,12 +8,13 @@ This file contains the important changes for each release. For a comprehension l
 - Add multi-line strings enclosed by """
 - Add documentation strings for user-defined types. Example of a multi-line documentation string:
 
-    """
-    Description of what D does
-    """
-    diagramtype D(...) {
-       ...
-    }
+        """
+        Description of what D does
+        """
+        diagramtype D(...) {
+           ...
+        }
+
 - Show documentation string (first line) in palette when creating blocks
 
 ## 0.2.3 - 2019-02-28
