@@ -12,7 +12,7 @@ public class TargetInterceptAction extends MySelectionAction {
 	public TargetInterceptAction(BloqqiEditor editor) {
 		super(editor);
 		setId(ID);
-		setText("Target port");
+		setText("Target port (default)");
 	}
 	
 	@Override

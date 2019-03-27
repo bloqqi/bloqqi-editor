@@ -38,9 +38,10 @@ public class ContextMenu extends ContextMenuProvider {
 	public void buildContextMenu(IMenuManager menu) {
 		GEFActionConstants.addStandardActionGroups(menu);
 
-		IMenuManager interceptSubmenu = new MenuManager("Intercept", SUBMENU_ID_INTERCEPT);
+		IMenuManager interceptSubmenu = new MenuManager("Intercept connection", SUBMENU_ID_INTERCEPT);
 		menu.appendToGroup(GEFActionConstants.GROUP_EDIT, interceptSubmenu);
 		addAction(interceptSubmenu, TargetInterceptAction.ID);
+		interceptSubmenu.add(new Separator());
 		addAction(interceptSubmenu, SourceInterceptAction.ID);
 		
 		if (Activator.isPreferenceSet(PreferenceConstants.LAYOUT_OPERATIONS)) {
