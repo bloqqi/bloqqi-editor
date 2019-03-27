@@ -2,6 +2,20 @@
 
 This file contains the important changes for each release. For a comprehension list of changes, see the commit log.
 
+## 0.2.4 - 2019-03-27
+
+- Automatically reverse connections if they are created "backwards"
+- Add multi-line strings enclosed by """
+- Add documentation strings for user-defined types. Example of a multi-line documentation string:
+
+    """
+    Description of what D does
+    """
+    diagramtype D(...) {
+       ...
+    }
+- Show documentation string (first line) in palette when creating blocks
+
 ## 0.2.3 - 2019-02-28
 
 - Add support for declaring states in state machines as `public`.
