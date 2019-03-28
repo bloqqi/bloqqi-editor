@@ -55,13 +55,14 @@ public class ConnectionPart extends AbstractConnectionEditPart {
 		LineAttributes attributesNormal = new LineAttributes(1);
 		attributesNormal.style = SWT.LINE_SOLID;
 		
+		Color foregroundColor = COLOR;
 		if (conn.hasErrors() || conn.isOnDataflowCycle()) {
-			figure.setForegroundColor(ColorConstants.red);
+			foregroundColor = ColorConstants.red;
 			figure.setLineWidth(2);
 		} else {
-			figure.setForegroundColor(COLOR);
 			figure.setLineAttributes(attributesNormal);
 		}
+		figure.setForegroundColor(foregroundColor);
 
 		if (!conn.canDelete()) {
 			figure.setForegroundColor(INHERITED_COLOR);
@@ -73,12 +74,12 @@ public class ConnectionPart extends AbstractConnectionEditPart {
 				figure.setLineAttributesFirst(attributesInherited);
 				figure.setLineAttributesSecond(attributesNormal);
 				figure.setColorFirst(INHERITED_COLOR);
-				figure.setColorSecond(COLOR);
+				figure.setColorSecond(foregroundColor);
 				figure.setLargeRectangle(!isConnectionInterception);
 			} else {
 				figure.setLineAttributesFirst(attributesNormal);
 				figure.setLineAttributesSecond(attributesInherited);
-				figure.setColorFirst(COLOR);
+				figure.setColorFirst(foregroundColor);
 				figure.setColorSecond(INHERITED_COLOR);
 				figure.setLargeRectangle(isConnectionInterception);
 			}
