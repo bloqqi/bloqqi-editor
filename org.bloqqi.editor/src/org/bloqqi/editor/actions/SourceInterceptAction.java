@@ -12,7 +12,7 @@ public class SourceInterceptAction extends MySelectionAction {
 	public SourceInterceptAction(BloqqiEditor editor) {
 		super(editor);
 		setId(ID);
-		setText("Source port (advanced)");
+		setText("Intercept source port");
 	}
 	
 	@Override

@@ -25,7 +25,6 @@ import org.eclipse.ui.actions.ActionFactory;
 
 public class ContextMenu extends ContextMenuProvider {
 	private static final String SUBMENU_ID_LAYOUT = "SUBMENU_ID_LAYOUT";
-	private static final String SUBMENU_ID_INTERCEPT = "SUBMENU_ID_INTERCEPT";
 	
 	private final ActionRegistry actionRegistry;
 
@@ -38,11 +37,8 @@ public class ContextMenu extends ContextMenuProvider {
 	public void buildContextMenu(IMenuManager menu) {
 		GEFActionConstants.addStandardActionGroups(menu);
 
-		IMenuManager interceptSubmenu = new MenuManager("Intercept connection", SUBMENU_ID_INTERCEPT);
-		menu.appendToGroup(GEFActionConstants.GROUP_EDIT, interceptSubmenu);
-		addAction(interceptSubmenu, TargetInterceptAction.ID);
-		interceptSubmenu.add(new Separator());
-		addAction(interceptSubmenu, SourceInterceptAction.ID);
+		addActionToEditGroup(menu, TargetInterceptAction.ID);
+		addActionToEditGroup(menu, SourceInterceptAction.ID);
 		
 		if (Activator.isPreferenceSet(PreferenceConstants.LAYOUT_OPERATIONS)) {
 			IMenuManager layoutSubmenu = new MenuManager("Layout", SUBMENU_ID_LAYOUT);
@@ -52,19 +48,19 @@ public class ContextMenu extends ContextMenuProvider {
 			addAction(layoutSubmenu, ChangeConnectionRouterAction.ID);
 		}
 		
-		addActionToRest(menu, OpenBlockTypeAction.ID);
-		addActionToRest(menu, InlineAction.ID);
-		addActionToRest(menu, RenameAction.ID);
-		addActionToRest(menu, ChangeSpecializationBlock.ID);
-		addActionToRest(menu, ActionFactory.DELETE.getId());
+		addActionToEditGroup(menu, OpenBlockTypeAction.ID);
+		addActionToEditGroup(menu, InlineAction.ID);
+		addActionToEditGroup(menu, RenameAction.ID);
+		addActionToEditGroup(menu, ChangeSpecializationBlock.ID);
+		addActionToEditGroup(menu, ActionFactory.DELETE.getId());
 		
 		menu.appendToGroup(GEFActionConstants.GROUP_EDIT, new Separator());
 
-		addActionToRest(menu, ExtractSubTypeAsRecommendationAction.ID);
-		addActionToRest(menu, DiagramTypePropertiesAction.ID);
+		addActionToEditGroup(menu, ExtractSubTypeAsRecommendationAction.ID);
+		addActionToEditGroup(menu, DiagramTypePropertiesAction.ID);
 	}
 	
-	private void addActionToRest(IMenuManager menu, String key) {
+	private void addActionToEditGroup(IMenuManager menu, String key) {
 		IAction action = actionRegistry.getAction(key);
 		if (action != null && action.isEnabled()) {
 			menu.appendToGroup(GEFActionConstants.GROUP_EDIT, action);
