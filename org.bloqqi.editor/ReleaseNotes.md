@@ -2,6 +2,13 @@
 
 This file contains the important changes for each release. For a comprehension list of changes, see the commit log.
 
+## 0.2.5 - 2019-11-13
+
+- Add RGT and SetReal to standard library
+- External functions can be called inside functions
+- Add support in compiler for concurrently running programs
+- Fix name-clash bug when generating C code (found by Alfred)
+
 ## 0.2.4 - 2019-03-27
 
 - Automatically reverse connections if they are created "backwards"
