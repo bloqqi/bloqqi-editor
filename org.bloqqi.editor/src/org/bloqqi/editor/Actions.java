@@ -6,6 +6,7 @@ import org.bloqqi.editor.actions.ShowTypesAction;
 import org.bloqqi.editor.actions.AutoLayoutAction;
 import org.bloqqi.editor.actions.ChangeAllConnectionRoutersAction;
 import org.bloqqi.editor.actions.ChangeConnectionRouterAction;
+import org.bloqqi.editor.actions.ChangeFeaturesBlock;
 import org.bloqqi.editor.actions.ChangeNameDisplayedAction;
 import org.bloqqi.editor.actions.ChangeSpecializationBlock;
 import org.bloqqi.editor.actions.DiagramTypePropertiesAction;
@@ -73,6 +74,7 @@ public class Actions {
 		addSelectionAction(new SourceInterceptAction(editor));
 		addSelectionAction(new OpenBlockTypeAction(editor));
 		addSelectionAction(new ChangeSpecializationBlock(editor));
+		addSelectionAction(new ChangeFeaturesBlock(editor));
 	}
 	
 	private void createOutlineActions() {
