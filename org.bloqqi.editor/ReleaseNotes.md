@@ -2,6 +2,28 @@
 
 This file contains the important changes for each release. For a comprehension list of changes, see the commit log.
 
+## 0.2.6 - 2020-06-09
+
+- Add support for new feature specification for a base diagram B:
+
+        features B {
+          optional f1: F1;  // Optional feature "f1" that is implemented in the subtype F1 <: B
+          optional f2: F2;
+          optional f3: F3;
+          f1 before f2;     // Feature f1 should be applied before f2 if both are applied
+          f1 before f3;
+          f2 exludes f3;    // Features f2 and f3 cannot be used at the same time
+        }
+
+- The features can then be instantiated for a block:
+   
+        diagramtype Main {
+          b: B {
+            feature f1;
+            feature f3;
+          };
+        }
+
 ## 0.2.5 - 2019-11-13
 
 - Add RGT and SetReal to standard library
