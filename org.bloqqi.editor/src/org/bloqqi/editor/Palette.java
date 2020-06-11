@@ -130,7 +130,7 @@ public class Palette extends PaletteRoot {
 	}
 
 	private boolean showTypeDecl(TypeDecl td) {
-		return td.isDiagramType()
+		return (td.isDiagramType() && !td.isAbstract())
 				|| td.isFunction()
 				|| td.isExternalFunction()
 				|| td.isStateMachine();
