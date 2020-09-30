@@ -2,6 +2,12 @@
 
 This file contains the important changes for each release. For a comprehension list of changes, see the commit log.
 
+## 0.2.7 - 2020-09-30
+
+- Don't show abstract diagram types in palette
+- Update to latest bloqqi compiler
+
+
 ## 0.2.6 - 2020-06-09
 
 - Add support for new feature specification for a base diagram B:
