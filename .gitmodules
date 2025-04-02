@@ -1,3 +1,3 @@
 [submodule "org.bloqqi.editor/bloqqi-compiler"]
 	path = org.bloqqi.editor/bloqqi-compiler
-	url = git@bitbucket.org:bloqqi/bloqqi-compiler.git
+	url = git@github.com:bloqqi/bloqqi-compiler.git
